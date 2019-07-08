@@ -21,7 +21,8 @@ class tree<T>::Node {
         const HeightComparator &heightComparator = HeightComparator(),
         const LeftComparator &leftComparator = LeftComparator());
 
-  private:
+    T &operator*();
+
     template <typename Comparator>
     static std::tuple<std::unique_ptr<tree<T>::Node>,
                       std::unique_ptr<tree<T>::Node>>

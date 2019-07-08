@@ -3,9 +3,11 @@
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
 
-using namespace std;
+#include <algorithm>
+#include <iostream>
 
 using int_node = tree<int>::Node;
+using namespace std;
 
 TEST_CASE("constructors", "[constructors]") {
     SECTION("single") { unique_ptr<int_node> n(make_unique<int_node>(5)); }
@@ -31,5 +33,17 @@ TEST_CASE("comparators", "[insert, constructor]") {
                             std::less<int>());
         n = int_node::merge(std::move(n), make_unique<int_node>(15),
                             std::greater<int>());
+    }
+}
+
+TEST_CASE("tree", "[constructors, insert]") {
+    SECTION("simple") {
+        tree<int> t((std::less<int>()));
+        for (uint32_t i = 0; i < 10; ++i) {
+            t.insert(i);
+        }
+
+        std::copy(t.begin(), t.end(),
+                  std::ostream_iterator<int>(std::cout, ", "));
     }
 }
