@@ -1,0 +1,8 @@
+BasedOnStyle: Google
+IndentWidth: 4
+CompactNamespaces: true
+AccessModifierOffset: -2
+
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: true
