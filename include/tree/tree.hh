@@ -50,6 +50,27 @@ typename tree<T>::iterator tree<T>::insert(const T &value) {
 }
 
 template <typename T>
+typename tree<T>::iterator tree<T>::erase(typename tree<T>::iterator left,
+                                          typename tree<T>::iterator right) {
+    for (auto pos = left, next = std::next(left);
+         pos != end() && pos != right;
+         pos = next, next = std::next(next)) {
+        auto parent = pos.parent();
+        if (parent == end()) {
+            erase(root_);
+            continue;
+        }
+
+        if (parent.left() == pos) {
+            erase(parent.node_->left_);
+        } else {
+            erase(parent.node_->right_);
+        }
+    }
+    return right;
+}
+
+template <typename T>
 typename tree<T>::iterator tree<T>::insert(T &&value,
                                            std::unique_ptr<Node> &pos) {
     auto node = std::make_unique<tree<T>::Node>(std::move(value));
@@ -61,6 +82,15 @@ typename tree<T>::iterator tree<T>::insert(T &&value,
     pos =
         tree<T>::Node::merge(std::move(pos), std::move(node), isTall_, isLeft_);
     return tree<T>::iterator(pos.get());
+}
+
+template <typename T>
+void tree<T>::erase(std::unique_ptr<Node> &pos) {
+    if (pos->left_) { pos->left_->parent_ = pos->parent_; }
+    if (pos->right_) { pos->right_->parent_ = pos->parent_; }
+
+    pos = tree<T>::Node::merge(std::move(pos->left_), std::move(pos->right_),
+                               isTall_, isLeft_);
 }
 
 // static member

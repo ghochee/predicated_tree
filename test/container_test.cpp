@@ -1,10 +1,11 @@
+#include <iostream>
+
 #include "tree/tree.h"
 
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
 
 #include <algorithm>
-#include <iostream>
 #include <iterator>
 #include <random>
 
@@ -43,6 +44,9 @@ TEST_CASE("tree", "[constructors, insert]") {
     SECTION("simple") {
         tree<uint32_t> t((std::less<uint32_t>()));
         std::generate_n(std::inserter(t, t.end()), 20, std::ref(rng));
+        std::copy(t.begin(), t.end(),
+                  std::ostream_iterator<uint32_t>(std::cout, " "));
+        std::cout << "\n";
         std::copy(t.begin(), t.end(),
                   std::ostream_iterator<uint32_t>(std::cout, " "));
     }

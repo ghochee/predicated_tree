@@ -5,7 +5,7 @@ set(TREE_VERSION_MINOR 1)
 set(TREE_VERSION_PATCH 0)
 
 set(CMAKE_CXX_COMPILER /usr/bin/clang++-5.0)
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -Wextra -O3")
+set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -Wextra -g")
 
 include_directories("${PROJECT_BINARY_DIR}/include")
 

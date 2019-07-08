@@ -44,12 +44,30 @@ class tree {
     iterator insert(iterator pos, const T &value);
     iterator insert(const T &value);
 
+    // Erase nodes from the tree which are in the range [first, last).
+    //
+    // 'first' and 'last' are iterators.
+    // - If last is not reachable from first then all elements from first
+    //   through end() are erased.
+    //
+    // NOTE: For pre-order iterator the semantics of iterator increment will
+    // interfere with the erasure of elements in the tree, including deleting
+    // elements outside the range. The only situations in which this is defined
+    // are:
+    // - [first, last) is empty.
+    // - [first, last) is a single element.
+    iterator erase(iterator first, iterator last);
+
   private:
     static iterator end_;
 
     // Insert helper which inserts a new node containing 'value' under 'pos'
     // **and** updates 'pos' to the result of the Node::merge call.
     iterator insert(T &&value, std::unique_ptr<Node> &pos);
+
+    // Erase helper which erases the node and merges the two children of ths
+    // node. The 'pos' reference is updated with the merged tree.
+    void erase(std::unique_ptr<Node> &pos);
 
     const std::function<bool(const T &, const T &)> isTall_;
     const std::function<bool(const T &, const T &)> isLeft_;
