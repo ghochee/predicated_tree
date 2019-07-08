@@ -34,17 +34,21 @@ class tree {
     //
     // 'pos' is a hint for insertion location. 'isTall' and 'isLeft' is used to
     //     determine if incorrect in which it is ignored.
-    void insert(T &&value, iterator pos);
+    iterator insert(iterator pos, T &&value);
+    // Same as above but with pos = end_.
+    iterator insert(T &&value);
+    iterator insert(iterator pos, const T &value);
+    iterator insert(const T &value);
 
     iterator begin() const;
     iterator end() const;
 
   private:
-    static iterator end_();
+    static iterator end_;
 
     // Insert helper which inserts a new node containing 'value' under 'pos'
     // **and** updates 'pos' to the result of the Node::merge call.
-    void insert(T &&value, std::unique_ptr<Node> &pos);
+    iterator insert(T &&value, std::unique_ptr<Node> &pos);
 
     const std::function<bool(const T &, const T &)> isTall_;
     const std::function<bool(const T &, const T &)> isLeft_;

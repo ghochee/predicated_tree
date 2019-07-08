@@ -5,6 +5,8 @@
 
 #include <algorithm>
 #include <iostream>
+#include <iterator>
+#include <random>
 
 using int_node = tree<int>::Node;
 using namespace std;
@@ -37,13 +39,11 @@ TEST_CASE("comparators", "[insert, constructor]") {
 }
 
 TEST_CASE("tree", "[constructors, insert]") {
+    std::mt19937 rng;
     SECTION("simple") {
-        tree<int> t((std::less<int>()));
-        for (uint32_t i = 0; i < 10; ++i) {
-            t.insert(i, t.end());
-        }
-
+        tree<uint32_t> t((std::less<uint32_t>()));
+        std::generate_n(std::inserter(t, t.end()), 20, std::ref(rng));
         std::copy(t.begin(), t.end(),
-                  std::ostream_iterator<int>(std::cout, " "));
+                  std::ostream_iterator<uint32_t>(std::cout, " "));
     }
 }
