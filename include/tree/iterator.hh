@@ -1,30 +1,26 @@
 template <typename T>
-template <traversal_order order>
-bool tree<T>::iterator<order>::operator==(
-    const tree<T>::iterator<order> &other) const {
+bool tree<T>::iterator::operator==(
+    const tree<T>::iterator &other) const {
     return node_ == other.node_;
 }
 
 template <typename T>
-template <traversal_order order>
-bool tree<T>::iterator<order>::operator!=(
-    const tree<T>::iterator<order> &other) const {
+bool tree<T>::iterator::operator!=(
+    const tree<T>::iterator &other) const {
     return node_ != other.node_;
 }
 
 template <typename T>
-template <traversal_order order>
-T &tree<T>::iterator<order>::operator*() const {
+T &tree<T>::iterator::operator*() const {
     return **node_;
 }
 
 template <typename T>
-template <traversal_order order>
-typename tree<T>::template iterator<order>
-    &tree<T>::iterator<order>::operator++() {
+typename tree<T>::iterator
+    &tree<T>::iterator::operator++() {
     if (node_ == nullptr) { return *this; }
 
-    if (order != traversal_order::pre) { return *this; }
+    if (order_ != traversal_order::pre) { return *this; }
     if (node_->left_) {
         node_ = node_->left_.get();
         return *this;
@@ -40,4 +36,25 @@ typename tree<T>::template iterator<order>
     }
 
     return *this;
+}
+
+template <typename T>
+typename tree<T>::iterator
+tree<T>::iterator::parent() const {
+    if (!node_) { return iterator(nullptr); }
+    return iterator(node_->parent_);
+}
+
+template <typename T>
+typename tree<T>::iterator
+tree<T>::iterator::left() const {
+    if (!node_) { return iterator(nullptr); }
+    return iterator(node_->left_.get());
+}
+
+template <typename T>
+typename tree<T>::iterator
+tree<T>::iterator::right() const {
+    if (!node_) { return iterator(nullptr); }
+    return iterator(node_->right_.get());
 }

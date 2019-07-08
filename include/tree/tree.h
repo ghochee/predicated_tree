@@ -10,6 +10,8 @@ enum class traversal_order { pre, in, post };
 template <typename T>
 class tree {
   private:
+    // Strict weak ordering is needed for the predicates. This is a totally
+    // strictly weak ordering :).
     static bool indifferent(const T &, const T &) { return false; }
 
   public:
@@ -22,20 +24,28 @@ class tree {
     typedef ptrdiff_t difference_type;
     typedef size_t size_type;
 
-    template <traversal_order order>
     class iterator;
 
     tree(std::function<bool(const T &, const T &)> isTall = indifferent,
          std::function<bool(const T &, const T &)> isLeft = indifferent);
 
-    void insert(T &&value);
+    // Insert 'value' into the tree. 'isTall' and 'isLeft' predicates are used
+    // to determine correct position to insert at.
+    //
+    // 'pos' is a hint for insertion location. 'isTall' and 'isLeft' is used to
+    //     determine if incorrect in which it is ignored.
+    void insert(T &&value, iterator pos);
 
-    template <traversal_order order = traversal_order::pre>
-    iterator<order> begin() const;
-    template <traversal_order order = traversal_order::pre>
-    iterator<order> end() const;
+    iterator begin() const;
+    iterator end() const;
 
   private:
+    static iterator end_();
+
+    // Insert helper which inserts a new node containing 'value' under 'pos'
+    // **and** updates 'pos' to the result of the Node::merge call.
+    void insert(T &&value, std::unique_ptr<Node> &pos);
+
     const std::function<bool(const T &, const T &)> isTall_;
     const std::function<bool(const T &, const T &)> isLeft_;
 

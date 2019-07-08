@@ -11,8 +11,8 @@ class tree<T>::Node {
 
   public:
     Node() = delete;
-    Node(T &&value) : value_(std::move(value)) {}
-    Node(const T &value) : value_(value) {}
+    explicit Node(T &&value) : value_(std::move(value)) {}
+    explicit Node(const T &value) : value_(value) {}
 
     template <typename HeightComparator = I, typename LeftComparator = I>
     static std::unique_ptr<tree<T>::Node> merge(

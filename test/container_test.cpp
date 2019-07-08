@@ -40,10 +40,10 @@ TEST_CASE("tree", "[constructors, insert]") {
     SECTION("simple") {
         tree<int> t((std::less<int>()));
         for (uint32_t i = 0; i < 10; ++i) {
-            t.insert(i);
+            t.insert(i, t.end());
         }
 
         std::copy(t.begin(), t.end(),
-                  std::ostream_iterator<int>(std::cout, ", "));
+                  std::ostream_iterator<int>(std::cout, " "));
     }
 }
