@@ -30,6 +30,7 @@ class tree<T>::Node {
              const Comparator &comparator);
 
     T value_;
+    tree<T>::Node *parent_ = nullptr;
     std::unique_ptr<tree<T>::Node> left_ = nullptr, right_ = nullptr;
 };
 

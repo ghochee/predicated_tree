@@ -26,6 +26,7 @@ std::unique_ptr<typename tree<T>::Node> tree<T>::Node::merge(
 
     auto [taller, shorter] =
         myminmax(std::move(first), std::move(second), heightComparator);
+    shorter->parent_ = taller.get();
 
     std::unique_ptr<tree<T>::Node> inside;
     if (leftComparator(taller->value_, shorter->value_)) {
@@ -35,6 +36,9 @@ std::unique_ptr<typename tree<T>::Node> tree<T>::Node::merge(
         std::swap(inside, shorter->right_);
         taller->left_ = merge(std::move(taller->left_), std::move(shorter));
     }
-    taller = merge(std::move(taller), std::move(inside));
+    if (inside) {
+        inside->parent_ = nullptr;
+        taller = merge(std::move(taller), std::move(inside));
+    }
     return std::move(taller);
 }
