@@ -29,6 +29,9 @@ class tree {
     tree(std::function<bool(const T &, const T &)> isTall = indifferent,
          std::function<bool(const T &, const T &)> isLeft = indifferent);
 
+    iterator begin() const;
+    iterator end() const;
+
     // Insert 'value' into the tree. 'isTall' and 'isLeft' predicates are used
     // to determine correct position to insert at.
     //
@@ -37,11 +40,9 @@ class tree {
     iterator insert(iterator pos, T &&value);
     // Same as above but with pos = end_.
     iterator insert(T &&value);
+    // Same as above but with const-lvalue-ref 'value'.
     iterator insert(iterator pos, const T &value);
     iterator insert(const T &value);
-
-    iterator begin() const;
-    iterator end() const;
 
   private:
     static iterator end_;
