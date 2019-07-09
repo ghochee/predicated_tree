@@ -1,24 +1,30 @@
+// The following code for compaction when accessing array indices (children_).
+// NOTE: https://stackoverflow.com/questions/8357240
+template <typename E>
+constexpr auto as_int(E e) noexcept {
+    return static_cast<std::underlying_type_t<E>>(e);
+}
+
 template <typename T>
 raw_tree<T>::raw_tree(raw_tree &&other)
     : value_(std::move(other.value_)),
       parent_(other.parent_),
-      children_{std::move(other.children_[static_cast<int>(side::left)]),
-                std::move(other.children_[static_cast<int>(side::right)])} {
-    if (children_[static_cast<int>(side::left)]) {
-        children_[static_cast<int>(side::left)]->parent_ = this;
+      children_(std::move(other.children_)) {
+    if (children_[as_int(side::left)]) {
+        children_[as_int(side::left)]->parent_ = this;
     }
-    if (children_[static_cast<int>(side::right)]) {
-        children_[static_cast<int>(side::right)]->parent_ = this;
+    if (children_[as_int(side::right)]) {
+        children_[as_int(side::right)]->parent_ = this;
     }
 }
 
 template <typename T>
 raw_tree<T> &raw_tree<T>::operator=(raw_tree<T> &&other) {
     value_ = std::move(other.value_);
-    children_[static_cast<int>(side::left)] =
-        std::move(other.children_[static_cast<int>(side::left)]);
-    children_[static_cast<int>(side::right)] =
-        std::move(other.children_[static_cast<int>(side::right)]);
+    children_[as_int(side::left)] =
+        std::move(other.children_[as_int(side::left)]);
+    children_[as_int(side::right)] =
+        std::move(other.children_[as_int(side::right)]);
     parent_ = other.parent_;
 
     return *this;
@@ -42,21 +48,21 @@ raw_tree<T> &raw_tree<T>::parent() {
 template <typename T>
 template <side wing>
 bool raw_tree<T>::has_child() const {
-    return (bool)children_[static_cast<int>(wing)];
+    return (bool)children_[as_int(wing)];
 }
 
 template <typename T>
 template <side wing>
 void raw_tree<T>::replace(raw_tree<T> &&child) {
-    this->children_[static_cast<int>(wing)] =
+    child.parent_ = this;
+    this->children_[as_int(wing)] =
         std::make_unique<raw_tree<T>>(std::move(child));
-    this->children_[static_cast<int>(wing)]->parent_ = this;
 }
 
 template <typename T>
 template <side wing>
 raw_tree<T> raw_tree<T>::detach() {
-    auto detached = std::move(children_[static_cast<int>(wing)]);
+    auto detached = std::move(children_[as_int(wing)]);
     detached->parent_ = nullptr;
     return raw_tree<T>(std::move(*detached));
 }
@@ -64,7 +70,7 @@ raw_tree<T> raw_tree<T>::detach() {
 template <typename T>
 template <side wing>
 raw_tree<T> &raw_tree<T>::child() {
-    return *children_[static_cast<int>(wing)];
+    return *children_[as_int(wing)];
 }
 
 template <typename T>
@@ -82,23 +88,19 @@ typename raw_tree<T>::template iterator<order> raw_tree<T>::end() {
 template <typename T>
 size_t raw_tree<T>::size() const {
     return 1 +
-           (has_child<side::left>()
-                ? children_[static_cast<int>(side::left)]->size()
-                : 0) +
-           (has_child<side::right>()
-                ? children_[static_cast<int>(side::right)]->size()
-                : 0);
+           (has_child<side::left>() ? children_[as_int(side::left)]->size()
+                                    : 0) +
+           (has_child<side::right>() ? children_[as_int(side::right)]->size()
+                                     : 0);
 }
 
 template <typename T>
 template <side wing>
 const std::unique_ptr<raw_tree<T>> &raw_tree<T>::child_ref() const {
-    if constexpr (wing == side::left) {
-        return children_[static_cast<int>(side::left)];
-    }
+    if constexpr (wing == side::left) { return children_[as_int(side::left)]; }
 
     if constexpr (wing == side::right) {
-        return children_[static_cast<int>(side::right)];
+        return children_[as_int(side::right)];
     }
 }
 
@@ -108,11 +110,9 @@ const std::unique_ptr<raw_tree<T>> &raw_tree<T>::child_ref() const {
 template <typename T>
 template <side wing>
 std::unique_ptr<raw_tree<T>> &raw_tree<T>::child_ref() {
-    if constexpr (wing == side::left) {
-        return children_[static_cast<int>(side::left)];
-    }
+    if constexpr (wing == side::left) { return children_[as_int(side::left)]; }
 
     if constexpr (wing == side::right) {
-        return children_[static_cast<int>(side::right)];
+        return children_[as_int(side::right)];
     }
 }

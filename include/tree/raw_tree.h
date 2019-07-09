@@ -1,4 +1,6 @@
+#include <array>
 #include <memory>
+#include <type_traits>
 
 enum class traversal_order { pre, in, post };
 // side is misleading because we have two children left and right, but
@@ -64,7 +66,8 @@ class raw_tree {
 
     T value_;
     raw_tree *parent_ = nullptr;
-    std::unique_ptr<raw_tree> children_[2 /* num sides */] = {nullptr, nullptr};
+    std::array<std::unique_ptr<raw_tree>, 2 /* num sides */> children_ = {
+        {nullptr, nullptr}};
 };
 
 #include "tree/raw_tree.hh"
