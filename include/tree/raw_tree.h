@@ -1,5 +1,7 @@
 #include <memory>
 
+enum class traversal_order { pre, in, post };
+
 // raw_tree is a class which is used for creating a 'raw' tree. It allows
 // client users to manipulate the tree in tree like operations.
 //
@@ -9,6 +11,14 @@
 template <typename T>
 class raw_tree {
   public:
+    typedef T value_type;
+    typedef value_type &reference;
+    typedef const value_type &const_reference;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+
+    class iterator;
+
     raw_tree() = delete;
     explicit raw_tree(T &&value) : value_(std::move(value)) {}
     explicit raw_tree(const T &value) : value_(value) {}
@@ -31,14 +41,21 @@ class raw_tree {
     void attach_right(raw_tree<T> &&right);
     raw_tree detach_right();
 
+    iterator begin();
+    iterator end();
+
     // O(n) call as it actually iterates through the tree to recover the
     // counts.
     size_t size() const;
 
   private:
+    static iterator end_;
+
     T value_;
     raw_tree *parent_ = nullptr;
     std::unique_ptr<raw_tree> left_ = nullptr, right_ = nullptr;
 };
 
 #include "tree/raw_tree.hh"
+
+#include "tree/raw_tree_iterator.h"

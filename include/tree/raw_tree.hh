@@ -80,7 +80,21 @@ raw_tree<T> raw_tree<T>::detach_right() {
 }
 
 template <typename T>
+typename raw_tree<T>::iterator raw_tree<T>::begin() {
+    return raw_tree<T>::iterator(*this);
+}
+
+template <typename T>
+typename raw_tree<T>::iterator raw_tree<T>::end() {
+    return raw_tree<T>::end_;
+}
+
+template <typename T>
 size_t raw_tree<T>::size() const {
     return 1 + (has_left() ? left_->size() : 0) +
            (has_right() ? right_->size() : 0);
 }
+
+// static member
+template <typename T>
+typename raw_tree<T>::iterator raw_tree<T>::end_ = raw_tree<T>::iterator();
