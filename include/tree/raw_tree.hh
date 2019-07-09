@@ -80,12 +80,12 @@ raw_tree<T> raw_tree<T>::detach_right() {
 }
 
 template <typename T>
-typename raw_tree<T>::iterator raw_tree<T>::begin() {
-    return raw_tree<T>::iterator(*this);
+typename raw_tree<T>::iterator raw_tree<T>::begin(traversal_order order) {
+    return raw_tree<T>::iterator(*this, order);
 }
 
 template <typename T>
-typename raw_tree<T>::iterator raw_tree<T>::end() {
+typename raw_tree<T>::iterator raw_tree<T>::end(traversal_order) {
     return raw_tree<T>::end_;
 }
 

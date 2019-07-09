@@ -1,5 +1,6 @@
 template <typename T>
-class raw_tree<T>::iterator : public std::iterator<std::input_iterator_tag, T> {
+class raw_tree<T>::iterator
+    : public std::iterator<std::forward_iterator_tag, T> {
   public:
     iterator(const iterator &) = default;
     bool operator==(const iterator &other) const;
@@ -31,6 +32,14 @@ class raw_tree<T>::iterator : public std::iterator<std::input_iterator_tag, T> {
     // copied around using assignment operator. This would specifically be a
     // problem for a const member variable as the operator= method cannot be
     // const.
+    //
+    // TODO(ghochee): Order should be in the type of the iterator. This is
+    // because it is really a feature of the iterator type. The container
+    // should default to providing in_order (for example) iterators on begin
+    // and end. It cannot return arbitrarily 'ordered' iterators because the
+    // method signature for begin would change. If we support automatic
+    // conversion from one form to the other then the same ::end could be used
+    // for all three types.
     traversal_order order_;
 };
 

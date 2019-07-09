@@ -42,6 +42,23 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
     SECTION("iterator") {
         t.attach_left(int_tree(20));
         t.attach_right(int_tree(30));
+
+        SECTION("inorder") {
+            auto pos = t.begin();
+            CHECK(*pos++ == 20);
+            CHECK(*pos++ == 10);
+            CHECK(*pos++ == 30);
+            CHECK(pos == t.end());
+        }
+
+        SECTION("preorder") {
+            CHECK(std::is_sorted(t.begin(traversal_order::pre), t.end()));
+        }
+    }
+
+    SECTION("preorder iterator") {
+        t.attach_left(int_tree(20));
+        t.attach_right(int_tree(30));
         auto pos = t.begin();
         CHECK(*pos++ == 20);
         CHECK(*pos++ == 10);
@@ -76,4 +93,3 @@ void build_bst(int_tree &root, uint32_t levels, uint32_t min_value) {
     root.attach_right(int_tree(*root + (*root - min_value) / 2));
     build_bst(root.right(), levels - 1, *root + 1);
 }
-

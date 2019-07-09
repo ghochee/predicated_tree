@@ -41,8 +41,8 @@ class raw_tree {
     void attach_right(raw_tree<T> &&right);
     raw_tree detach_right();
 
-    iterator begin();
-    iterator end();
+    iterator begin(traversal_order order=traversal_order::in);
+    iterator end(traversal_order order=traversal_order::in);
 
     // O(n) call as it actually iterates through the tree to recover the
     // counts.

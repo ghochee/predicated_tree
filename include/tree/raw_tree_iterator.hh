@@ -4,14 +4,10 @@ raw_tree<T>::iterator::iterator(
         const traversal_order &order)
     : node_(nullptr),
       order_(order) {
-    if (order != traversal_order::in) {
-        return;
-    }
-    for (auto first = &root; true; first = first->left_.get()) {
-        if (!first->left_) {
-            node_ = first;
-            break;
-        }
+    if (order == traversal_order::pre) {
+        node_ = &root;
+    } else if (order == traversal_order::in) {
+        for (node_ = &root; node_->left_.get(); node_ = node_->left_.get()) {}
     }
 }
 
@@ -34,8 +30,6 @@ T &raw_tree<T>::iterator::operator*() const {
 
 template <typename T>
 typename raw_tree<T>::iterator &raw_tree<T>::iterator::operator++() {
-    if (node_ == nullptr) { return *this; }
-
     if (order_ == traversal_order::pre) {
         preorder_increment();
     } else if (order_ == traversal_order::in) {
@@ -53,36 +47,45 @@ typename raw_tree<T>::iterator raw_tree<T>::iterator::operator++(int) {
 
 template <typename T>
 void raw_tree<T>::iterator::preorder_increment() {
+    if (node_ == nullptr) {
+        // FIXME(ghochee): Set to root.
+        return;
+    }
+
     if (node_->left_) {
         node_ = node_->left_.get();
         return;
     }
 
-    /*
-    while (node_ != nullptr) {
-        if (node_->parent_ && node_->parent_->right_ &&
-            node_->parent_->right_.get() != node_) {
-            node_ = node_->parent_->right_.get();
-        } else {
-            node_ = node_->parent_;
-        }
+    if (node_->right_) {
+        node_ = node_->right_.get();
+        return;
     }
-    */
+
     for (auto parent = node_->parent_;
-         parent && !(parent->right_ && parent->right_.get() != node_);
+         parent && (!parent->right_ || parent->right_.get() == node_);
          node_ = parent, parent = node_->parent_) {}
     node_ = node_->parent_;
+    if (node_) {
+        node_ = node_->right_.get();
+    }
 }
 
 template <typename T>
 void raw_tree<T>::iterator::inorder_increment() {
-    if (node_->right_) {
-        for (node_ = node_->right_.get(); node_->left_;
-             node_ = node_->left_.get()) {}
+    if (node_ == nullptr) {
+        // FIXME(ghochee): Set root and choose leftmost descendant.
         return;
     }
 
-    for (auto parent = node_->parent_; parent && parent->right_.get() == node_;
-         node_ = parent, parent = node_->parent_) {}
-    node_ = node_->parent_;
+    if (node_ and !node_->right_) {
+        for (auto parent = node_->parent_;
+             parent && parent->right_ && parent->right_.get() == node_;
+             node_ = parent, parent = node_->parent_) {}
+        node_ = node_->parent_;
+        return;
+    }
+
+    for (node_ = node_->right_.get(); node_->left_;
+         node_ = node_->left_.get()) {}
 }
