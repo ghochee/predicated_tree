@@ -1,5 +1,5 @@
 template <typename T>
-template <traversal_order order>
+template <traversal_order order, side wing>
 class raw_tree<T>::iterator
     : public std::iterator<std::forward_iterator_tag, T> {
   public:
@@ -9,8 +9,8 @@ class raw_tree<T>::iterator
     // transliteration (the position doesn't change only the direction in which
     // it will head will change). This behaviour is similar to forward and
     // reverse iterators.
-    template <traversal_order other_order>
-    iterator<order>(const iterator<other_order> &other);
+    template <traversal_order other_order, side other_wing>
+    iterator(const iterator<other_order, other_wing> &other);
 
     bool operator==(const iterator &other) const;
     bool operator!=(const iterator &other) const;

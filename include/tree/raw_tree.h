@@ -22,7 +22,7 @@ class raw_tree {
     typedef ptrdiff_t difference_type;
     typedef size_t size_type;
 
-    template <traversal_order order>
+    template <traversal_order, side = side::left>
     class iterator;
 
     raw_tree() = delete;
@@ -50,9 +50,9 @@ class raw_tree {
     raw_tree &child();
 
     template <traversal_order order = traversal_order::in>
-    iterator<order> begin();
+    iterator<order, side::left> begin();
     template <traversal_order order = traversal_order::in>
-    iterator<order> end();
+    iterator<order, side::left> end();
 
     // O(n) call as it actually iterates through the tree to recover the
     // counts.
