@@ -37,22 +37,28 @@ typename raw_tree<T>::iterator &raw_tree<T>::iterator::operator++() {
     if (node_ == nullptr) { return *this; }
 
     if (order_ == traversal_order::pre) {
-        return preorder_increment();
+        preorder_increment();
     } else if (order_ == traversal_order::in) {
-        return inorder_increment();
-    } else {
-        return *this;
+        inorder_increment();
     }
     return *this;
 }
 
 template <typename T>
-typename raw_tree<T>::iterator &raw_tree<T>::iterator::preorder_increment() {
+typename raw_tree<T>::iterator raw_tree<T>::iterator::operator++(int) {
+    auto return_value = *this;
+    ++(*this);
+    return return_value;
+}
+
+template <typename T>
+void raw_tree<T>::iterator::preorder_increment() {
     if (node_->left_) {
         node_ = node_->left_.get();
-        return *this;
+        return;
     }
 
+    /*
     while (node_ != nullptr) {
         if (node_->parent_ && node_->parent_->right_ &&
             node_->parent_->right_.get() != node_) {
@@ -61,20 +67,22 @@ typename raw_tree<T>::iterator &raw_tree<T>::iterator::preorder_increment() {
             node_ = node_->parent_;
         }
     }
-
-    return *this;
+    */
+    for (auto parent = node_->parent_;
+         parent && !(parent->right_ && parent->right_.get() != node_);
+         node_ = parent, parent = node_->parent_) {}
+    node_ = node_->parent_;
 }
 
 template <typename T>
-typename raw_tree<T>::iterator &raw_tree<T>::iterator::inorder_increment() {
+void raw_tree<T>::iterator::inorder_increment() {
     if (node_->right_) {
         for (node_ = node_->right_.get(); node_->left_;
              node_ = node_->left_.get()) {}
-        return *this;
+        return;
     }
 
     for (auto parent = node_->parent_; parent && parent->right_.get() == node_;
          node_ = parent, parent = node_->parent_) {}
     node_ = node_->parent_;
-    return *this;
 }

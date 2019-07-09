@@ -6,9 +6,10 @@ class raw_tree<T>::iterator : public std::iterator<std::input_iterator_tag, T> {
     bool operator!=(const iterator &other) const;
     reference operator*() const;
     iterator &operator++();
+    iterator operator++(int);
 
-    iterator &preorder_increment();
-    iterator &inorder_increment();
+    void preorder_increment();
+    void inorder_increment();
 
   private:
     // Equivalent to ::end.

@@ -43,9 +43,9 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
         t.attach_left(int_tree(20));
         t.attach_right(int_tree(30));
         auto pos = t.begin();
-        CHECK(*pos == 20); ++pos;
-        CHECK(*pos == 10); ++pos;
-        CHECK(*pos == 30); ++pos;
+        CHECK(*pos++ == 20);
+        CHECK(*pos++ == 10);
+        CHECK(*pos++ == 30);
         CHECK(pos == t.end());
     }
 
