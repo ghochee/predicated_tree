@@ -1,6 +1,9 @@
 #include <memory>
 
 enum class traversal_order { pre, in, post };
+// side is misleading because we have two children left and right, but
+// if / when we have more this would be useful.
+enum class side { left, right };
 
 // raw_tree is a class which is used for creating a 'raw' tree. It allows
 // client users to manipulate the tree in tree like operations.
@@ -32,19 +35,21 @@ class raw_tree {
     bool has_parent() const;
     raw_tree &parent();
 
-    bool has_left() const;
-    raw_tree &left();
-    void attach_left(raw_tree<T> &&left);
-    raw_tree detach_left();
+    template <side wing = side::left>
+    bool has_child() const;
 
-    bool has_right() const;
-    raw_tree &right();
-    void attach_right(raw_tree<T> &&right);
-    raw_tree detach_right();
+    template <side wing = side::left>
+    void replace(raw_tree<T> &&child);
 
-    template <traversal_order order=traversal_order::in>
+    template <side wing = side::left>
+    raw_tree detach();
+
+    template <side wing = side::left>
+    raw_tree &child();
+
+    template <traversal_order order = traversal_order::in>
     iterator<order> begin();
-    template <traversal_order order=traversal_order::in>
+    template <traversal_order order = traversal_order::in>
     iterator<order> end();
 
     // O(n) call as it actually iterates through the tree to recover the
@@ -52,9 +57,14 @@ class raw_tree {
     size_t size() const;
 
   private:
+    template <side wing = side::left>
+    const std::unique_ptr<raw_tree> &child_ref() const;
+    template <side wing = side::left>
+    std::unique_ptr<raw_tree> &child_ref();
+
     T value_;
     raw_tree *parent_ = nullptr;
-    std::unique_ptr<raw_tree> left_ = nullptr, right_ = nullptr;
+    std::unique_ptr<raw_tree> children_[2 /* num sides */] = {nullptr, nullptr};
 };
 
 #include "tree/raw_tree.hh"

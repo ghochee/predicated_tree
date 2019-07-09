@@ -16,33 +16,40 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
     }
 
     SECTION("attach") {
-        t.attach_left(int_tree(20));
-        t.attach_right(int_tree(30));
+        t.replace<side::left>(int_tree(20));
+        t.replace<side::right>(int_tree(30));
         CHECK(!t.has_parent());
-        REQUIRE(t.has_left());
-        CHECK((*t.left()  == 20 && t.left().has_parent()));
-        REQUIRE(t.has_right());
-        CHECK((*t.right() == 30 && t.right().has_parent()));
+        REQUIRE(t.has_child<side::left>());
+        CHECK((*t.child<side::left>() == 20 &&
+               t.child<side::left>().has_parent()));
+        REQUIRE(t.has_child<side::right>());
+        CHECK((*t.child<side::right>() == 30 &&
+               t.child<side::right>().has_parent()));
     }
 
     SECTION("detach") {
-        t.attach_left(int_tree(20));
-        t.attach_right(int_tree(30));
+        t.replace<side::left>(int_tree(20));
+        t.replace<side::right>(int_tree(30));
 
-        REQUIRE(t.has_left());   t.detach_left();   CHECK(!t.has_left());
-        REQUIRE(t.has_right());  t.detach_right();  CHECK(!t.has_right());
+        REQUIRE(t.has_child<side::left>()); t.detach<side::left>();
+        CHECK(!t.has_child<side::left>());
+
+        REQUIRE(t.has_child<side::right>()); t.detach<side::right>();
+        CHECK(!t.has_child<side::right>());
+
         CHECK(*t == 10);
 
-        t.attach_left(int_tree(35));
-        REQUIRE(t.has_left());
-        CHECK(*t.left() == 35);
-        auto b = t.detach_left();
+        t.replace<side::left>(int_tree(35));
+        REQUIRE(t.has_child<side::left>());
+        CHECK(*t.child<side::left>() == 35);
+
+        auto b = t.detach<side::left>();
         CHECK(*b == 35);  CHECK(!b.has_parent());
     }
 
     SECTION("iterator") {
-        t.attach_left(int_tree(20));
-        t.attach_right(int_tree(30));
+        t.replace<side::left>(int_tree(20));
+        t.replace<side::right>(int_tree(30));
 
         SECTION("inorder") {
             auto pos = t.begin();
@@ -60,8 +67,8 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
     }
 
     SECTION("preorder iterator") {
-        t.attach_left(int_tree(20));
-        t.attach_right(int_tree(30));
+        t.replace<side::left>(int_tree(20));
+        t.replace<side::right>(int_tree(30));
         auto pos = t.begin();
         CHECK(*pos++ == 20);
         CHECK(*pos++ == 10);
@@ -90,9 +97,9 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
 void build_bst(int_tree &root, uint32_t levels, uint32_t min_value) {
     if (levels == 0) { return; }
 
-    root.attach_left(int_tree(*root - (*root - min_value) / 2));
-    build_bst(root.left(), levels - 1, min_value);
+    root.replace<side::left>(int_tree(*root - (*root - min_value) / 2));
+    build_bst(root.child<side::left>(), levels - 1, min_value);
 
-    root.attach_right(int_tree(*root + (*root - min_value) / 2));
-    build_bst(root.right(), levels - 1, *root + 1);
+    root.replace<side::right>(int_tree(*root + (*root - min_value) / 2));
+    build_bst(root.child<side::right>(), levels - 1, *root + 1);
 }
