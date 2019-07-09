@@ -1,8 +1,17 @@
 template <typename T>
+template <traversal_order order>
 class raw_tree<T>::iterator
     : public std::iterator<std::forward_iterator_tag, T> {
   public:
     iterator(const iterator &) = default;
+
+    // Automatic conversions between the various iterator types. This is a
+    // transliteration (the position doesn't change only the direction in which
+    // it will head will change). This behaviour is similar to forward and
+    // reverse iterators.
+    template <traversal_order other_order>
+    iterator<order>(const iterator<other_order> &other);
+
     bool operator==(const iterator &other) const;
     bool operator!=(const iterator &other) const;
     reference operator*() const;
@@ -14,33 +23,14 @@ class raw_tree<T>::iterator
 
   private:
     // Equivalent to ::end.
-    iterator(const traversal_order &order = traversal_order::in)
-        : order_(order) {}
+    iterator() = default;
     // Equivalent of ::begin on 'root'.
-    explicit iterator(raw_tree &root,
-                      const traversal_order &order = traversal_order::in);
+    explicit iterator(raw_tree &root);
     // Iterator pointing to 'node'.
-    explicit iterator(raw_tree *node,
-                      const traversal_order &order = traversal_order::in)
-        : node_(node), order_(order) {}
+    explicit iterator(raw_tree *node) : node_(node) {}
 
     friend class raw_tree<T>;
     raw_tree *node_ = nullptr;
-
-    // 'order_' is supposed to be const for the life of the object but the way
-    // template code for iterators is written in most places, iterators are
-    // copied around using assignment operator. This would specifically be a
-    // problem for a const member variable as the operator= method cannot be
-    // const.
-    //
-    // TODO(ghochee): Order should be in the type of the iterator. This is
-    // because it is really a feature of the iterator type. The container
-    // should default to providing in_order (for example) iterators on begin
-    // and end. It cannot return arbitrarily 'ordered' iterators because the
-    // method signature for begin would change. If we support automatic
-    // conversion from one form to the other then the same ::end could be used
-    // for all three types.
-    traversal_order order_;
 };
 
 #include "raw_tree_iterator.hh"

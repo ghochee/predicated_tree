@@ -5,8 +5,7 @@
 
 using int_tree = raw_tree<uint32_t>;
 
-void build_bst(int_tree &root, uint32_t levels,
-               uint32_t min_value = 0);
+void build_bst(int_tree &root, uint32_t levels, uint32_t min_value = 0);
 
 TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
     int_tree t(10);
@@ -20,8 +19,10 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
         t.attach_left(int_tree(20));
         t.attach_right(int_tree(30));
         CHECK(!t.has_parent());
-        REQUIRE(t.has_left());   CHECK(*t.left()  == 20);  CHECK(t.left().has_parent());
-        REQUIRE(t.has_right());  CHECK(*t.right() == 30);  CHECK(t.right().has_parent());
+        REQUIRE(t.has_left());
+        CHECK((*t.left()  == 20 && t.left().has_parent()));
+        REQUIRE(t.has_right());
+        CHECK((*t.right() == 30 && t.right().has_parent()));
     }
 
     SECTION("detach") {
@@ -52,7 +53,9 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
         }
 
         SECTION("preorder") {
-            CHECK(std::is_sorted(t.begin(traversal_order::pre), t.end()));
+            CHECK(std::is_sorted(
+                t.begin<traversal_order::pre>(),
+                int_tree::iterator<traversal_order::pre>(t.end())));
         }
     }
 

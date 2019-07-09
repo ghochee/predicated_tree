@@ -1,54 +1,70 @@
 template <typename T>
-raw_tree<T>::iterator::iterator(
-        raw_tree<T> &root,
-        const traversal_order &order)
-    : node_(nullptr),
-      order_(order) {
-    if (order == traversal_order::pre) {
+template <traversal_order order>
+raw_tree<T>::template iterator<order>::iterator(raw_tree<T> &root) {
+    if constexpr (order == traversal_order::pre) {
         node_ = &root;
-    } else if (order == traversal_order::in) {
+    }
+    
+    if constexpr (order == traversal_order::in) {
         for (node_ = &root; node_->left_.get(); node_ = node_->left_.get()) {}
     }
 }
 
 template <typename T>
-bool raw_tree<T>::iterator::operator==(
-    const raw_tree<T>::iterator &other) const {
+template <traversal_order order>
+template <traversal_order other_order>
+raw_tree<T>::template iterator<order>::iterator(
+    const iterator<other_order> &other)
+    : node_(other.node_) {}
+
+template <typename T>
+template <traversal_order order>
+bool raw_tree<T>::template iterator<order>::operator==(
+    const raw_tree<T>::iterator<order> &other) const {
     return node_ == other.node_;
 }
 
 template <typename T>
-bool raw_tree<T>::iterator::operator!=(
-    const raw_tree<T>::iterator &other) const {
+template <traversal_order order>
+bool raw_tree<T>::template iterator<order>::operator!=(
+    const raw_tree<T>::iterator<order> &other) const {
     return node_ != other.node_;
 }
 
 template <typename T>
-T &raw_tree<T>::iterator::operator*() const {
+template <traversal_order order>
+T &raw_tree<T>::template iterator<order>::operator*() const {
     return **node_;
 }
 
 template <typename T>
-typename raw_tree<T>::iterator &raw_tree<T>::iterator::operator++() {
-    if (order_ == traversal_order::pre) {
+template <traversal_order order>
+typename raw_tree<T>::template iterator<order>
+    &raw_tree<T>::template iterator<order>::operator++() {
+    if constexpr (order == traversal_order::pre) {
         preorder_increment();
-    } else if (order_ == traversal_order::in) {
+    }
+    
+    if constexpr (order == traversal_order::in) {
         inorder_increment();
     }
     return *this;
 }
 
 template <typename T>
-typename raw_tree<T>::iterator raw_tree<T>::iterator::operator++(int) {
+template <traversal_order order>
+typename raw_tree<T>::template iterator<order>
+    raw_tree<T>::template iterator<order>::operator++(int) {
     auto return_value = *this;
     ++(*this);
     return return_value;
 }
 
 template <typename T>
-void raw_tree<T>::iterator::preorder_increment() {
+template <traversal_order order>
+void raw_tree<T>::template iterator<order>::preorder_increment() {
     if (node_ == nullptr) {
-        // FIXME(ghochee): Set to root.
+        // TODO(ghochee): Set to root.
         return;
     }
 
@@ -66,15 +82,14 @@ void raw_tree<T>::iterator::preorder_increment() {
          parent && (!parent->right_ || parent->right_.get() == node_);
          node_ = parent, parent = node_->parent_) {}
     node_ = node_->parent_;
-    if (node_) {
-        node_ = node_->right_.get();
-    }
+    if (node_) { node_ = node_->right_.get(); }
 }
 
 template <typename T>
-void raw_tree<T>::iterator::inorder_increment() {
+template <traversal_order order>
+void raw_tree<T>::template iterator<order>::inorder_increment() {
     if (node_ == nullptr) {
-        // FIXME(ghochee): Set root and choose leftmost descendant.
+        // TODO(ghochee): Set root and choose leftmost descendant.
         return;
     }
 

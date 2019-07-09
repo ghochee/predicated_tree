@@ -17,6 +17,7 @@ class raw_tree {
     typedef ptrdiff_t difference_type;
     typedef size_t size_type;
 
+    template <traversal_order order>
     class iterator;
 
     raw_tree() = delete;
@@ -41,16 +42,16 @@ class raw_tree {
     void attach_right(raw_tree<T> &&right);
     raw_tree detach_right();
 
-    iterator begin(traversal_order order=traversal_order::in);
-    iterator end(traversal_order order=traversal_order::in);
+    template <traversal_order order=traversal_order::in>
+    iterator<order> begin();
+    template <traversal_order order=traversal_order::in>
+    iterator<order> end();
 
     // O(n) call as it actually iterates through the tree to recover the
     // counts.
     size_t size() const;
 
   private:
-    static iterator end_;
-
     T value_;
     raw_tree *parent_ = nullptr;
     std::unique_ptr<raw_tree> left_ = nullptr, right_ = nullptr;
