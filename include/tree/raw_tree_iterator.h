@@ -20,6 +20,7 @@ class raw_tree<T>::iterator
 
     void preorder_increment();
     void inorder_increment();
+    void postorder_increment();
 
   private:
     // Equivalent to ::end.

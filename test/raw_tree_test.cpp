@@ -5,6 +5,8 @@
 
 #include <algorithm>
 #include <functional>
+#include <iterator>
+#include <vector>
 
 using int_tree = raw_tree<uint32_t>;
 
@@ -84,6 +86,14 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
         build_bst(t, 3);
         CHECK(t.size() == (1 << (3 + 1)) - 1);
         CHECK(std::is_sorted(t.begin(), t.end()));
+
+        std::vector<uint32_t> elements;
+        std::copy(t.begin<traversal_order::pre>(),
+                  t.end<traversal_order::pre>(),
+                  std::inserter(elements, elements.end()));
+        CHECK(std::equal(elements.rbegin(), elements.rend(),
+                         t.begin<traversal_order::post, side::right>(),
+                         t.end<traversal_order::post, side::right>()));
 
         *t = 256;
         build_bst(t, 7);
