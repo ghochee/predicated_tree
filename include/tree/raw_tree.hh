@@ -74,16 +74,15 @@ raw_tree<T> &raw_tree<T>::child() {
 }
 
 template <typename T>
-template <traversal_order order>
-typename raw_tree<T>::template iterator<order, side::left>
-raw_tree<T>::begin() {
-    return raw_tree<T>::iterator<order, side::left>(*this);
+template <traversal_order order, side wing>
+typename raw_tree<T>::template iterator<order, wing> raw_tree<T>::begin() {
+    return raw_tree<T>::iterator<order, wing>(*this);
 }
 
 template <typename T>
-template <traversal_order order>
-typename raw_tree<T>::template iterator<order, side::left> raw_tree<T>::end() {
-    return raw_tree<T>::iterator<order, side::left>();
+template <traversal_order order, side wing>
+typename raw_tree<T>::template iterator<order, wing> raw_tree<T>::end() {
+    return raw_tree<T>::iterator<order, wing>();
 }
 
 template <typename T>

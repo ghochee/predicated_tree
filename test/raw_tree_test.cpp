@@ -3,6 +3,9 @@
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
 
+#include <algorithm>
+#include <functional>
+
 using int_tree = raw_tree<uint32_t>;
 
 void build_bst(int_tree &root, uint32_t levels, uint32_t min_value = 0);
@@ -91,6 +94,9 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
         build_bst(t, 10);
         CHECK(t.size() == (1 << (10 + 1)) - 1);
         CHECK(std::is_sorted(t.begin(), t.end()));
+        CHECK(std::is_sorted(t.begin<traversal_order::in, side::right>(),
+                             t.end<traversal_order::in, side::right>(),
+                             std::greater()));
     }
 }
 

@@ -49,10 +49,12 @@ class raw_tree {
     template <side wing = side::left>
     raw_tree &child();
 
-    template <traversal_order order = traversal_order::in>
-    iterator<order, side::left> begin();
-    template <traversal_order order = traversal_order::in>
-    iterator<order, side::left> end();
+    template <traversal_order order = traversal_order::in,
+              side wing = side::left>
+    iterator<order, wing> begin();
+    template <traversal_order order = traversal_order::in,
+              side wing = side::left>
+    iterator<order, wing> end();
 
     // O(n) call as it actually iterates through the tree to recover the
     // counts.
