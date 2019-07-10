@@ -42,6 +42,7 @@ TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
     int_tree t(10);
     t.replace<side::left>(int_tree(20));
     t.replace<side::right>(int_tree(30));
+    test_tree_invariants(t);
 
     CHECK(*t == 10);
 
