@@ -1,3 +1,11 @@
+constexpr side other(const side wing) {
+    if (wing == side::left) {
+        return side::right;
+    } else {
+        return side::left;
+    }
+}
+
 // The following code for compaction when accessing array indices (children_).
 // NOTE: https://stackoverflow.com/questions/8357240
 template <typename E>

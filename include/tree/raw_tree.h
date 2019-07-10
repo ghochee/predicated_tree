@@ -5,10 +5,12 @@
 #include <memory>
 #include <type_traits>
 
-enum class traversal_order { pre, in, post };
+enum class traversal_order : uint8_t { pre, in, post };
+
 // side is misleading because we have two children left and right, but
 // if / when we have more this would be useful.
-enum class side { left, right };
+enum class side : uint8_t { left, right };
+constexpr side other(const side wing);
 
 // raw_tree is a class which is used for creating a 'raw' tree. It allows
 // client users to manipulate the tree in tree like operations.
