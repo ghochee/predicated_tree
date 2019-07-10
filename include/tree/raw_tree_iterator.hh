@@ -80,7 +80,7 @@ void raw_tree<T>::template iterator<order, wing>::preorder_increment() {
         return;
     }
 
-    for (const raw_tree<T> *child = std::exchange(node_, node_->parent_);
+    for (const raw_tree<T> *child = nullptr;
          node_ && child == node_->child_ref<other(wing)>().get();
          child = std::exchange(node_, node_->parent_)) {}
 
@@ -93,16 +93,14 @@ void raw_tree<T>::template iterator<order, wing>::inorder_increment() {
     if (node_ == nullptr) { return; }
 
     if (node_->child_ref<other(wing)>()) {
-        for (node_ = node_->child_ref<other(wing)>().get();
-             node_->child_ref<wing>(); node_ = node_->child_ref<wing>().get()) {
-        }
+        for (raw_tree<T> *child = node_->child_ref<other(wing)>().get(); child;
+             node_ = std::exchange(child, child->child_ref<wing>().get())) {}
         return;
     }
 
-    for (const raw_tree<T> *child = nullptr; node_;
-         child = std::exchange(node_, node_->parent_)) {
-        if (node_->child_ref<other(wing)>().get() != child) { return; }
-    }
+    for (const raw_tree<T> *child = nullptr;
+         node_ && node_->child_ref<other(wing)>().get() == child;
+         child = std::exchange(node_, node_->parent_)) {}
 }
 
 template <typename T>
@@ -117,9 +115,10 @@ void raw_tree<T>::template iterator<order, wing>::postorder_increment() {
         return;
     }
 
-    for (raw_tree<T> *child = parent->child_ref<other(wing)>().get(); child;
-         node_ = std::exchange(
-             child, child->child_ref<wing>().get()
-                        ? child->child_ref<wing>().get()
-                        : child->child_ref<other(wing)>().get())) {}
+    node_ = node_->parent_;
+    for (raw_tree<T> *child = node_->child_ref<other(wing)>().get(); child;
+         node_ = std::exchange(child,
+                               child->child_ref<wing>().get()
+                                   ? child->child_ref<wing>().get()
+                                   : child->child_ref<other(wing)>().get())) {}
 }
