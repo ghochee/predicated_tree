@@ -56,6 +56,23 @@ class raw_tree {
               side wing = side::left>
     iterator<order, wing> end();
 
+#define RAW_TREE_MAKE_ALIAS(prefix, order, wing)                  \
+    inline auto prefix##begin()->decltype(                        \
+        begin<traversal_order::order, side::wing>()) {            \
+        return this->begin<traversal_order::order, side::wing>(); \
+    }                                                             \
+    inline auto prefix##end()->decltype(                          \
+        end<traversal_order::order, side::wing>()) {              \
+        return this->end<traversal_order::order, side::wing>();   \
+    }
+
+    RAW_TREE_MAKE_ALIAS(inl,   in,   left);
+    RAW_TREE_MAKE_ALIAS(inr,   in,   right);
+    RAW_TREE_MAKE_ALIAS(prel,  pre,  left);
+    RAW_TREE_MAKE_ALIAS(prer,  pre,  right);
+    RAW_TREE_MAKE_ALIAS(postl, post, left);
+    RAW_TREE_MAKE_ALIAS(postr, post, right);
+
     // O(n) call as it actually iterates through the tree to recover the
     // counts.
     size_t size() const;

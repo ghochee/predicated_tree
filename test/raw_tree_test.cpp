@@ -11,6 +11,8 @@
 using int_tree = raw_tree<uint32_t>;
 
 void build_bst(int_tree &root, uint32_t levels, uint32_t min_value = 0);
+void test_tree_invariants(int_tree &root);
+void test_bst_invariants(int_tree &root);
 
 TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
     int_tree t(10);
@@ -85,28 +87,20 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
         *t = 16;
         build_bst(t, 3);
         CHECK(t.size() == (1 << (3 + 1)) - 1);
-        CHECK(std::is_sorted(t.begin(), t.end()));
-
-        std::vector<uint32_t> elements;
-        std::copy(t.begin<traversal_order::pre>(),
-                  t.end<traversal_order::pre>(),
-                  std::inserter(elements, elements.end()));
-        CHECK(std::equal(elements.rbegin(), elements.rend(),
-                         t.begin<traversal_order::post, side::right>(),
-                         t.end<traversal_order::post, side::right>()));
+        test_tree_invariants(t);
+        test_bst_invariants(t);
 
         *t = 256;
         build_bst(t, 7);
         CHECK(t.size() == (1 << (7 + 1)) - 1);
-        CHECK(std::is_sorted(t.begin(), t.end()));
+        test_tree_invariants(t);
+        test_bst_invariants(t);
 
         *t = 1024;
         build_bst(t, 10);
         CHECK(t.size() == (1 << (10 + 1)) - 1);
-        CHECK(std::is_sorted(t.begin(), t.end()));
-        CHECK(std::is_sorted(t.begin<traversal_order::in, side::right>(),
-                             t.end<traversal_order::in, side::right>(),
-                             std::greater()));
+        test_tree_invariants(t);
+        test_bst_invariants(t);
     }
 }
 
@@ -118,4 +112,66 @@ void build_bst(int_tree &root, uint32_t levels, uint32_t min_value) {
 
     root.replace<side::right>(int_tree(*root + (*root - min_value) / 2));
     build_bst(root.child<side::right>(), levels - 1, *root + 1);
+}
+
+void test_tree_invariants(int_tree &root) {
+    REQUIRE(!root.has_parent());
+    std::vector<int_tree::value_type> elements;
+
+    std::copy(root.prelbegin(), root.prelend(),
+              std::inserter(elements, elements.end()));
+    CHECK(std::equal(elements.rbegin(), elements.rend(),
+                     root.postrbegin(), root.postrend()));
+
+    elements.clear();
+    std::copy(root.postlbegin(), root.postlend(),
+              std::inserter(elements, elements.end()));
+    CHECK(std::equal(elements.rbegin(), elements.rend(),
+                     root.prerbegin(), root.prerend()));
+
+    elements.clear();
+    std::copy(root.inlbegin(), root.inlend(),
+              std::inserter(elements, elements.end()));
+    CHECK(std::equal(elements.rbegin(), elements.rend(),
+                     root.inrbegin(), root.inrend()));
+
+    elements.clear();
+    auto r = root.detach<side::right>();
+    std::copy(root.prelbegin(), root.prelend(),
+              std::inserter(elements, elements.end()));
+    std::copy(r.prelbegin(), r.prelend(),
+              std::inserter(elements, elements.end()));
+    root.replace<side::right>(std::move(r));
+    CHECK(std::equal(elements.rbegin(), elements.rend(),
+                     root.postrbegin(), root.postrend()));
+}
+
+void test_bst_invariants(int_tree &root) {
+    REQUIRE(!root.has_parent());
+    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
+    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
+
+    auto l = root.detach<side::left>();
+    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
+    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
+    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
+    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
+
+    auto lr = l.detach<side::right>();
+    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
+    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
+    CHECK(std::is_sorted(lr.inlbegin(), lr.inlend()));
+    CHECK(std::is_sorted(lr.inrbegin(), lr.inrend(), std::greater()));
+
+    root.replace<side::left>(std::move(lr));
+    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
+    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
+    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
+    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
+
+    root.detach<side::right>();
+    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
+    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
+    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
+    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
 }
