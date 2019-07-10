@@ -8,43 +8,54 @@
 #include <iterator>
 #include <vector>
 
+#include "raw_tree_test.h"
+
+using namespace std;
+
 using int_tree = raw_tree<uint32_t>;
+using int_v = vector<uint32_t>;
 
-void build_bst(int_tree &root, uint32_t levels, uint32_t min_value = 0);
-void test_tree_invariants(int_tree &root);
-void test_bst_invariants(int_tree &root);
-
-TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
+TEST_CASE("pointed single node", "[integer_tree, raw_tree]") {
     int_tree t(10);
 
-    SECTION("test values") {
-        CHECK(*t == 10);
-        CHECK(!t.has_parent());
+    SECTION("accessors") {
+        SECTION("values") {
+            CHECK(*t == 10);
+            CHECK(!t.has_parent());
+        }
+
+        SECTION("children") {
+            CHECK(!t.has_child<side::left>());
+            CHECK(!t.has_child<side::right>());
+        }
+
+        SECTION("iterators") { RANGE_EQ(t.inlbegin(), t.inlend(), {10}); }
     }
 
-    SECTION("attach") {
-        t.replace<side::left>(int_tree(20));
-        t.replace<side::right>(int_tree(30));
-        CHECK(!t.has_parent());
+    SECTION("modify") {
+        *t = 20;
+        CHECK(*t == 20);
+    }
+}
+
+TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
+    int_tree t(10);
+    t.replace<side::left>(int_tree(20));
+    t.replace<side::right>(int_tree(30));
+
+    CHECK(*t == 10);
+
+    SECTION("children") {
         REQUIRE(t.has_child<side::left>());
-        CHECK((*t.child<side::left>() == 20 &&
-               t.child<side::left>().has_parent()));
         REQUIRE(t.has_child<side::right>());
-        CHECK((*t.child<side::right>() == 30 &&
-               t.child<side::right>().has_parent()));
     }
 
     SECTION("detach") {
-        t.replace<side::left>(int_tree(20));
-        t.replace<side::right>(int_tree(30));
-
         REQUIRE(t.has_child<side::left>()); t.detach<side::left>();
         CHECK(!t.has_child<side::left>());
 
         REQUIRE(t.has_child<side::right>()); t.detach<side::right>();
         CHECK(!t.has_child<side::right>());
-
-        CHECK(*t == 10);
 
         t.replace<side::left>(int_tree(35));
         REQUIRE(t.has_child<side::left>());
@@ -54,124 +65,41 @@ TEST_CASE("raw tree objects can be initialized", "[integer_tree, raw_tree]") {
         CHECK(*b == 35);  CHECK(!b.has_parent());
     }
 
-    SECTION("iterator") {
-        t.replace<side::left>(int_tree(20));
-        t.replace<side::right>(int_tree(30));
-
-        SECTION("inorder") {
-            auto pos = t.begin();
-            CHECK(*pos++ == 20);
-            CHECK(*pos++ == 10);
-            CHECK(*pos++ == 30);
-            CHECK(pos == t.end());
-        }
-
-        SECTION("preorder") {
-            CHECK(std::is_sorted(
-                t.begin<traversal_order::pre>(),
-                int_tree::iterator<traversal_order::pre>(t.end())));
-        }
-    }
-
-    SECTION("preorder iterator") {
-        t.replace<side::left>(int_tree(20));
-        t.replace<side::right>(int_tree(30));
-        auto pos = t.begin();
-        CHECK(*pos++ == 20);
-        CHECK(*pos++ == 10);
-        CHECK(*pos++ == 30);
-        CHECK(pos == t.end());
-    }
-
-    SECTION("big tree iterators") {
-        *t = 16;
-        build_bst(t, 3);
-        CHECK(t.size() == (1 << (3 + 1)) - 1);
-        test_tree_invariants(t);
-        test_bst_invariants(t);
-
-        *t = 256;
-        build_bst(t, 7);
-        CHECK(t.size() == (1 << (7 + 1)) - 1);
-        test_tree_invariants(t);
-        test_bst_invariants(t);
-
-        *t = 1024;
-        build_bst(t, 10);
-        CHECK(t.size() == (1 << (10 + 1)) - 1);
-        test_tree_invariants(t);
-        test_bst_invariants(t);
+    SECTION("order") {
+        SECTION("in") { RANGE_EQ(t.inlbegin(), t.inlend(), {20, 10, 30}); }
+        SECTION("pre") { RANGE_EQ(t.prelbegin(), t.prelend(), {10, 20, 30}); }
     }
 }
 
-void build_bst(int_tree &root, uint32_t levels, uint32_t min_value) {
-    if (levels == 0) { return; }
+TEST_CASE("coarse string", "[string_tree, raw_tree]") {
+    raw_tree<string> t("middle");
+    CHECK(*t == "middle");
 
-    root.replace<side::left>(int_tree(*root - (*root - min_value) / 2));
-    build_bst(root.child<side::left>(), levels - 1, min_value);
+    t.replace<side::left>(raw_tree<string>("left"));
+    t.child<side::left>().replace<side::left>(raw_tree<string>("far left"));
+    t.child<side::left>().replace<side::right>(raw_tree<string>("left right"));
 
-    root.replace<side::right>(int_tree(*root + (*root - min_value) / 2));
-    build_bst(root.child<side::right>(), levels - 1, *root + 1);
+    t.replace<side::right>(raw_tree<string>("right"));
+    t.child<side::right>().replace<side::left>(raw_tree<string>("more right"));
+    t.child<side::right>().replace<side::right>(raw_tree<string>("rightmost"));
+
+    CHECK(t.size() == 7);
+    test_bst_invariants(t);
 }
 
-void test_tree_invariants(int_tree &root) {
-    REQUIRE(!root.has_parent());
-    std::vector<int_tree::value_type> elements;
+TEST_CASE("bst", "[integer_tree, raw_tree]") {
+    int_tree t(10);
+    build_bst(t, 3);
+    CHECK(t.size() == (1 << (3 + 1)) - 1);
+    test_bst_invariants(t);
 
-    std::copy(root.prelbegin(), root.prelend(),
-              std::inserter(elements, elements.end()));
-    CHECK(std::equal(elements.rbegin(), elements.rend(),
-                     root.postrbegin(), root.postrend()));
+    *t = 256;
+    build_bst(t, 7);
+    CHECK(t.size() == (1 << (7 + 1)) - 1);
+    test_bst_invariants(t);
 
-    elements.clear();
-    std::copy(root.postlbegin(), root.postlend(),
-              std::inserter(elements, elements.end()));
-    CHECK(std::equal(elements.rbegin(), elements.rend(),
-                     root.prerbegin(), root.prerend()));
-
-    elements.clear();
-    std::copy(root.inlbegin(), root.inlend(),
-              std::inserter(elements, elements.end()));
-    CHECK(std::equal(elements.rbegin(), elements.rend(),
-                     root.inrbegin(), root.inrend()));
-
-    elements.clear();
-    auto r = root.detach<side::right>();
-    std::copy(root.prelbegin(), root.prelend(),
-              std::inserter(elements, elements.end()));
-    std::copy(r.prelbegin(), r.prelend(),
-              std::inserter(elements, elements.end()));
-    root.replace<side::right>(std::move(r));
-    CHECK(std::equal(elements.rbegin(), elements.rend(),
-                     root.postrbegin(), root.postrend()));
-}
-
-void test_bst_invariants(int_tree &root) {
-    REQUIRE(!root.has_parent());
-    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
-    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
-
-    auto l = root.detach<side::left>();
-    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
-    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
-    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
-    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
-
-    auto lr = l.detach<side::right>();
-    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
-    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
-    CHECK(std::is_sorted(lr.inlbegin(), lr.inlend()));
-    CHECK(std::is_sorted(lr.inrbegin(), lr.inrend(), std::greater()));
-
-    root.replace<side::left>(std::move(lr));
-    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
-    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
-    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
-    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
-
-    root.detach<side::right>();
-    CHECK(std::is_sorted(root.inlbegin(), root.inlend()));
-    CHECK(std::is_sorted(root.inrbegin(), root.inrend(), std::greater()));
-    CHECK(std::is_sorted(l.inlbegin(), l.inlend()));
-    CHECK(std::is_sorted(l.inrbegin(), l.inrend(), std::greater()));
+    *t = 1024;
+    build_bst(t, 10);
+    CHECK(t.size() == (1 << (10 + 1)) - 1);
+    test_bst_invariants(t);
 }
