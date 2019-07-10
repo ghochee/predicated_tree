@@ -1,3 +1,6 @@
+#ifndef TREE_RAW_TREE_H
+#define TREE_RAW_TREE_H
+
 #include <array>
 #include <memory>
 #include <type_traits>
@@ -92,3 +95,5 @@ class raw_tree {
 #include "tree/raw_tree.hh"
 
 #include "tree/raw_tree_iterator.h"
+
+#endif  // TREE_RAW_TREE_H

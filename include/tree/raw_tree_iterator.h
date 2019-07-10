@@ -1,3 +1,6 @@
+#ifndef TREE_RAW_TREE_ITERATOR_H
+#define TREE_RAW_TREE_ITERATOR_H
+
 template <typename T>
 template <traversal_order order, side wing>
 class raw_tree<T>::iterator
@@ -35,3 +38,5 @@ class raw_tree<T>::iterator
 };
 
 #include "raw_tree_iterator.hh"
+
+#endif  // TREE_RAW_TREE_ITERATOR_H
