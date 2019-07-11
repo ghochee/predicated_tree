@@ -4,16 +4,9 @@
 template <typename T>
 class accessor {
   public:
-    // An iterator which is specifically pointing to 'node' and set at 'depth'.
-    // This may be used when the call site already knows enough to actually
-    // construct a pointer to the right object with the right depth.
-    //
-    // TODO(ghochee): This should be public to allow clients of the overall
-    // library to use externally available information when creating the
-    // iterator. We already allow public conversion between one type of
-    // iterator to another.
-    explicit accessor(raw_tree<T> *node, int16_t depth = 0)
-        : node_(node), depth_(depth) {}
+    // An accessor which is specifically pointing to 'node' and set at 'depth'.
+    explicit accessor(raw_tree<T> &node, int16_t depth)
+        : node_(&node), depth_(depth) {}
 
     accessor(const accessor &) = default;
     accessor(accessor &&) = default;

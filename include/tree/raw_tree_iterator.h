@@ -10,14 +10,15 @@ class raw_tree<T>::iterator
       public std::iterator<std::bidirectional_iterator_tag, T> {
   public:
     using accessor<T>::accessor;
-    iterator(raw_tree<T> &node);
 
-    // Automatic conversions between the various iterator types. This is a
-    // transliteration (the position doesn't change only the direction in which
-    // it will head will change). This behaviour is similar to forward and
-    // reverse iterators.
-    template <traversal_order other_order, side other_wing>
-    iterator(const iterator<other_order, other_wing> &other);
+    // Construct a 'begin' iterator with 'node' as the root of a tree. This is
+    // different from the raw accessors created through the accessor
+    // constructors in that there the depth is explicitly specified.
+    //
+    // Here the depth and actual reference is set to the appropriate position
+    // depending on 'order' and 'wing'. For in-order, right-wing, we would set
+    // the reference to the rightmost descendant of 'node'.
+    iterator(raw_tree<T> &node);
 
     iterator &operator++();
     iterator operator++(int);
