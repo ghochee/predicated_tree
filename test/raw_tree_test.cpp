@@ -43,15 +43,50 @@ TEST_CASE("pointed single node", "[integer_tree, raw_tree]") {
 
 TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
     int_tree t(10);
-    t.replace<side::left>(int_tree(20));
-    t.replace<side::right>(int_tree(30));
-    test_tree_invariants(t);
 
+    int_tree l(20);
+    l.replace<side::left>(int_tree(5));
+    l.replace<side::right>(int_tree(50));
+
+    int_tree r(30);
+    r.replace<side::left>(int_tree(35));
+    r.replace<side::right>(int_tree(20));
+
+    t.replace<side::left>(std::move(l));
+    t.replace<side::right>(std::move(r));
+
+    test_tree_invariants(t);
+    std::initializer_list<int_tree::value_type> inl_values = {5,  20, 50, 10,
+                                                              35, 30, 20};
+    std::initializer_list<int_tree::value_type> prel_values = {10, 20, 5, 50,
+                                                               30, 35, 20};
     CHECK(*t == 10);
 
     SECTION("children") {
         REQUIRE(t.has_child<side::left>());
         REQUIRE(t.has_child<side::right>());
+    }
+
+    SECTION("order") {
+        SECTION("in") {
+            CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
+        }
+        SECTION("pre") {
+            CHECK(range_eq(t.prelbegin(), t.prelend(), prel_values));
+        }
+    }
+
+    SECTION("rotate") {
+        t.rotate<side::right>();
+        test_tree_invariants(t);
+        CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
+
+        t.rotate<side::left>();
+        CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
+        CHECK(range_eq(t.prelbegin(), t.prelend(), prel_values));
+
+        t.rotate<side::left>();
+        CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
     }
 
     SECTION("detach") {
@@ -67,15 +102,6 @@ TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
 
         auto b = t.detach<side::left>();
         CHECK(*b == 35);  CHECK(!b.has_parent());
-    }
-
-    SECTION("order") {
-        SECTION("in") {
-            CHECK(range_eq(t.inlbegin(), t.inlend(), {20, 10, 30}));
-        }
-        SECTION("pre") {
-            CHECK(range_eq(t.prelbegin(), t.prelend(), {10, 20, 30}));
-        }
     }
 }
 

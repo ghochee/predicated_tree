@@ -52,6 +52,12 @@ class raw_tree {
     raw_tree &child();
     raw_tree &child(side wing);
 
+    // Reshape subtrees.
+    // NOTE: right == clockwise.
+    template <side wing>
+    void rotate();
+    void rotate(side wing);
+
     // Add / remove subtrees.
     template <side wing>
     void replace(raw_tree<T> &&child);

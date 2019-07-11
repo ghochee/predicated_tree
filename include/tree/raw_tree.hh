@@ -113,6 +113,49 @@ raw_tree<T> &raw_tree<T>::child(side wing) {
 
 template <typename T>
 template <side wing>
+void raw_tree<T>::rotate() {
+    // NOTE: Examples and variable names describe 'right' rotation.
+    // NOTE: Variable names based on pre-rotation positions.
+    std::swap(**children_[as_int(!wing)], value_);
+
+    // Move left child to right position. Hold right.
+    auto right = std::exchange(
+        children_[as_int(wing)],
+        std::move(children_[as_int(!wing)]));
+    // Move right child to right of left child. Hold left's right child.
+    auto left_right = std::exchange(
+        children_[as_int(wing)]->children_[as_int(wing)],
+        std::move(right));
+    // Move left's right child to left's left position. Hold left's left child.
+    auto left_left =
+        std::exchange(children_[as_int(wing)]->children_[as_int(!wing)],
+                      std::move(left_right));
+    // Move left's left child to left position.
+    children_[as_int(!wing)] = std::move(left_left);
+
+    // Correct parent pointers for the following if these nodes exist:
+    // Right child is now a right-right grandchild.
+    // left-left grandchild is now a left child.
+    if (children_[as_int(wing)]->children_[as_int(wing)]) {
+        children_[as_int(wing)]->children_[as_int(wing)]->parent_ =
+            children_[as_int(wing)].get();
+    }
+    if (children_[as_int(!wing)]) {
+        children_[as_int(!wing)]->parent_ = this;
+    }
+}
+
+template <typename T>
+void raw_tree<T>::rotate(side wing) {
+    if (wing == side::left) {
+        return rotate<side::left>();
+    } else {
+        return rotate<side::right>();
+    }
+}
+
+template <typename T>
+template <side wing>
 void raw_tree<T>::replace(raw_tree<T> &&child) {
     child.parent_ = this;
     this->children_[as_int(wing)] =
