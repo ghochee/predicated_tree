@@ -34,6 +34,11 @@ T &accessor<T>::operator*() const {
 }
 
 template <typename T>
+raw_tree<T> *accessor<T>::operator->() const {
+    return node_;
+}
+
+template <typename T>
 template <traversal_order order, side wing>
 void accessor<T>::next() {
     if constexpr (order == traversal_order::pre) preorder_increment<wing>();

@@ -52,6 +52,7 @@ class accessor {
     bool operator==(const accessor &other) const;
     bool operator!=(const accessor &other) const;
     T &operator*() const;
+    raw_tree<T> *operator->() const;
 
     // Movement operations allow this accessor / visitor to move over the tree
     // elements.
