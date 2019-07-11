@@ -6,9 +6,8 @@
 #include <type_traits>
 
 enum class traversal_order : uint8_t { pre, in, post };
+constexpr traversal_order operator~(const traversal_order order);
 
-// side is misleading because we have two children left and right, but
-// if / when we have more this would be useful.
 enum class side : uint8_t { left, right };
 constexpr side operator!(const side wing);
 
@@ -27,7 +26,7 @@ class raw_tree {
     typedef ptrdiff_t difference_type;
     typedef size_t size_type;
 
-    template <traversal_order, side = side::left>
+    template <traversal_order, side>
     class iterator;
 
     raw_tree() = delete;
@@ -45,23 +44,21 @@ class raw_tree {
     template <side wing>
     bool is_side() const;
 
-    template <side wing = side::left>
+    template <side wing>
     bool has_child() const;
 
-    template <side wing = side::left>
+    template <side wing>
     void replace(raw_tree<T> &&child);
 
-    template <side wing = side::left>
+    template <side wing>
     raw_tree detach();
 
-    template <side wing = side::left>
+    template <side wing>
     raw_tree &child();
 
-    template <traversal_order order = traversal_order::in,
-              side wing = side::left>
+    template <traversal_order order, side wing>
     iterator<order, wing> begin();
-    template <traversal_order order = traversal_order::in,
-              side wing = side::left>
+    template <traversal_order order, side wing>
     iterator<order, wing> end();
 
 #define RAW_TREE_MAKE_ALIAS(prefix, order, wing)                  \

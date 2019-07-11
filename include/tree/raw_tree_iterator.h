@@ -7,7 +7,7 @@ template <typename T>
 template <traversal_order order, side wing>
 class raw_tree<T>::iterator
     : public accessor<T>,
-      public std::iterator<std::forward_iterator_tag, T> {
+      public std::iterator<std::bidirectional_iterator_tag, T> {
   public:
     using accessor<T>::accessor;
     iterator(raw_tree<T> &node);
@@ -21,6 +21,9 @@ class raw_tree<T>::iterator
 
     iterator &operator++();
     iterator operator++(int);
+
+    iterator &operator--();
+    iterator operator--(int);
 };
 
 #include "raw_tree_iterator.hh"

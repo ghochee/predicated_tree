@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "tree/raw_tree.h"
 
 #define CATCH_CONFIG_MAIN
@@ -13,7 +15,6 @@
 using namespace std;
 
 using int_tree = raw_tree<uint32_t>;
-using int_v = vector<uint32_t>;
 
 TEST_CASE("pointed single node", "[integer_tree, raw_tree]") {
     int_tree t(10);
@@ -29,7 +30,9 @@ TEST_CASE("pointed single node", "[integer_tree, raw_tree]") {
             CHECK(!t.has_child<side::right>());
         }
 
-        SECTION("iterators") { RANGE_EQ(t.inlbegin(), t.inlend(), {10}); }
+        SECTION("iterators") {
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {10}));
+        }
     }
 
     SECTION("modify") {
@@ -67,8 +70,12 @@ TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
     }
 
     SECTION("order") {
-        SECTION("in") { RANGE_EQ(t.inlbegin(), t.inlend(), {20, 10, 30}); }
-        SECTION("pre") { RANGE_EQ(t.prelbegin(), t.prelend(), {10, 20, 30}); }
+        SECTION("in") {
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {20, 10, 30}));
+        }
+        SECTION("pre") {
+            CHECK(range_eq(t.prelbegin(), t.prelend(), {10, 20, 30}));
+        }
     }
 }
 

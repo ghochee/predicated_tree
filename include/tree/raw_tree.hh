@@ -6,6 +6,16 @@ constexpr side operator!(const side wing) {
     }
 }
 
+constexpr traversal_order operator~(const traversal_order order) {
+    if (order == traversal_order::pre) {
+        return traversal_order::post;
+    } else if (order == traversal_order::in) {
+        return traversal_order::in;
+    } else {
+        return traversal_order::pre;
+    }
+}
+
 // The following code for compaction when accessing array indices (children_).
 // NOTE: https://stackoverflow.com/questions/8357240
 //
