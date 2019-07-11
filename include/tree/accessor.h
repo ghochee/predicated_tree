@@ -53,6 +53,17 @@ class accessor {
     bool operator!=(const accessor &other) const;
     T &operator*() const;
 
+    // Movement operations allow this accessor / visitor to move over the tree
+    // elements.
+    //
+    // The functions when possible come in two forms:
+    // template <...>
+    // ... functionName();
+    // ... functionName(...);
+    // The former are used when the side and traversal order enums are known at
+    // compile time. The latter should be used when these values are determined
+    // at runtime.
+
     // Moves to the parent node if possible.
     // Complexity: O(1).
     // NOTE: Calling up on:
@@ -72,10 +83,12 @@ class accessor {
     //   'end' node moves to 'root' node and always returns true.
     template <side wing>
     bool down();
+    bool down(side wing);
     // Moves to the furthest descendant on the 'wing' side.
     // Complexity: Similar to 'root'.
     template <side wing>
     void descendant();
+    void descendant(side wing);
 
     // Moves this accessor to the *next* element according to 'order' on 'wing'
     // side.
@@ -92,6 +105,7 @@ class accessor {
     //   and cost would depend on the shape of the tree.
     template <traversal_order order, side wing>
     void next();
+    void next(traversal_order order, side wing);
 
   private:
     // Unsafe movement to the parent node. This should be called by other

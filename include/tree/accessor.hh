@@ -42,6 +42,19 @@ void accessor<T>::next() {
 }
 
 template <typename T>
+void accessor<T>::next(traversal_order order, side wing) {
+    if (wing == side::left) {
+        if (order == traversal_order::pre) preorder_increment<side::left>();
+        if (order == traversal_order::in) inorder_increment<side::left>();
+        if (order == traversal_order::post) postorder_increment<side::left>();
+    } else {
+        if (order == traversal_order::pre) preorder_increment<side::right>();
+        if (order == traversal_order::in) inorder_increment<side::right>();
+        if (order == traversal_order::post) postorder_increment<side::right>();
+    }
+}
+
+template <typename T>
 void accessor<T>::up() {
     if (depth_ == -1) { return; }
     if (depth_ == 0) { --depth_; return; }
@@ -71,12 +84,30 @@ bool accessor<T>::down() {
 }
 
 template <typename T>
+bool accessor<T>::down(side wing) {
+    if (wing == side::left) {
+        return down<side::left>();
+    } else {
+        return down<side::right>();
+    }
+}
+
+template <typename T>
 template <side wing>
 void accessor<T>::descendant() {
     if (depth_ == -1) { ++depth_; }
 
     for (; node_->template has_child<wing>();
          ++depth_, node_ = node_ = &node_->template child<wing>()) {}
+}
+
+template <typename T>
+void accessor<T>::descendant(side wing) {
+    if (wing == side::left) {
+        return descendant<side::left>();
+    } else {
+        return descendant<side::right>();
+    }
 }
 
 template <typename T>
