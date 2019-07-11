@@ -14,6 +14,11 @@ accessor<T>::accessor(raw_tree<T> &node, int16_t depth)
 }
 
 template <typename T>
+accessor<T>::operator bool() const {
+    return depth_ != -1;
+}
+
+template <typename T>
 bool accessor<T>::operator==(const accessor<T> &other) const {
     return depth_ == other.depth_ && node_ == other.node_;
 }
@@ -44,6 +49,16 @@ void accessor<T>::up() {
 }
 
 template <typename T>
+void accessor<T>::root() {
+    if (depth_ == -1) {
+        depth_ = 0;
+        return;
+    }
+
+    for (; depth_; unsafe_up()) {}
+}
+
+template <typename T>
 template <side wing>
 bool accessor<T>::down() {
     if (depth_ == -1) {
@@ -53,6 +68,15 @@ bool accessor<T>::down() {
 
     return node_->template has_child<wing>() &&
            (++depth_, node_ = &node_->template child<wing>(), true);
+}
+
+template <typename T>
+template <side wing>
+void accessor<T>::descendant() {
+    if (depth_ == -1) { ++depth_; }
+
+    for (; node_->template has_child<wing>();
+         ++depth_, node_ = node_ = &node_->template child<wing>()) {}
 }
 
 template <typename T>

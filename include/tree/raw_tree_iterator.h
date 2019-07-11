@@ -17,7 +17,9 @@ class raw_tree<T>::iterator
     //
     // Here the depth and actual reference is set to the appropriate position
     // depending on 'order' and 'wing'. For in-order, right-wing, we would set
-    // the reference to the rightmost descendant of 'node'.
+    // the reference to the rightmost descendant of 'node'. See
+    // accessor<T>::next NOTE regarding 'end' and general documentation in the
+    // file about 'end' for more information.
     iterator(raw_tree<T> &node);
 
     iterator &operator++();

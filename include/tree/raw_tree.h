@@ -11,7 +11,7 @@ constexpr traversal_order operator~(const traversal_order order);
 enum class side : uint8_t { left, right };
 constexpr side operator!(const side wing);
 
-// raw_tree is a class which is used for creating a 'raw' tree. It allows
+// raw_tree is a container which is used for creating a 'raw' tree. It allows
 // client users to manipulate the tree in tree like operations.
 //
 // T is the value type of the element stored in the tree. This is expected to
@@ -58,6 +58,21 @@ class raw_tree {
 
     template <traversal_order order, side wing>
     iterator<order, wing> begin();
+
+    // Returns an iterator which compares equal with an iterator which starts
+    // from begin and has navigated through all the nodes (depending on the
+    // specific order and wing).
+    //
+    // Specifically
+    //    std::advance(tree.begin<traversal_order::post, side::right>(),
+    //                 tree.size()) == \
+    //    tree.end<traversal_order::post, side::right>()
+    // is always true. Note that the traversal_order, wing pair has to be the
+    // same for the begin and end iterators (even though they are convertible
+    // from one to another). Comparing iterators with different orders / wings
+    // is not guaranteed to be correct.
+    //
+    // See accessor<T>::accessor(...) for information on 'end' for iterators.
     template <traversal_order order, side wing>
     iterator<order, wing> end();
 
@@ -71,6 +86,13 @@ class raw_tree {
         return this->end<traversal_order::order, side::wing>();   \
     }
 
+    // Compact method names for various iterator types. The generic
+    // construction of the name is in the form of
+    //
+    // <order><wing_short>{begin|end}
+    // e.g.
+    // prelbegin (order = pre, wing = left  (l), begin)
+    // inrend    (order = in,  wing = right (r), end)
     RAW_TREE_MAKE_ALIAS(inl,   in,   left);
     RAW_TREE_MAKE_ALIAS(inr,   in,   right);
     RAW_TREE_MAKE_ALIAS(prel,  pre,  left);

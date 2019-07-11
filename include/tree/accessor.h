@@ -1,17 +1,37 @@
 #ifndef TREE_ACCESSOR_H
 #define TREE_ACCESSOR_H
 
+// An accessor object is used for referencing a node in a raw_tree<T> tree and
+// for navigating through the various nodes in the tree. It is a single object
+// that can be used to visit through all the nodes in the tree.
+// Example usage:
+//     raw_tree<T> t(...);
+//     ...
+//     accessor<T> a(t, 0);
+//     a.descendant<side::left>();
+//     a.descendant<side::right>();
+//     for (; a; a.next<traversal_order::pre, side::left>()) {
+//       cout << *a << endl;
+//     }
 template <typename T>
 class accessor {
   public:
     // An accessor which is specifically pointing to 'node' and set at 'depth'.
     //
-    // 'depth' of 0 indicates the root node. It can also be given a special
+    // 'depth' of 0 indicates the 'root' node. It can also be given a special
     //     value of '-1' which indicates an accessor which is **linked** to the
     //     tree rooted at 'node' but is currently set to access an invalid
-    //     element.
+    //     element. This may be used similar to an 'end' accessor or 'npos'.
+    //     See NOTEs on various methods for information on how 'movement' of
+    //     'end' accessors is handled.
     // 'node' must be part of a raw_tree<T> structure where 'depth' can climbed
-    //     upward through valid nodes.
+    //     upward through valid nodes. A reference to 'node' is maintained
+    //     inside this object and hence it must remain valid until at least the
+    //     accessor is used to dereference it's value. Tree modifications don't
+    //     affect the accessor except in the following ways:
+    //     - Removing / deleting 'node'.
+    //     - Reshaping the tree which invalidates 'depth'.
+    //     Behaviour after these is undefined.
     //
     // If invalid values are supplied then the process is std::aborted.
     //
@@ -27,17 +47,49 @@ class accessor {
     accessor<T> &operator=(const accessor<T> &) = default;
     accessor<T> &operator=(accessor<T> &&) = default;
 
+    // Returns true if we are not at 'end'.
+    explicit operator bool() const;
     bool operator==(const accessor &other) const;
     bool operator!=(const accessor &other) const;
     T &operator*() const;
 
-    // Moves to the parent node if possible. When 'up' is called when we are
-    // already at the 'root', then it moves the accessor to 'end'.
+    // Moves to the parent node if possible.
+    // Complexity: O(1).
+    // NOTE: Calling up on:
+    //   'root' node moves to 'end' node.
+    //   'end' node is a no-op.
     void up();
+    // Sets accessor to 'root' node.
+    // Complexity: Depends on the shape of the tree.
+    //   O(log(N)) for perfectly balanced trees.
+    //   O(N) for perfectly imbalanced trees.
+    //   In between in other cases.
+    void root();
 
+    // Moves to the 'wing' child and returns true when possible.
+    // Complexity: O(1).
+    // NOTE: Calling down<*>() on:
+    //   'end' node moves to 'root' node and always returns true.
     template <side wing>
     bool down();
+    // Moves to the furthest descendant on the 'wing' side.
+    // Complexity: Similar to 'root'.
+    template <side wing>
+    void descendant();
 
+    // Moves this accessor to the *next* element according to 'order' on 'wing'
+    // side.
+    // NOTE: Calling next on:
+    //   'end' node moves to *first* element of the wing-sided order traversal.
+    //   For example:
+    //     <in, left> would move to the leftmost descendant of the tree.
+    //     <pre, right> would move to the root element of the tree.
+    //     ...
+    //   Basically the *first* element of the appropriate iteration being
+    //   attempted.
+    // Complexity:
+    //   O(1) amortized but specific instances of 'next' may be more expensive
+    //   and cost would depend on the shape of the tree.
     template <traversal_order order, side wing>
     void next();
 
