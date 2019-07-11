@@ -53,7 +53,7 @@ class raw_tree {
     raw_tree() = delete;
     explicit raw_tree(T &&value) : value_(std::move(value)) {}
     explicit raw_tree(const T &value) : value_(value) {}
-    explicit raw_tree(raw_tree &&);
+    raw_tree(raw_tree &&);
 
     raw_tree &operator=(raw_tree &&);
 
