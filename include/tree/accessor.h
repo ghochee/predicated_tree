@@ -17,6 +17,8 @@ class accessor {
     bool operator!=(const accessor &other) const;
     T &operator*() const;
 
+    // Moves to the parent node if possible. When 'up' is called when we are
+    // already at the 'root', then it moves the accessor to 'end'.
     void up();
 
     template <side wing>
@@ -26,6 +28,11 @@ class accessor {
     void next();
 
   private:
+    // Unsafe movement to the parent node. This should be called by other
+    // methods when they have context that guarantees that calling this would
+    // not violate correctness.
+    void unsafe_up();
+
     template <side wing>
     void preorder_increment();
     template <side wing>

@@ -23,10 +23,9 @@ void accessor<T>::next() {
 
 template <typename T>
 void accessor<T>::up() {
-    // TODO(ghochee): up, shouldn't contain the -1 test.
     if (depth_ == -1) { return; }
-    if (depth_) { node_ = &node_->parent(); }
-    --depth_;
+    if (depth_ == 0) { --depth_; return; }
+    unsafe_up();
 }
 
 template <typename T>
@@ -42,16 +41,22 @@ bool accessor<T>::down() {
 }
 
 template <typename T>
+void accessor<T>::unsafe_up() {
+    node_ = &node_->parent();
+    --depth_;
+}
+
+template <typename T>
 template <side wing>
 void accessor<T>::preorder_increment() {
     if (down<wing>() || down<!wing>()) { return; }
 
-    for (; depth_ > 0 && (node_->template is_side<!wing>() ||
-                          !node_->parent().template has_child<!wing>());
-         up()) {}
+    for (; depth_ && (node_->template is_side<!wing>() ||
+                      !node_->parent().template has_child<!wing>());
+         unsafe_up()) {}
 
     if (depth_ == 0) {
-        --depth_;
+        up();
         return;
     }
 
@@ -66,7 +71,7 @@ void accessor<T>::inorder_increment() {
         return;
     }
 
-    for (; depth_ && node_->template is_side<!wing>(); up()) {}
+    for (; depth_ && node_->template is_side<!wing>(); unsafe_up()) {}
     up();
 }
 
@@ -77,7 +82,7 @@ void accessor<T>::postorder_increment() {
 
     if (depth_ > 0 && (node_->template is_side<!wing>() ||
                        !(node_->parent().template has_child<!wing>()))) {
-        return up();
+        return unsafe_up();
     }
 
     for (up(), down<!wing>(); down<wing>() || down<!wing>();) {}
