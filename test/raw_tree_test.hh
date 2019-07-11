@@ -13,19 +13,20 @@ void build_bst(raw_tree<T> &root, uint32_t levels, uint32_t min_value) {
     build_bst(root.template child<side::right>(), levels - 1, *root + 1);
 }
 
-#define RANGE_EQ(first, last, initList...)                                \
-    {                                                                     \
-        vector<uint32_t> elements(initList);                              \
-        CHECK(std::equal(first, last, elements.begin(), elements.end())); \
+#define RANGE_EQ(first, last, initList...)                  \
+    {                                                       \
+        vector<uint32_t> initElements(initList);            \
+        CHECK(std::equal(first, last, initElements.begin(), \
+                         initElements.end()));              \
     }
 
-#define REVERSE_EQ(first_begin, first_end, second_begin, second_end)       \
-    {                                                                      \
-        std::vector<typename decltype(first_begin)::value_type> elements;  \
-        std::copy(first_begin, first_end,                                  \
-                  std::inserter(elements, elements.end()));                \
-        CHECK(std::equal(elements.rbegin(), elements.rend(), second_begin, \
-                         second_end));                                     \
+#define REVERSE_EQ(first_begin, first_end, second_begin, second_end)         \
+    {                                                                        \
+        std::vector<typename decltype(first_begin)::value_type> relements;   \
+        std::copy(first_begin, first_end,                                    \
+                  std::inserter(relements, relements.end()));                \
+        CHECK(std::equal(relements.rbegin(), relements.rend(), second_begin, \
+                         second_end));                                       \
     }
 
 #define test_tree_invariants(root)                                       \

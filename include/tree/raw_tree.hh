@@ -90,7 +90,7 @@ typename raw_tree<T>::template iterator<order, wing> raw_tree<T>::begin() {
 template <typename T>
 template <traversal_order order, side wing>
 typename raw_tree<T>::template iterator<order, wing> raw_tree<T>::end() {
-    return raw_tree<T>::iterator<order, wing>();
+    return raw_tree<T>::iterator<order, wing>(this, -1);
 }
 
 template <typename T>
