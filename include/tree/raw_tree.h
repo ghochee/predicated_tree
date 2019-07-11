@@ -49,6 +49,11 @@ class raw_tree {
     bool has_child(side wing) const;
 
     template <side wing>
+    raw_tree &child();
+    raw_tree &child(side wing);
+
+    // Add / remove subtrees.
+    template <side wing>
     void replace(raw_tree<T> &&child);
     void replace(side wing, raw_tree<T> &&child);
 
@@ -56,10 +61,7 @@ class raw_tree {
     raw_tree detach();
     raw_tree detach(side wing);
 
-    template <side wing>
-    raw_tree &child();
-    raw_tree &child(side wing);
-
+    // Construct iterators for the tree.
     template <traversal_order order, side wing>
     iterator<order, wing> begin();
 
