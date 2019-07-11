@@ -1,25 +1,8 @@
-#include <iostream>
-
 template <typename T>
 template <traversal_order order, side wing>
-raw_tree<T>::template iterator<order, wing>::iterator(raw_tree<T> &root) {
-    if constexpr (order == traversal_order::pre) {
-        ++depth_;
-        node_ = &root;
-    }
-
-    if constexpr (order == traversal_order::in) {
-        for (++depth_, node_ = &root; node_->child_ref<wing>();
-             ++depth_, node_ = node_->child_ref<wing>().get()) {}
-    }
-
-    if constexpr (order == traversal_order::post) {
-        for (raw_tree<T> *child = &root; child;
-             ++depth_, node_ = std::exchange(
-                           child, child->child_ref<wing>().get()
-                                      ? child->child_ref<wing>().get()
-                                      : child->child_ref<!wing>().get())) {}
-    }
+raw_tree<T>::template iterator<order, wing>::iterator(raw_tree<T> &root)
+    : node_(&root) {
+    ++(*this);
 }
 
 template <typename T>
@@ -71,7 +54,10 @@ typename raw_tree<T>::template iterator<order, wing>
 template <typename T>
 template <traversal_order order, side wing>
 void raw_tree<T>::template iterator<order, wing>::preorder_increment() {
-    if (depth_ == -1) { return; }
+    if (depth_ == -1) {
+        ++depth_;
+        return;
+    }
 
     if (node_->child_ref<wing>()) {
         ++depth_;
@@ -100,7 +86,11 @@ void raw_tree<T>::template iterator<order, wing>::preorder_increment() {
 template <typename T>
 template <traversal_order order, side wing>
 void raw_tree<T>::template iterator<order, wing>::inorder_increment() {
-    if (depth_ == -1) { return; }
+    if (depth_ == -1) {
+        for (++depth_; node_->child_ref<wing>();
+             ++depth_, node_ = node_->child_ref<wing>().get()) {}
+        return;
+    }
 
     if (node_->child_ref<!wing>()) {
         for (raw_tree<T> *child = node_->child_ref<!wing>().get(); child;
@@ -119,7 +109,14 @@ void raw_tree<T>::template iterator<order, wing>::inorder_increment() {
 template <typename T>
 template <traversal_order order, side wing>
 void raw_tree<T>::template iterator<order, wing>::postorder_increment() {
-    if (depth_ == -1) { return; }
+    if (depth_ == -1) {
+        for (raw_tree<T> *child = std::exchange(node_, nullptr); child;
+             ++depth_, node_ = std::exchange(
+                           child, child->child_ref<wing>().get()
+                                      ? child->child_ref<wing>().get()
+                                      : child->child_ref<!wing>().get())) {}
+        return;
+    }
 
     raw_tree<T> *parent = node_->parent_;
     if (parent == nullptr) {

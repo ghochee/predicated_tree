@@ -1,6 +1,11 @@
 #ifndef TREE_RAW_TREE_ITERATOR_H
 #define TREE_RAW_TREE_ITERATOR_H
 
+// TODO(ghochee): Make a separate class raw_tree<T>::accessor<...> which allows
+// accessing the various spot-wise relative elements of a tree including child
+// etc. It returns an accessor. This Iterator can convert to / from and derives
+// from / template parameters the accessor. Iterator doesn't add any data
+// members of it's own and derives from the std::iterator hierarchy.
 template <typename T>
 template <traversal_order order, side wing>
 class raw_tree<T>::iterator
