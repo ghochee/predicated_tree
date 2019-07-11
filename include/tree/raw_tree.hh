@@ -1,4 +1,4 @@
-constexpr side other(const side wing) {
+constexpr side operator!(const side wing) {
     if (wing == side::left) {
         return side::right;
     } else {

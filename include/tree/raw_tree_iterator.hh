@@ -16,10 +16,9 @@ raw_tree<T>::template iterator<order, wing>::iterator(raw_tree<T> &root) {
     if constexpr (order == traversal_order::post) {
         for (raw_tree<T> *child = &root; child;
              ++depth_, node_ = std::exchange(
-                           child,
-                           child->child_ref<wing>().get()
-                               ? child->child_ref<wing>().get()
-                               : child->child_ref<other(wing)>().get())) {}
+                           child, child->child_ref<wing>().get()
+                                      ? child->child_ref<wing>().get()
+                                      : child->child_ref<!wing>().get())) {}
     }
 }
 
@@ -80,21 +79,21 @@ void raw_tree<T>::template iterator<order, wing>::preorder_increment() {
         return;
     }
 
-    if (node_->child_ref<other(wing)>()) {
+    if (node_->child_ref<!wing>()) {
         ++depth_;
-        node_ = node_->child_ref<other(wing)>().get();
+        node_ = node_->child_ref<!wing>().get();
         return;
     }
 
     raw_tree<T> *parent = node_->parent_;
-    for (; parent && (!parent->child_ref<other(wing)>() ||
-                      parent->child_ref<other(wing)>().get() == node_);
+    for (; parent && (!parent->child_ref<!wing>() ||
+                      parent->child_ref<!wing>().get() == node_);
          --depth_, node_ = std::exchange(parent, parent->parent_)) {}
 
     if (parent == nullptr) {
         --depth_;
     } else {
-        node_ = parent->child_ref<other(wing)>().get();
+        node_ = parent->child_ref<!wing>().get();
     }
 }
 
@@ -103,15 +102,15 @@ template <traversal_order order, side wing>
 void raw_tree<T>::template iterator<order, wing>::inorder_increment() {
     if (depth_ == -1) { return; }
 
-    if (node_->child_ref<other(wing)>()) {
-        for (raw_tree<T> *child = node_->child_ref<other(wing)>().get(); child;
+    if (node_->child_ref<!wing>()) {
+        for (raw_tree<T> *child = node_->child_ref<!wing>().get(); child;
              ++depth_, node_ = std::exchange(child,
                                              child->child_ref<wing>().get())) {}
         return;
     }
 
     raw_tree<T> *parent = node_->parent_;
-    for (; parent && parent->child_ref<other(wing)>().get() == node_;
+    for (; parent && parent->child_ref<!wing>().get() == node_;
          --depth_, node_ = std::exchange(parent, parent->parent_)) {}
     --depth_;
     if (parent != nullptr) { node_ = parent; }
@@ -128,7 +127,7 @@ void raw_tree<T>::template iterator<order, wing>::postorder_increment() {
         return;
     }
 
-    if (parent->child_ref<other(wing)>().get() == node_) {
+    if (parent->child_ref<!wing>().get() == node_) {
         --depth_;
         node_ = parent;
         return;
@@ -136,9 +135,9 @@ void raw_tree<T>::template iterator<order, wing>::postorder_increment() {
 
     --depth_;
     node_ = node_->parent_;
-    for (raw_tree<T> *child = node_->child_ref<other(wing)>().get(); child;
+    for (raw_tree<T> *child = node_->child_ref<!wing>().get(); child;
          ++depth_, node_ = std::exchange(
                        child, child->child_ref<wing>().get()
                                   ? child->child_ref<wing>().get()
-                                  : child->child_ref<other(wing)>().get())) {}
+                                  : child->child_ref<!wing>().get())) {}
 }
