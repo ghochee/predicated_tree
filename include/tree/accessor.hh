@@ -1,3 +1,18 @@
+#include <cstdlib>
+
+template <typename T>
+accessor<T>::accessor(raw_tree<T> &node, int16_t depth)
+    : node_(&node), depth_(depth) {
+    if (!(depth_ >= -1)) {
+        ::std::abort();
+    }
+
+    for (raw_tree<T> *node_ptr = &node; depth > 0;
+         --depth, node_ptr = std::exchange(node_ptr, &node_ptr->parent())) {
+        if (!node_ptr->has_parent()) { ::std::abort(); }
+    }
+}
+
 template <typename T>
 bool accessor<T>::operator==(const accessor<T> &other) const {
     return depth_ == other.depth_ && node_ == other.node_;

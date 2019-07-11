@@ -5,8 +5,22 @@ template <typename T>
 class accessor {
   public:
     // An accessor which is specifically pointing to 'node' and set at 'depth'.
-    explicit accessor(raw_tree<T> &node, int16_t depth)
-        : node_(&node), depth_(depth) {}
+    //
+    // 'depth' of 0 indicates the root node. It can also be given a special
+    //     value of '-1' which indicates an accessor which is **linked** to the
+    //     tree rooted at 'node' but is currently set to access an invalid
+    //     element.
+    // 'node' must be part of a raw_tree<T> structure where 'depth' can climbed
+    //     upward through valid nodes.
+    //
+    // If invalid values are supplied then the process is std::aborted.
+    //
+    // TODO(ghochee): Maybe a raw accessor constructor without testing and a
+    // static make_valid_accessor (make_or_abort?) which would do testing and
+    // return accessor value which will be rvalue moved into the call-site
+    // accessor object. That would ensure we don't incur penalty unless we have
+    // to.
+    explicit accessor(raw_tree<T> &node, int16_t depth);
 
     accessor(const accessor &) = default;
     accessor(accessor &&) = default;
