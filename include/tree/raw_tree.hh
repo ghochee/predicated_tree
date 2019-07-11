@@ -63,6 +63,12 @@ raw_tree<T> &raw_tree<T>::parent() {
 
 template <typename T>
 template <side wing>
+bool raw_tree<T>::is_side() const {
+    return has_parent() && parent_->children_[as_int(wing)].get() == this;
+}
+
+template <typename T>
+template <side wing>
 bool raw_tree<T>::has_child() const {
     return (bool)children_[as_int(wing)];
 }
@@ -105,27 +111,4 @@ template <typename T>
 size_t raw_tree<T>::size() const {
     return 1 + (has_child<side::left>() ? children_[_left]->size() : 0) +
            (has_child<side::right>() ? children_[_right]->size() : 0);
-}
-
-template <typename T>
-template <side wing>
-const std::unique_ptr<raw_tree<T>> &raw_tree<T>::child_ref() const {
-    if constexpr (wing == side::left) { return children_[_left]; }
-
-    if constexpr (wing == side::right) {
-        return children_[_right];
-    }
-}
-
-// TODO(ghochee): The following needs to be DRY with the above method but the
-// standard method is to do a const_cast which I am uncomfortable with. Also
-// doing that on the unique_ptr ref is causing a segfault.
-template <typename T>
-template <side wing>
-std::unique_ptr<raw_tree<T>> &raw_tree<T>::child_ref() {
-    if constexpr (wing == side::left) { return children_[_left]; }
-
-    if constexpr (wing == side::right) {
-        return children_[_right];
-    }
 }

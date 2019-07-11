@@ -42,6 +42,9 @@ class raw_tree {
     bool has_parent() const;
     raw_tree &parent();
 
+    template <side wing>
+    bool is_side() const;
+
     template <side wing = side::left>
     bool has_child() const;
 
@@ -83,11 +86,6 @@ class raw_tree {
     size_t size() const;
 
   private:
-    template <side wing = side::left>
-    const std::unique_ptr<raw_tree> &child_ref() const;
-    template <side wing = side::left>
-    std::unique_ptr<raw_tree> &child_ref();
-
     T value_;
     raw_tree *parent_ = nullptr;
     std::array<std::unique_ptr<raw_tree>, 2 /* num sides */> children_ = {
