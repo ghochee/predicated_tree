@@ -78,9 +78,27 @@ bool raw_tree<T>::is_side() const {
 }
 
 template <typename T>
+bool raw_tree<T>::is_side(side wing) const {
+    if (wing == side::left) {
+        return is_side<side::left>();
+    } else {
+        return is_side<side::right>();
+    }
+}
+
+template <typename T>
 template <side wing>
 bool raw_tree<T>::has_child() const {
     return (bool)children_[as_int(wing)];
+}
+
+template <typename T>
+bool raw_tree<T>::has_child(side wing) const {
+    if (wing == side::left) {
+        return has_child<side::left>();
+    } else {
+        return has_child<side::right>();
+    }
 }
 
 template <typename T>
@@ -92,11 +110,29 @@ void raw_tree<T>::replace(raw_tree<T> &&child) {
 }
 
 template <typename T>
+void raw_tree<T>::replace(side wing, raw_tree<T> &&child) {
+    if (wing == side::left) {
+        return replace<side::left>(std::move(child));
+    } else {
+        return replace<side::right>(std::move(child));
+    }
+}
+
+template <typename T>
 template <side wing>
 raw_tree<T> raw_tree<T>::detach() {
     auto detached = std::move(children_[as_int(wing)]);
     detached->parent_ = nullptr;
     return raw_tree<T>(std::move(*detached));
+}
+
+template <typename T>
+raw_tree<T> raw_tree<T>::detach(side wing) {
+    if (wing == side::left) {
+        return detach<side::left>();
+    } else {
+        return detach<side::right>();
+    }
 }
 
 template <typename T>

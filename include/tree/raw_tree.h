@@ -43,18 +43,23 @@ class raw_tree {
 
     template <side wing>
     bool is_side() const;
+    bool is_side(side wing) const;
 
     template <side wing>
     bool has_child() const;
+    bool has_child(side wing) const;
 
     template <side wing>
     void replace(raw_tree<T> &&child);
+    void replace(side wing, raw_tree<T> &&child);
 
     template <side wing>
     raw_tree detach();
+    raw_tree detach(side wing);
 
     template <side wing>
     raw_tree &child();
+    raw_tree &child(side wing);
 
     template <traversal_order order, side wing>
     iterator<order, wing> begin();
