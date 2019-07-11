@@ -47,11 +47,14 @@ raw_tree<T>::raw_tree(raw_tree &&other)
 template <typename T>
 raw_tree<T> &raw_tree<T>::operator=(raw_tree<T> &&other) {
     value_ = std::move(other.value_);
-    children_[_left] =
-        std::move(other.children_[_left]);
-    children_[_right] =
-        std::move(other.children_[_right]);
     parent_ = other.parent_;
+    children_ = std::move(other.children_);
+    if (children_[_left]) {
+        children_[_left]->parent_ = this;
+    }
+    if (children_[_right]) {
+        children_[_right]->parent_ = this;
+    }
 
     return *this;
 }

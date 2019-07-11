@@ -3,7 +3,6 @@
 
 #include <array>
 #include <memory>
-#include <type_traits>
 
 enum class traversal_order : uint8_t { pre, in, post };
 constexpr traversal_order operator~(const traversal_order order);
@@ -117,7 +116,5 @@ class raw_tree {
 };
 
 #include "tree/raw_tree.hh"
-
-#include "tree/raw_tree_iterator.h"
 
 #endif  // TREE_RAW_TREE_H

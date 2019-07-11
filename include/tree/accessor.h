@@ -1,6 +1,8 @@
 #ifndef TREE_ACCESSOR_H
 #define TREE_ACCESSOR_H
 
+#include <cstdint>
+
 // An accessor object is used for referencing a node in a raw_tree<T> tree and
 // for navigating through the various nodes in the tree. It is a single object
 // that can be used to visit through all the nodes in the tree.

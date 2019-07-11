@@ -1,4 +1,4 @@
-#include "tree/raw_tree.h"
+#include "tree.h"
 
 template <typename T>
 void build_bst(raw_tree<T> &root, uint32_t levels, uint32_t min_value) {
