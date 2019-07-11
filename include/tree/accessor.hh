@@ -1,11 +1,10 @@
+#include <algorithm>
 #include <cstdlib>
 
 template <typename T>
 accessor<T>::accessor(raw_tree<T> &node, int16_t depth)
     : node_(&node), depth_(depth) {
-    if (!(depth_ >= -1)) {
-        ::std::abort();
-    }
+    if (!(depth_ >= -1)) { ::std::abort(); }
 
     for (raw_tree<T> *node_ptr = &node; depth > 0;
          --depth, node_ptr = std::exchange(node_ptr, &node_ptr->parent())) {
@@ -31,6 +30,11 @@ bool accessor<T>::operator!=(const accessor<T> &other) const {
 template <typename T>
 T &accessor<T>::operator*() const {
     return **node_;
+}
+
+template <typename T>
+raw_tree<T> &accessor<T>::node() const {
+    return *node_;
 }
 
 template <typename T>
@@ -62,7 +66,10 @@ void accessor<T>::next(traversal_order order, side wing) {
 template <typename T>
 void accessor<T>::up() {
     if (depth_ == -1) { return; }
-    if (depth_ == 0) { --depth_; return; }
+    if (depth_ == 0) {
+        --depth_;
+        return;
+    }
     unsafe_up();
 }
 
@@ -113,6 +120,24 @@ void accessor<T>::descendant(side wing) {
     } else {
         return descendant<side::right>();
     }
+}
+
+template <typename T>
+accessor<T> accessor<T>::common_ancestor(const accessor<T> &other) const {
+    if (!*this || !other) { return *this; }
+
+    auto [lower, higher] = std::minmax_element(
+        *this, other, [](const accessor<T> &left, const accessor<T> &right) {
+            return left.depth_ > right.depth_;
+        });
+
+    for (uint32_t i = lower.depth_ - higher.depth_; i; --i) {
+        lower.unsafe_up();
+    }
+
+    for (; lower.depth_ && lower != higher;
+         lower.unsafe_up(), higher.unsafe_up()) {}
+    return lower;
 }
 
 template <typename T>

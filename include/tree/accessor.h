@@ -52,6 +52,7 @@ class accessor {
     bool operator==(const accessor &other) const;
     bool operator!=(const accessor &other) const;
     T &operator*() const;
+    raw_tree<T> &node() const;
     raw_tree<T> *operator->() const;
 
     // Movement operations allow this accessor / visitor to move over the tree
@@ -107,6 +108,12 @@ class accessor {
     template <traversal_order order, side wing>
     void next();
     void next(traversal_order order, side wing);
+
+    // Returns an accessor pointing to the lowest common ancestor between this
+    // and 'other'.
+    // If either is 'end' accessor then 'end' is returned.
+    // If the two accessors have different 'root's then the result is undefined.
+    accessor<T> common_ancestor(const accessor<T> &other) const;
 
   private:
     // Unsafe movement to the parent node. This should be called by other
