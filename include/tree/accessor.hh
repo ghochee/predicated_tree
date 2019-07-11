@@ -97,11 +97,7 @@ bool accessor<T>::down() {
 
 template <typename T>
 bool accessor<T>::down(side wing) {
-    if (wing == side::left) {
-        return down<side::left>();
-    } else {
-        return down<side::right>();
-    }
+    SWITCH_ON_SIDE(down);
 }
 
 template <typename T>
@@ -115,11 +111,7 @@ void accessor<T>::descendant() {
 
 template <typename T>
 void accessor<T>::descendant(side wing) {
-    if (wing == side::left) {
-        return descendant<side::left>();
-    } else {
-        return descendant<side::right>();
-    }
+    SWITCH_ON_SIDE(down);
 }
 
 template <typename T>

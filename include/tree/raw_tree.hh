@@ -74,11 +74,7 @@ bool raw_tree<T>::is_side() const {
 
 template <typename T>
 bool raw_tree<T>::is_side(side wing) const {
-    if (wing == side::left) {
-        return is_side<side::left>();
-    } else {
-        return is_side<side::right>();
-    }
+    SWITCH_ON_SIDE(is_side);
 }
 
 template <typename T>
@@ -89,11 +85,7 @@ bool raw_tree<T>::has_child() const {
 
 template <typename T>
 bool raw_tree<T>::has_child(side wing) const {
-    if (wing == side::left) {
-        return has_child<side::left>();
-    } else {
-        return has_child<side::right>();
-    }
+    SWITCH_ON_SIDE(has_child);
 }
 
 template <typename T>
@@ -104,11 +96,7 @@ raw_tree<T> &raw_tree<T>::child() {
 
 template <typename T>
 raw_tree<T> &raw_tree<T>::child(side wing) {
-    if (wing == side::left) {
-        return child<side::left>();
-    } else {
-        return child<side::right>();
-    }
+    SWITCH_ON_SIDE(child);
 }
 
 template <typename T>
@@ -147,11 +135,7 @@ void raw_tree<T>::rotate() {
 
 template <typename T>
 void raw_tree<T>::rotate(side wing) {
-    if (wing == side::left) {
-        return rotate<side::left>();
-    } else {
-        return rotate<side::right>();
-    }
+    SWITCH_ON_SIDE(rotate);
 }
 
 template <typename T>
@@ -164,11 +148,7 @@ void raw_tree<T>::replace(raw_tree<T> &&child) {
 
 template <typename T>
 void raw_tree<T>::replace(side wing, raw_tree<T> &&child) {
-    if (wing == side::left) {
-        return replace<side::left>(std::move(child));
-    } else {
-        return replace<side::right>(std::move(child));
-    }
+    SWITCH_ON_SIDE(replace, std::move(child));
 }
 
 template <typename T>
@@ -181,11 +161,7 @@ raw_tree<T> raw_tree<T>::detach() {
 
 template <typename T>
 raw_tree<T> raw_tree<T>::detach(side wing) {
-    if (wing == side::left) {
-        return detach<side::left>();
-    } else {
-        return detach<side::right>();
-    }
+    SWITCH_ON_SIDE(detach);
 }
 
 template <typename T>
