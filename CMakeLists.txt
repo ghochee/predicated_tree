@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 set(TREE_VERSION_MAJOR 0)
 set(TREE_VERSION_MINOR 1)
 set(TREE_VERSION_PATCH 0)
 
-set(CMAKE_CXX_COMPILER /usr/bin/clang++-5.0)
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -Wextra -g")
+set(CMAKE_CXX_COMPILER /usr/bin/clang++-7)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -fno-exceptions -fno-omit-frame-pointer -O3")
 
-include_directories("${PROJECT_BINARY_DIR}/include")
-
-add_library(tree INTERFACE)
-target_include_directories(tree INTERFACE include/)
+add_subdirectory(include)
 
 enable_testing()
 add_subdirectory(test)
