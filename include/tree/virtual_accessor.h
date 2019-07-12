@@ -30,8 +30,10 @@
 template <class ContainerType>
 class virtual_accessor : public accessor<ContainerType> {
   public:
-    using node_type = ContainerType;
     using base_type = accessor<ContainerType>;
+    using container_type = typename base_type::container_type;
+    using node_type = typename base_type::node_type;
+    using value_type_t = typename base_type::value_type_t;
 
     // An accessor with 'node' set as the root of a virtual tree. All
     // operations on this object will restrict the accessor to this virtual
@@ -98,5 +100,8 @@ class virtual_accessor : public accessor<ContainerType> {
 
 template <class T>
 using raw_virtual_accessor = virtual_accessor<raw_tree<T>>;
+
+template <class T>
+using const_raw_virtual_accessor = virtual_accessor<const raw_tree<T>>;
 
 #endif  // TREE_VIRTUAL_ACCESSOR_H
