@@ -1,34 +1,38 @@
-template <typename T>
-class tree<T>::iterator : public std::iterator<std::input_iterator_tag, T> {
+#ifndef TREE_ITERATOR_H
+#define TREE_ITERATOR_H
+
+#include "accessor.h"
+
+template <class C, traversal_order order, side wing>
+class iterator : public virtual_accessor<C>,
+                 public std::iterator<std::bidirectional_iterator_tag,
+                                      typename C::value_type> {
   public:
-    iterator(const iterator &) = default;
-    bool operator==(const iterator &other) const;
-    bool operator!=(const iterator &other) const;
-    reference operator*() const;
+    using base_type = virtual_accessor<C>;
+    using container_type = typename base_type::container_type;
+    using node_type = typename base_type::node_type;
+    using value_type_t = typename base_type::value_type_t;
+
+    using base_type::virtual_accessor;
+
+    // Construct a 'begin' iterator with 'node' as the root of a tree. This is
+    // different from the raw accessors created through the accessor
+    // constructors in that there the depth is explicitly specified.
+    //
+    // Here the depth and actual reference is set to the appropriate position
+    // depending on 'order' and 'wing'. For in-order, right-wing, we would set
+    // the reference to the rightmost descendant of 'node'. See
+    // accessor<T>::next NOTE regarding 'end' and general documentation in the
+    // file about 'end' for more information.
+    iterator(node_type &node);
+
     iterator &operator++();
+    iterator operator++(int);
 
-    // Returns iterators to the three edges from this node. Any / all of them
-    // may be ::end.
-    iterator parent() const;
-    iterator left() const;
-    iterator right() const;
-
-  private:
-    iterator(const traversal_order &order = traversal_order::pre)
-        : order_(order) {}
-    explicit iterator(Node *node,
-                      const traversal_order &order = traversal_order::pre)
-        : node_(node), order_(order) {}
-
-    friend class tree<T>;
-    Node *node_ = nullptr;
-
-    // 'order_' is supposed to be const for the life of the object but the way
-    // template code for iterators is written in most places, iterators are
-    // copied around using assignment operator. This would specifically be a
-    // problem for a const member variable as the operator= method cannot be
-    // const.
-    traversal_order order_;
+    iterator &operator--();
+    iterator operator--(int);
 };
 
 #include "iterator.hh"
+
+#endif  // TREE_ITERATOR_H
