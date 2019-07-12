@@ -149,10 +149,10 @@ class raw_tree {
     void replace(raw_tree<T> &&child);
     void replace(side wing, raw_tree<T> &&child);
 
-    template <side wing, typename ...Args>
-    void emplace(Args&&... args);
-    template <typename ...Args>
-    void emplace(side wing, Args&&... args);
+    template <side wing, typename... Args>
+    void emplace(Args &&... args);
+    template <typename... Args>
+    void emplace(side wing, Args &&... args);
 
     template <side wing>
     raw_tree detach();
@@ -163,7 +163,6 @@ class raw_tree {
     iterator<raw_tree<T>, order, wing> begin();
     template <traversal_order order, side wing>
     iterator<const raw_tree<T>, order, wing> begin() const;
-
 
     // Returns an iterator which compares equal with an iterator which starts
     // from begin and has navigated through all the nodes (depending on the

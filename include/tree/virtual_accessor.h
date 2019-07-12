@@ -65,7 +65,7 @@ class virtual_accessor : public accessor<ContainerType> {
 
     void up();
     // Same as parent with the difference that calling on 'end' objects will
-    // move it to the virtual root of the subtree this is operating under. 
+    // move it to the virtual root of the subtree this is operating under.
     void root();
 
     // Same as parent with the difference that calling down<*> on 'end' objects

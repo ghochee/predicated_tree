@@ -69,14 +69,14 @@ class accessor {
     // following signature:
     //
     // accessor(const accessor &) = default;
-    // 
+    //
     // but the functionality is equivalent. When 'is_const' is false, this is a
     // copy constructor, when is_const is true this is a 'conversion'
     // constructor which converts from the non-const accessor to the const
     // accessor.
     //
-	// Detailed notes at
-	// http://www.drdobbs.com/the-standard-librarian-defining-iterato/184401331
+    // Detailed notes at
+    // http://www.drdobbs.com/the-standard-librarian-defining-iterato/184401331
     accessor(const accessor<container_type> &);
     accessor(const accessor<const container_type> &);
 

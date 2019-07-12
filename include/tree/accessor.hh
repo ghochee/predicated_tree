@@ -21,8 +21,7 @@ accessor<C>::accessor(const accessor<const container_type> &other) {
 }
 
 template <class C>
-typename accessor<C>::value_type_t &accessor<C>::operator*()
-    const {
+typename accessor<C>::value_type_t &accessor<C>::operator*() const {
     return **node_;
 }
 
@@ -32,8 +31,7 @@ typename accessor<C>::node_type &accessor<C>::node() const {
 }
 
 template <class C>
-typename accessor<C>::node_type *accessor<C>::operator->()
-    const {
+typename accessor<C>::node_type *accessor<C>::operator->() const {
     return node_;
 }
 
@@ -43,14 +41,12 @@ accessor<C>::operator bool() const {
 }
 
 template <class C>
-bool accessor<C>::operator==(
-    const accessor<C> &other) const {
+bool accessor<C>::operator==(const accessor<C> &other) const {
     return node_ == other.node_;
 }
 
 template <class C>
-bool accessor<C>::operator!=(
-    const accessor<C> &other) const {
+bool accessor<C>::operator!=(const accessor<C> &other) const {
     return !(other == *this);
 }
 
@@ -114,8 +110,7 @@ bool accessor<C>::ancestor(side wing) {
 }
 
 template <class C>
-accessor<C> accessor<C>::common_ancestor(
-    const accessor<C> &other) const {
+accessor<C> accessor<C>::common_ancestor(const accessor<C> &other) const {
     if (!*this || !other) { return *this; }
 
     uint32_t depth = this->depth(), other_depth = other.depth();
