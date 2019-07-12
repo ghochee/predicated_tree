@@ -27,16 +27,24 @@
 template <typename A, traversal_order order, side wing>
 class traverser {
   public:
-    // Moves this accessor to the *next* element according to 'order' on 'wing'
-    // side.
-    // NOTE: Calling next on:
-    //   'end' node moves to *first* element of the wing-sided order traversal.
+    // Creates an accessor which points to the *first* element according to
+    // 'order' on 'wing'.
     //   For example:
     //     <in, left> would move to the leftmost descendant of the tree.
     //     <pre, right> would move to the root element of the tree.
     //     ...
-    //   Basically the *first* element of the appropriate iteration being
-    //   attempted.
+    // Complexity:
+    //   O(1) for preorder, O(lg(n)) for others.
+    template <typename Container>
+    static A begin(Container &c);
+
+    // Moves this accessor to the *next* element according to 'order' on 'wing'
+    // side.
+    // NOTE: Calling next on 'end' node attempts to move to the *first* element
+    // of the wing-sided order traversal. This may fail as an operation (but
+    // not compilation) if the accessor the operation is performed on is not
+    // bidirectional.
+    //
     // Complexity:
     //   O(1) amortized but specific instances of 'next' may be more expensive
     //   and cost would depend on the shape of the tree.

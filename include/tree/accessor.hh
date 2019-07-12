@@ -4,12 +4,7 @@
 template <typename T, template <typename> typename C>
 accessor<T, C>::accessor(C<T> &node, int16_t depth)
     : node_(&node), depth_(depth) {
-    if (!(depth_ >= -1)) { ::std::abort(); }
-
-    for (C<T> *node_ptr = &node; depth > 0;
-         --depth, node_ptr = std::exchange(node_ptr, &node_ptr->parent())) {
-        if (!node_ptr->has_parent()) { ::std::abort(); }
-    }
+    if (depth_ != -1 && depth_ != 0) { ::std::abort(); }
 }
 
 template <typename T, template <typename> typename C>
