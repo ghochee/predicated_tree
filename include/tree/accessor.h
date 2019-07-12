@@ -12,9 +12,6 @@
 //     accessor<T> a(t, 0);
 //     a.descendant<side::left>();
 //     a.descendant<side::right>();
-//     for (; a; a.next<traversal_order::pre, side::left>()) {
-//       cout << *a << endl;
-//     }
 template <typename T, template <typename> typename ContainerType = raw_tree>
 class accessor {
   public:
@@ -102,36 +99,7 @@ class accessor {
     // If the two accessors have different 'root's then the result is undefined.
     accessor common_ancestor(const accessor &other) const;
 
-    // Moves this accessor to the *next* element according to 'order' on 'wing'
-    // side.
-    // NOTE: Calling next on:
-    //   'end' node moves to *first* element of the wing-sided order traversal.
-    //   For example:
-    //     <in, left> would move to the leftmost descendant of the tree.
-    //     <pre, right> would move to the root element of the tree.
-    //     ...
-    //   Basically the *first* element of the appropriate iteration being
-    //   attempted.
-    // Complexity:
-    //   O(1) amortized but specific instances of 'next' may be more expensive
-    //   and cost would depend on the shape of the tree.
-    template <traversal_order order, side wing>
-    void next();
-    void next(traversal_order order, side wing);
-
   private:
-    // Handle how past the end should be handled.
-    template <traversal_order order, side wing>
-    void handle_end();
-    void handle_end(traversal_order order, side wing);
-
-    template <side wing>
-    void preorder_increment();
-    template <side wing>
-    void inorder_increment();
-    template <side wing>
-    void postorder_increment();
-
     // The node that we are pointing to currently in the tree but if depth_ ==
     // -1 this indicates the root of the tree.
     node_type *node_ = nullptr;
