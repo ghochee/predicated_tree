@@ -176,14 +176,19 @@ void raw_tree<T>::reshape() {
         }
         children_[as_int(C)] = std::move(child_node);
     } else {
-        if (children_[as_int(C)]->children_[as_int(!C)]) {
-            children_[as_int(C)]->children_[as_int(!C)]->parent_ =
-                child_node.get();
-            child_node->children_[as_int(C)] =
-                std::move(children_[as_int(C)]->children_[as_int(!C)]);
+        if (children_[as_int(C)]) {
+            if (children_[as_int(C)]->children_[as_int(GC)]) {
+                children_[as_int(C)]->children_[as_int(GC)]->parent_ =
+                    child_node.get();
+                child_node->children_[as_int(C)] =
+                    std::move(children_[as_int(C)]->children_[as_int(GC)]);
+            }
+            child_node->parent_ = children_[as_int(C)].get();
+            children_[as_int(C)]->children_[as_int(GC)] = std::move(child_node);
+        } else {
+            child_node->parent_ = this;
+            children_[as_int(C)] = std::move(child_node);
         }
-        child_node->parent_ = children_[as_int(C)].get();
-        children_[as_int(C)]->children_[as_int(!C)] = std::move(child_node);
     }
 }
 
