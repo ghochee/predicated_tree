@@ -226,12 +226,13 @@ template <typename T>
 template <side wing, typename... Args>
 void raw_tree<T>::emplace(Args &&... args) {
     this->children_[as_int(wing)] = std::make_unique<raw_tree<T>>(args...);
+    this->children_[as_int(wing)]->parent_ = this;
 }
 
 template <typename T>
 template <typename... Args>
 void raw_tree<T>::emplace(side wing, Args &&... args) {
-    this->children_[as_int(wing)] = std::make_unique<raw_tree<T>>(args...);
+    SWITCH_ON_SIDE(emplace, args...);
 }
 
 template <typename T>
