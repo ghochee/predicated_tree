@@ -133,6 +133,14 @@ class accessor {
     // If the two accessors have different 'root's then the result is undefined.
     accessor common_ancestor(const accessor &other) const;
 
+    // The following non-const constructor exists specifically to make life
+    // easy for client code which has to write const and non-const versions of
+    // functions. Calling this method to return a non-const accessor pointing
+    // to the same element should be considered the semantic equivalent of
+    // calling const_cast on an object inside a function which takes the
+    // object's const reference.
+    accessor<ContainerType, false> non_const() const;
+
   private:
     void unsafe_up();
 

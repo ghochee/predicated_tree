@@ -110,3 +110,11 @@ accessor<C, is_const> accessor<C, is_const>::common_ancestor(
     for (; lower && lower != higher; lower.unsafe_up(), higher.unsafe_up()) {}
     return lower;
 }
+
+template <class C, bool is_const>
+accessor<C, false> accessor<C, is_const>::non_const() const {
+    if (!this->accessor<C, is_const>::operator bool()) {
+        return accessor<C, false>();
+    }
+    return accessor<C, false>(const_cast<C &>(*node_));
+}
