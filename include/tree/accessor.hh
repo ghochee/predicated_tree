@@ -2,9 +2,8 @@
 #include <cstdlib>
 
 template <typename T, template <typename> typename C>
-accessor<T, C>::accessor(C<T> &node, int16_t depth)
-    : node_(&node), depth_(depth) {
-    if (depth_ != -1 && depth_ != 0) { ::std::abort(); }
+accessor<T, C>::accessor(C<T> &node)
+    : node_(&node) {
 }
 
 template <typename T, template <typename> typename C>
@@ -24,12 +23,12 @@ C<T> *accessor<T, C>::operator->() const {
 
 template <typename T, template <typename> typename C>
 accessor<T, C>::operator bool() const {
-    return depth_ >= 0;
+    return node_ != nullptr;
 }
 
 template <typename T, template <typename> typename C>
 bool accessor<T, C>::operator==(const accessor<T, C> &other) const {
-    return depth_ == other.depth_ && node_ == other.node_;
+    return node_ == other.node_;
 }
 
 template <typename T, template <typename> typename C>
@@ -44,35 +43,46 @@ bool accessor<T, C>::is_root() const {
 
 template <typename T, template <typename> typename C>
 uint32_t accessor<T, C>::depth() const {
-    return depth_;
+    if (!*this) { return -1; }
+    if (is_root()) { return 0; }
+
+    uint32_t levels = 0;
+    for (auto it = *this; !it.is_root(); ++levels, it.unsafe_up()) {}
+    return levels;
 }
 
 template <typename T, template <typename> typename C>
 void accessor<T, C>::up() {
+    if (node_->has_parent()) {
+        unsafe_up();
+    } else {
+        node_ = nullptr;
+    }
+}
+
+template <typename T, template <typename> typename C>
+void accessor<T, C>::unsafe_up() {
     node_ = &node_->parent();
-    --depth_;
 }
 
 template <typename T, template <typename> typename C>
 void accessor<T, C>::root() {
     if (!*this) {
-        depth_ = 0;
         return;
     }
 
-    for (; !is_root(); up()) {}
+    for (; !is_root(); unsafe_up()) {}
 }
 
 template <typename T, template <typename> typename C>
 template <side wing>
 bool accessor<T, C>::down() {
     if (!*this) {
-        depth_ = 0;
-        return true;
+        return false;
     }
 
     return node_->template has_child<wing>() &&
-           (++depth_, node_ = &node_->template child<wing>(), true);
+           (node_ = &node_->template child<wing>(), true);
 }
 
 template <typename T, template <typename> typename C>
@@ -93,7 +103,7 @@ accessor<T, C> accessor<T, C>::common_ancestor(
         height_difference = other_depth - depth;
     }
 
-    for (; height_difference; --height_difference) { lower.up(); }
-    for (; lower && lower != higher; lower.up(), higher.up()) {}
+    for (; height_difference; --height_difference) { lower.unsafe_up(); }
+    for (; lower && lower != higher; lower.unsafe_up(), higher.unsafe_up()) {}
     return lower;
 }
