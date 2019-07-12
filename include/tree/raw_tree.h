@@ -74,8 +74,61 @@ class raw_tree {
     raw_tree &child();
     raw_tree &child(side wing);
 
-    // Reshape subtrees.
-    // NOTE: right == clockwise.
+    // Reshape.
+
+    // Reshape this node and the relative positions of the children while
+    // maintaining the in-order traversal sequence. The specification of what
+    // reshaping is to be done is specified through the template parameters
+    // child and grandchild. Specified with the parameters, the function call
+    // may be treated as a "command".
+    //
+    // Examples:
+    //
+    // Before:
+    //                      1 === this node
+    //                     /             \
+    //                    /               \
+    //   child<side::left> === 0         child<side::right> === 2
+    //           /          \               /           \
+    //          /            \             /             \
+    //      left-left     left-right   right-left    right-right
+    //
+    // command: L, R
+    //
+    //                     right(2)
+    //                    /        \
+    //                   /          \
+    //                left(0)     right-right
+    //               /       \
+    //              /         \
+    //          left-left    this(1)
+    //                              \
+    //                               \
+    //                            right-left
+    //
+    // command: R, R
+    //
+    //                      left(0)
+    //                     /       \
+    //                    /         \
+    //                left-left   this(1)
+    //                           /       \
+    //                          /         \
+    //                    left-right    right(2)
+    //                                 /        \
+    //                                /          \
+    //                          right-left    right-right
+    //
+    // After the reshaping command the value at this will change (because we
+    // reshape without moving this node but move around it's values). Any
+    // reshaping command which would make an absent node the root will cause
+    // undefined behaviour (likely segfault). For example R, R when the left
+    // child is absent is an error.
+    template <side child, side grand_child>
+    void reshape();
+
+    // NOTE: right == clockwise      == reshape<R, R>
+    //       left  == anti-clockwise == reshape<L, L>
     template <side wing>
     void rotate();
     void rotate(side wing);

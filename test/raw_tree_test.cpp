@@ -76,7 +76,7 @@ TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
         }
     }
 
-    SECTION("rotate") {
+    SECTION("rotate and reshape") {
         t.rotate<side::right>();
         test_tree_invariants(t);
         CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
@@ -86,6 +86,15 @@ TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
         CHECK(range_eq(t.prelbegin(), t.prelend(), prel_values));
 
         t.rotate<side::left>();
+        CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
+
+        t.reshape<side::right, side::left>();
+        CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
+
+        t.reshape<side::right, side::left>();
+        CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
+
+        t.reshape<side::left, side::right>();
         CHECK(range_eq(t.inlbegin(), t.inlend(), inl_values));
     }
 
@@ -135,5 +144,20 @@ TEST_CASE("bst", "[integer_tree, raw_tree]") {
     *t = 1024;
     build_bst(t, 10);
     CHECK(t.size() == (1 << (10 + 1)) - 1);
-    test_bst_invariants(t);
+    CHECK(t.template has_child<side::right>());
+
+    SECTION("reshape") {
+        t.reshape<side::left, side::right>();
+        test_bst_invariants(t);
+    }
+
+    SECTION("reshape") {
+        t.reshape<side::right, side::left>();
+        test_bst_invariants(t);
+    }
+
+    SECTION("reshape") {
+        t.reshape<side::right, side::right>();
+        test_bst_invariants(t);
+    }
 }
