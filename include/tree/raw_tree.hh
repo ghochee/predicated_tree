@@ -52,8 +52,14 @@ raw_tree<T> &raw_tree<T>::operator=(raw_tree<T> &&other) {
 }
 
 template <typename T>
-T &raw_tree<T>::operator*() {
+const T &raw_tree<T>::operator*() const {
     return value_;
+}
+
+template <typename T>
+T &raw_tree<T>::operator*() {
+    return const_cast<T &>(
+        const_cast<const raw_tree<T> *>(this)->raw_tree<T>::operator*());
 }
 
 template <typename T>
@@ -63,6 +69,11 @@ bool raw_tree<T>::has_parent() const {
 
 template <typename T>
 raw_tree<T> &raw_tree<T>::parent() {
+    return *parent_;
+}
+
+template <typename T>
+const raw_tree<T> &raw_tree<T>::parent() const {
     return *parent_;
 }
 
@@ -90,13 +101,26 @@ bool raw_tree<T>::has_child(side wing) const {
 
 template <typename T>
 template <side wing>
-raw_tree<T> &raw_tree<T>::child() {
+const raw_tree<T> &raw_tree<T>::child() const {
     return *children_[as_int(wing)];
 }
 
 template <typename T>
-raw_tree<T> &raw_tree<T>::child(side wing) {
+const raw_tree<T> &raw_tree<T>::child(side wing) const {
     SWITCH_ON_SIDE(child);
+}
+
+template <typename T>
+template <side wing>
+raw_tree<T> &raw_tree<T>::child() {
+    return const_cast<raw_tree<T> &>(
+        const_cast<const raw_tree<T> *>(this)->raw_tree<T>::child<wing>());
+}
+
+template <typename T>
+raw_tree<T> &raw_tree<T>::child(side wing) {
+    return const_cast<raw_tree<T> &>(
+        const_cast<const raw_tree<T> *>(this)->raw_tree<T>::child(wing));
 }
 
 template <typename T>

@@ -57,10 +57,12 @@ class raw_tree {
 
     raw_tree &operator=(raw_tree &&);
 
+    const T &operator*() const;
     T &operator*();
 
     bool has_parent() const;
     raw_tree &parent();
+    const raw_tree &parent() const;
 
     template <side wing>
     bool is_side() const;
@@ -70,6 +72,9 @@ class raw_tree {
     bool has_child() const;
     bool has_child(side wing) const;
 
+    template <side wing>
+    const raw_tree &child() const;
+    const raw_tree &child(side wing) const;
     template <side wing>
     raw_tree &child();
     raw_tree &child(side wing);
