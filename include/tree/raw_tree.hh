@@ -236,6 +236,18 @@ void raw_tree<T>::emplace(side wing, Args &&... args) {
 }
 
 template <typename T>
+template <side wing, side gc_wing, typename... Args>
+void raw_tree<T>::splice(Args &&... args) {
+    auto inserted = ::std::make_unique<raw_tree<T>>(args...);
+    inserted->children_[as_int(gc_wing)] =
+        ::std::move(this->children_[as_int(wing)]);
+    inserted->children_[as_int(gc_wing)]->parent_ = inserted.get();
+
+    this->children_[as_int(wing)] = ::std::move(inserted);
+    this->children_[as_int(wing)]->parent_ = this;
+}
+
+template <typename T>
 template <side wing>
 raw_tree<T> raw_tree<T>::detach() {
     auto detached = std::move(children_[as_int(wing)]);

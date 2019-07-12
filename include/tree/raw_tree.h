@@ -154,6 +154,10 @@ class raw_tree {
     template <typename... Args>
     void emplace(side wing, Args &&... args);
 
+    // 'Emplace's a node and moves the existing node to 'gc_wing'.
+    template <side wing, side gc_wing, typename... Args>
+    void splice(Args &&... args);
+
     template <side wing>
     raw_tree detach();
     raw_tree detach(side wing);
