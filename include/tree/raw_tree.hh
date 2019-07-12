@@ -34,21 +34,53 @@ constexpr std::underlying_type_t<side> _right = as_int(side::right);
 template <typename T>
 raw_tree<T>::raw_tree(raw_tree &&other)
     : value_(std::move(other.value_)),
-      parent_(other.has_parent() ? other.parent_ : this),
+      parent_(other.parent_),
       children_(std::move(other.children_)) {
     if (children_[_left]) { children_[_left]->parent_ = this; }
     if (children_[_right]) { children_[_right]->parent_ = this; }
+
+    if (parent_ == &other) {
+        parent_ = this;
+    } else if (other.is_side<side::left>()) {
+        parent_->children_[_left].reset();
+    } else {
+        parent_->children_[_right].reset();
+    }
 }
 
 template <typename T>
 raw_tree<T> &raw_tree<T>::operator=(raw_tree<T> &&other) {
     value_ = std::move(other.value_);
-    parent_ = other.has_parent() ? other.parent_ : this;
+    parent_ = other.parent_;
     children_ = std::move(other.children_);
     if (children_[_left]) { children_[_left]->parent_ = this; }
     if (children_[_right]) { children_[_right]->parent_ = this; }
 
+    if (parent_ == &other) {
+        parent_ = this;
+    } else if (other.is_side<side::left>()) {
+        parent_->children_[_left].reset();
+    } else {
+        parent_->children_[_right].reset();
+    }
+
     return *this;
+}
+
+template <typename T>
+void raw_tree<T>::swap(raw_tree<T> &other) {
+    std::swap(value_, other.value_);
+    std::swap(children_, other.children_);
+    if (children_[_left]) { children_[_left]->parent_ = this; }
+    if (children_[_right]) { children_[_right]->parent_ = this; }
+
+    if (other.children_[_left]) { other.children_[_left]->parent_ = &other; }
+    if (other.children_[_right]) { other.children_[_right]->parent_ = &other; }
+}
+
+template <typename T>
+void swap(raw_tree<T> &left, raw_tree<T> &right) {
+    left.swap(right);
 }
 
 template <typename T>
@@ -68,19 +100,19 @@ bool raw_tree<T>::has_parent() const {
 }
 
 template <typename T>
-raw_tree<T> &raw_tree<T>::parent() {
+const raw_tree<T> &raw_tree<T>::parent() const {
     return *parent_;
 }
 
 template <typename T>
-const raw_tree<T> &raw_tree<T>::parent() const {
+raw_tree<T> &raw_tree<T>::parent() {
     return *parent_;
 }
 
 template <typename T>
 template <side wing>
 bool raw_tree<T>::is_side() const {
-    return has_parent() && parent_->children_[as_int(wing)].get() == this;
+    return parent_->children_[as_int(wing)].get() == this;
 }
 
 template <typename T>
@@ -167,16 +199,34 @@ void raw_tree<T>::rotate(side wing) {
 }
 
 template <typename T>
+void raw_tree<T>::flip() {
+    using std::swap;
+    swap(children_[_left], children_[_right]);
+}
+
+template <typename T>
 template <side wing>
 void raw_tree<T>::replace(raw_tree<T> &&child) {
-    child.parent_ = this;
     this->children_[as_int(wing)] =
         std::make_unique<raw_tree<T>>(std::move(child));
+    this->children_[as_int(wing)]->parent_ = this;
 }
 
 template <typename T>
 void raw_tree<T>::replace(side wing, raw_tree<T> &&child) {
     SWITCH_ON_SIDE(replace, std::move(child));
+}
+
+template <typename T>
+template <side wing, typename... Args>
+void raw_tree<T>::emplace(Args &&... args) {
+    this->children_[as_int(wing)] = std::make_unique<raw_tree<T>>(args...);
+}
+
+template <typename T>
+template <typename... Args>
+void raw_tree<T>::emplace(side wing, Args &&... args) {
+    this->children_[as_int(wing)] = std::make_unique<raw_tree<T>>(args...);
 }
 
 template <typename T>

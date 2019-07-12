@@ -54,15 +54,18 @@ class raw_tree {
     explicit raw_tree(T &&value) : value_(std::move(value)) {}
     explicit raw_tree(const T &value) : value_(value) {}
     raw_tree(raw_tree &&);
-
     raw_tree &operator=(raw_tree &&);
+
+    // 'Deep' swaps this with 'other'. To do a shallow swap, call swap on the
+    // values (swap(*first, *second) instead of swap(first, second)).
+    void swap(raw_tree<T> &other);
 
     const T &operator*() const;
     T &operator*();
 
     bool has_parent() const;
-    raw_tree &parent();
     const raw_tree &parent() const;
+    raw_tree &parent();
 
     template <side wing>
     bool is_side() const;
@@ -138,10 +141,18 @@ class raw_tree {
     void rotate();
     void rotate(side wing);
 
+    // Switch the left and right children.
+    void flip();
+
     // Add / remove subtrees.
     template <side wing>
     void replace(raw_tree<T> &&child);
     void replace(side wing, raw_tree<T> &&child);
+
+    template <side wing, typename ...Args>
+    void emplace(Args&&... args);
+    template <typename ...Args>
+    void emplace(side wing, Args&&... args);
 
     template <side wing>
     raw_tree detach();
@@ -202,6 +213,9 @@ class raw_tree {
     std::array<std::unique_ptr<raw_tree>, 2 /* num sides */> children_ = {
         {nullptr, nullptr}};
 };
+
+template <typename T>
+void swap(raw_tree<T> &left, raw_tree<T> &right);
 
 #include "tree/raw_tree.hh"
 
