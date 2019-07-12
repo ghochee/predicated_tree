@@ -15,9 +15,11 @@
 //     for (; a; a.next<traversal_order::pre, side::left>()) {
 //       cout << *a << endl;
 //     }
-template <typename T>
+template <typename T, template <typename> typename ContainerType = raw_tree>
 class accessor {
   public:
+    using node_type = ContainerType<T>;
+
     // An accessor which is specifically pointing to 'node' and set at 'depth'.
     //
     // 'depth' of 0 indicates the 'root' node. It can also be given a special
@@ -42,20 +44,25 @@ class accessor {
     // return accessor value which will be rvalue moved into the call-site
     // accessor object. That would ensure we don't incur penalty unless we have
     // to.
-    explicit accessor(raw_tree<T> &node, int16_t depth);
-
+    explicit accessor(node_type &node, int16_t depth);
     accessor(const accessor &) = default;
     accessor(accessor &&) = default;
-    accessor<T> &operator=(const accessor<T> &) = default;
-    accessor<T> &operator=(accessor<T> &&) = default;
+    accessor &operator=(const accessor &) = default;
+    accessor &operator=(accessor &&) = default;
 
-    // Returns true if we are not at 'end'.
-    explicit operator bool() const;
+    // Dereferences.
+    T &operator*() const;
+    node_type &node() const;
+    node_type *operator->() const;
+
+    // Equality and position tests.
+    operator bool() const;
     bool operator==(const accessor &other) const;
     bool operator!=(const accessor &other) const;
-    T &operator*() const;
-    raw_tree<T> &node() const;
-    raw_tree<T> *operator->() const;
+    bool is_root() const;
+    // Returns the 'depth' of the node. Invalid result is returned when we are
+    // at end.
+    uint32_t depth() const;
 
     // Movement operations allow this accessor / visitor to move over the tree
     // elements.
@@ -88,11 +95,12 @@ class accessor {
     template <side wing>
     bool down();
     bool down(side wing);
-    // Moves to the furthest descendant on the 'wing' side.
-    // Complexity: Similar to 'root'.
-    template <side wing>
-    void descendant();
-    void descendant(side wing);
+
+    // Returns an accessor pointing to the lowest common ancestor between this
+    // and 'other'.
+    // If either is 'end' accessor then 'end' is returned.
+    // If the two accessors have different 'root's then the result is undefined.
+    accessor common_ancestor(const accessor &other) const;
 
     // Moves this accessor to the *next* element according to 'order' on 'wing'
     // side.
@@ -111,17 +119,11 @@ class accessor {
     void next();
     void next(traversal_order order, side wing);
 
-    // Returns an accessor pointing to the lowest common ancestor between this
-    // and 'other'.
-    // If either is 'end' accessor then 'end' is returned.
-    // If the two accessors have different 'root's then the result is undefined.
-    accessor<T> common_ancestor(const accessor<T> &other) const;
-
   private:
-    // Unsafe movement to the parent node. This should be called by other
-    // methods when they have context that guarantees that calling this would
-    // not violate correctness.
-    void unsafe_up();
+    // Handle how past the end should be handled.
+    template <traversal_order order, side wing>
+    void handle_end();
+    void handle_end(traversal_order order, side wing);
 
     template <side wing>
     void preorder_increment();
@@ -132,7 +134,7 @@ class accessor {
 
     // The node that we are pointing to currently in the tree but if depth_ ==
     // -1 this indicates the root of the tree.
-    raw_tree<T> *node_ = nullptr;
+    node_type *node_ = nullptr;
 
     // Depth indicates the depth of the node in our tree. Root node has a depth
     // of 0 and all subsequent values are 1 more. The only valid negative value
@@ -159,5 +161,11 @@ class accessor {
 };
 
 #include "accessor.hh"
+
+template <typename T>
+using const_raw_tree = const raw_tree<T>;
+
+template <typename T>
+using const_accessor = accessor<T, const_raw_tree>;
 
 #endif  // TREE_ACCESSOR_H

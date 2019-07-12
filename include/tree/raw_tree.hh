@@ -34,7 +34,7 @@ constexpr std::underlying_type_t<side> _right = as_int(side::right);
 template <typename T>
 raw_tree<T>::raw_tree(raw_tree &&other)
     : value_(std::move(other.value_)),
-      parent_(other.parent_),
+      parent_(other.has_parent() ? other.parent_ : this),
       children_(std::move(other.children_)) {
     if (children_[_left]) { children_[_left]->parent_ = this; }
     if (children_[_right]) { children_[_right]->parent_ = this; }
@@ -43,7 +43,7 @@ raw_tree<T>::raw_tree(raw_tree &&other)
 template <typename T>
 raw_tree<T> &raw_tree<T>::operator=(raw_tree<T> &&other) {
     value_ = std::move(other.value_);
-    parent_ = other.parent_;
+    parent_ = other.has_parent() ? other.parent_ : this;
     children_ = std::move(other.children_);
     if (children_[_left]) { children_[_left]->parent_ = this; }
     if (children_[_right]) { children_[_right]->parent_ = this; }
@@ -64,7 +64,7 @@ T &raw_tree<T>::operator*() {
 
 template <typename T>
 bool raw_tree<T>::has_parent() const {
-    return parent_;
+    return parent_ != this;
 }
 
 template <typename T>
@@ -183,7 +183,7 @@ template <typename T>
 template <side wing>
 raw_tree<T> raw_tree<T>::detach() {
     auto detached = std::move(children_[as_int(wing)]);
-    detached->parent_ = nullptr;
+    detached->parent_ = detached.get();
     return raw_tree<T>(std::move(*detached));
 }
 

@@ -198,7 +198,7 @@ class raw_tree {
 
   private:
     T value_;
-    raw_tree *parent_ = nullptr;
+    raw_tree *parent_ = this;
     std::array<std::unique_ptr<raw_tree>, 2 /* num sides */> children_ = {
         {nullptr, nullptr}};
 };
