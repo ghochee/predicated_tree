@@ -1,7 +1,10 @@
 template <typename T, template <typename> typename C>
+virtual_accessor<T, C>::virtual_accessor(base_type &pos)
+    : base_type(pos), depth_(pos->depth()) {}
+
+template <typename T, template <typename> typename C>
 virtual_accessor<T, C>::virtual_accessor(C<T> &node, int16_t depth)
-    : base_type(node),
-      depth_(depth) {
+    : base_type(node), depth_(depth) {
     if (depth_ != -1 && depth_ != 0) { ::std::abort(); }
 }
 

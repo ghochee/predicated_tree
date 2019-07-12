@@ -42,6 +42,7 @@ class virtual_accessor : public accessor<T, ContainerType> {
     // 'depth' of 0 indicates the 'root' node. It can also be given a special
     //     value of '-1' which indicates an accessor which is indicative of an
     //     'end' accessor. Any other value will cause a std::abort.
+    virtual_accessor(base_type &pos);
     virtual_accessor(node_type &node, int16_t depth);
     virtual_accessor(const virtual_accessor &) = default;
     virtual_accessor(virtual_accessor &&) = default;
