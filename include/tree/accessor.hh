@@ -131,5 +131,5 @@ accessor<typename accessor<C>::container_type> accessor<C>::non_const() const {
     if (!this->accessor<node_type>::operator bool()) {
         return accessor<container_type>();
     }
-    return accessor<container_type>(const_cast<C &>(*node_));
+    return accessor<container_type>(const_cast<container_type &>(*node_));
 }
