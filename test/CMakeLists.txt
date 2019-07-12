@@ -1,7 +1,3 @@
-add_executable(container_test container_test.cpp)
-target_link_libraries(container_test PRIVATE tree)
-add_test(NAME tree_container_test COMMAND container_test)
-
 add_executable(mutator_test mutator_test.cpp)
 target_link_libraries(mutator_test PRIVATE tree)
 add_test(NAME tree_mutator_test COMMAND mutator_test)
