@@ -1,54 +1,66 @@
 #include <algorithm>
 #include <cstdlib>
 
-template <class C, bool is_const>
-accessor<C, is_const>::accessor(node_type &node) : node_(&node) {}
+template <class C>
+accessor<C>::accessor(node_type &node) : node_(&node) {}
 
-template <class C, bool is_const>
-accessor<C, is_const>::accessor(const accessor<C, false> &other)
-    : node_(other.node_) {}
+template <class C>
+accessor<C>::accessor(const accessor<container_type> &other)
+    : node_(other ? &other.node() : nullptr) {}
 
-template <class C, bool is_const>
-typename accessor<C, is_const>::value_type_t &accessor<C, is_const>::operator*()
+template <class C>
+accessor<C>::accessor(const accessor<const container_type> &other) {
+    static_assert(
+        is_const == true,
+        "Attempting to convert a const accessor to a non-const accessor");
+
+    // This is done here instead of as an initializer because we want a more
+    // useful static_assert to fire if necessary. It's safe because there are
+    // no base classes of this.
+    node_ = other ? &other.node() : nullptr;
+}
+
+template <class C>
+typename accessor<C>::value_type_t &accessor<C>::operator*()
     const {
     return **node_;
 }
 
-template <class C, bool is_const>
-typename accessor<C, is_const>::node_type &accessor<C, is_const>::node() const {
+template <class C>
+typename accessor<C>::node_type &accessor<C>::node() const {
     return *node_;
 }
 
-template <class C, bool is_const>
-typename accessor<C, is_const>::node_type *accessor<C, is_const>::operator->()
+template <class C>
+typename accessor<C>::node_type *accessor<C>::operator->()
     const {
     return node_;
 }
 
-template <class C, bool is_const>
-accessor<C, is_const>::operator bool() const {
+template <class C>
+accessor<C>::operator bool() const {
     return node_ != nullptr;
 }
 
-template <class C, bool is_const>
-bool accessor<C, is_const>::operator==(
-    const accessor<C, is_const> &other) const {
+template <class C>
+bool accessor<C>::operator==(
+    const accessor<C> &other) const {
     return node_ == other.node_;
 }
 
-template <class C, bool is_const>
-bool accessor<C, is_const>::operator!=(
-    const accessor<C, is_const> &other) const {
+template <class C>
+bool accessor<C>::operator!=(
+    const accessor<C> &other) const {
     return !(other == *this);
 }
 
-template <class C, bool is_const>
-bool accessor<C, is_const>::is_root() const {
+template <class C>
+bool accessor<C>::is_root() const {
     return !node_->has_parent();
 }
 
-template <class C, bool is_const>
-uint32_t accessor<C, is_const>::depth() const {
+template <class C>
+uint32_t accessor<C>::depth() const {
     if (!*this) { return -1; }
     if (is_root()) { return 0; }
 
@@ -57,36 +69,53 @@ uint32_t accessor<C, is_const>::depth() const {
     return levels;
 }
 
-template <class C, bool is_const>
-void accessor<C, is_const>::up() {
+template <class C>
+void accessor<C>::up() {
     node_ = &node_->parent();
 }
 
-template <class C, bool is_const>
-void accessor<C, is_const>::root() {
+template <class C>
+void accessor<C>::root() {
     if (!*this) { return; }
 
     for (; !is_root(); up()) {}
 }
 
-template <class C, bool is_const>
+template <class C>
 template <side wing>
-bool accessor<C, is_const>::down() {
+bool accessor<C>::down() {
     // FIXME(ghochee): Removing this if test seems to slow down on benchmarks.
-    if (!this->accessor<C, is_const>::operator bool()) { return false; }
+    if (!this->accessor<C>::operator bool()) { return false; }
 
     return node_->template has_child<wing>() &&
            (node_ = &node_->template child<wing>(), true);
 }
 
-template <class C, bool is_const>
-bool accessor<C, is_const>::down(side wing) {
+template <class C>
+bool accessor<C>::down(side wing) {
     SWITCH_ON_SIDE(down);
 }
 
-template <class C, bool is_const>
-accessor<C, is_const> accessor<C, is_const>::common_ancestor(
-    const accessor<C, is_const> &other) const {
+template <class C>
+template <side wing>
+bool accessor<C>::ancestor() {
+    for (; node_->has_parent(); up()) {
+        if (node_->template is_side<!wing>()) {
+            up();
+            return true;
+        }
+    }
+    return false;
+}
+
+template <class C>
+bool accessor<C>::ancestor(side wing) {
+    SWITCH_ON_SIDE(ancestor);
+}
+
+template <class C>
+accessor<C> accessor<C>::common_ancestor(
+    const accessor<C> &other) const {
     if (!*this || !other) { return *this; }
 
     uint32_t depth = this->depth(), other_depth = other.depth();
@@ -102,10 +131,10 @@ accessor<C, is_const> accessor<C, is_const>::common_ancestor(
     return lower;
 }
 
-template <class C, bool is_const>
-accessor<C, false> accessor<C, is_const>::non_const() const {
-    if (!this->accessor<C, is_const>::operator bool()) {
-        return accessor<C, false>();
+template <class C>
+accessor<typename accessor<C>::container_type> accessor<C>::non_const() const {
+    if (!this->accessor<node_type>::operator bool()) {
+        return accessor<container_type>();
     }
-    return accessor<C, false>(const_cast<C &>(*node_));
+    return accessor<container_type>(const_cast<C &>(*node_));
 }

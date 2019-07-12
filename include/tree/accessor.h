@@ -2,6 +2,7 @@
 #define TREE_ACCESSOR_H
 
 #include <cstdint>
+#include <type_traits>
 
 // An accessor object is used for referencing a node in a raw_tree<T> tree and
 // for navigating through the various nodes in the tree. It is a single object
@@ -40,17 +41,17 @@
 // contents are switched. This would cause the first memory location to
 // 'become' the tree rooted at the second location. Accessors are tied to
 // memory locations and hence will not port across swaps.
-template <class ContainerType, bool is_const=false>
+template <class Container>
 class accessor {
   public:
-    using node_type =
-        typename std::conditional<is_const,
-                                  const ContainerType,
-                                  ContainerType>::type;
+    static constexpr bool is_const = ::std::is_const<Container>::value;
+    using container_type = typename ::std::remove_cv<Container>::type;
+    using node_type = typename std::conditional<is_const, const container_type,
+                                                container_type>::type;
     using value_type_t =
         typename std::conditional<is_const,
-                                  const typename node_type::value_type,
-                                  typename node_type::value_type>::type;
+                                  const typename container_type::value_type,
+                                  typename container_type::value_type>::type;
 
     // An accessor which is specifically pointing to 'node'.
     //
@@ -76,7 +77,8 @@ class accessor {
     //
 	// Detailed notes at
 	// http://www.drdobbs.com/the-standard-librarian-defining-iterato/184401331
-    accessor(const accessor<ContainerType, false> &);
+    accessor(const accessor<container_type> &);
+    accessor(const accessor<const container_type> &);
 
     // Dereferences.
     value_type_t &operator*() const;
@@ -125,6 +127,15 @@ class accessor {
     bool down();
     bool down(side wing);
 
+    // Returns the first ancestor which is on 'wing' side. For example if we
+    // ask for 'left' ancestor then we keep going up until we reach an ancestor
+    // who is a 'right' sided child. We then move to *it's parent* and return
+    // true. If we never find such an ancestor, we move to root and return
+    // false.
+    template <side wing>
+    bool ancestor();
+    bool ancestor(side wing);
+
     // Returns an accessor pointing to the lowest common ancestor between this
     // and 'other'.
     // If either is 'end' accessor then 'end' is returned.
@@ -137,7 +148,7 @@ class accessor {
     // to the same element should be considered the semantic equivalent of
     // calling const_cast on an object inside a function which takes the
     // object's const reference.
-    accessor<ContainerType, false> non_const() const;
+    accessor<container_type> non_const() const;
 
   private:
     // The node that we are pointing to currently in the tree or nullptr at
@@ -150,9 +161,9 @@ class accessor {
 // raw_accessors are a family (T-parameterize) of accessors which work over
 // 'raw_tree' container types.
 template <class T>
-using raw_accessor = accessor<raw_tree<T>, false>;
+using raw_accessor = accessor<raw_tree<T>>;
 
 template <class T>
-using const_raw_accessor = accessor<raw_tree<T>, true>;
+using const_raw_accessor = accessor<const raw_tree<T>>;
 
 #endif  // TREE_ACCESSOR_H
