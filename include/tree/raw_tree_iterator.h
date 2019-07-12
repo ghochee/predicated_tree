@@ -6,10 +6,10 @@
 template <typename T>
 template <traversal_order order, side wing>
 class raw_tree<T>::iterator
-    : public virtual_accessor<T>,
+    : public raw_virtual_accessor<T>,
       public std::iterator<std::bidirectional_iterator_tag, T> {
   public:
-    using virtual_accessor<T>::virtual_accessor;
+    using raw_virtual_accessor<T>::raw_virtual_accessor;
 
     // Construct a 'begin' iterator with 'node' as the root of a tree. This is
     // different from the raw accessors created through the accessor

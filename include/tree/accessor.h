@@ -8,11 +8,16 @@
 // that can be used to visit through all the nodes in the tree.
 //
 // Example usage:
-//     raw_tree<T> t(...);
+//     raw_tree<uint32_t> t(...);
 //     ...
-//     accessor<T> a(t, 0);
+//     accessor<raw_tree<uint32_t>> a(t);
 //     a.descendant<side::left>();
 //     a.descendant<side::right>();
+//
+// Clients should see this object as a more fundamental object than 'iterator's
+// are because these objects don't know 'next' and can navigate freely through
+// the container. Freely doesn't imply cheaply, complexity costs are indicated
+// on the various methods.
 //
 // Other than nodes in a tree, accessor objects may be put in a state we call
 // 'end' (because typically this is useful when done as an iterator). In this
@@ -29,10 +34,17 @@
 // reference or replace) any accessors pointing to it are valid. Their
 // behaviour may be seen analogous to that of std::list<..>::iterators which
 // remain valid across inward and outward splice operations done on the lists.
-template <typename T, template <typename> typename ContainerType = raw_tree>
+//
+// NOTE: Accessors would lose some semantic relevance across 'swap' operations.
+// In swaps, the memory allocation of two nodes remains the same and the
+// contents are switched. This would cause the first memory location to
+// 'become' the tree rooted at the second location. Accessors are tied to
+// memory locations and hence will not port across swaps.
+template <class ContainerType>
 class accessor {
   public:
-    using node_type = ContainerType<T>;
+    using value_type_t = typename ContainerType::value_type;
+    using node_type = ContainerType;
 
     // An accessor which is specifically pointing to 'node'.
     //
@@ -41,13 +53,14 @@ class accessor {
     //     at least the accessor is used to dereference it's value. Tree
     //     modifications don't affect the accessor. See note above.
     explicit accessor(node_type &node);
+    accessor() = default;
     accessor(const accessor &) = default;
     accessor(accessor &&) = default;
     accessor &operator=(const accessor &) = default;
     accessor &operator=(accessor &&) = default;
 
     // Dereferences.
-    T &operator*() const;
+    value_type_t &operator*() const;
     node_type &node() const;
     node_type *operator->() const;
 
@@ -111,10 +124,12 @@ class accessor {
 
 #include "accessor.hh"
 
-template <typename T>
-using const_raw_tree = const raw_tree<T>;
+// raw_accessors are a family (T-parameterize) of accessors which work over
+// 'raw_tree' container types.
+template <class T>
+using raw_accessor = accessor<raw_tree<T>>;
 
-template <typename T>
-using const_accessor = accessor<T, const_raw_tree>;
+template <class T>
+using const_raw_accessor = accessor<const raw_tree<T>>;
 
 #endif  // TREE_ACCESSOR_H

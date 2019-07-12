@@ -27,11 +27,11 @@
 // invalidate an accessor. A clean way to read it is 'any modification which
 // changes the 'depth' of the pointed-to node *in* the virtual tree that an
 // accessor is referring to would invalidate it.
-template <typename T, template <typename> typename ContainerType = raw_tree>
-class virtual_accessor : public accessor<T, ContainerType> {
+template <class ContainerType>
+class virtual_accessor : public accessor<ContainerType> {
   public:
-    using node_type = ContainerType<T>;
-    using base_type = accessor<T, ContainerType>;
+    using node_type = ContainerType;
+    using base_type = accessor<ContainerType>;
 
     // An accessor with 'node' set as the root of a virtual tree. All
     // operations on this object will restrict the accessor to this virtual
@@ -88,11 +88,15 @@ class virtual_accessor : public accessor<T, ContainerType> {
     // - This allows us to have iterators which range only over a subtree. This
     //   seems like a pretty useful feature for writing more complex algorithms.
     // - Depth is a useful feature when iterating through a tree. Though
-    //   clients can set it as part of their T value and the updates etc. are
-    //   expected to update them it would be convoluted to bake it together.
+    //   clients can set it as part of the contained value and the updates etc.
+    //   are expected to update them it would be convoluted to bake it
+    //   together.
     int16_t depth_ = -1;
 };
 
 #include "virtual_accessor.hh"
+
+template <class T>
+using raw_virtual_accessor = virtual_accessor<raw_tree<T>>;
 
 #endif  // TREE_VIRTUAL_ACCESSOR_H

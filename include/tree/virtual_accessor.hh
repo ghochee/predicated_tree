@@ -1,56 +1,50 @@
-template <typename T, template <typename> typename C>
-virtual_accessor<T, C>::virtual_accessor(base_type &pos)
+template <class C>
+virtual_accessor<C>::virtual_accessor(base_type &pos)
     : base_type(pos), depth_(pos->depth()) {}
 
-template <typename T, template <typename> typename C>
-virtual_accessor<T, C>::virtual_accessor(C<T> &node, int16_t depth)
+template <class C>
+virtual_accessor<C>::virtual_accessor(C &node, int16_t depth)
     : base_type(node), depth_(depth) {
     if (depth_ != -1 && depth_ != 0) { ::std::abort(); }
 }
 
-template <typename T, template <typename> typename C>
-virtual_accessor<T, C>::operator bool() const {
+template <class C>
+virtual_accessor<C>::operator bool() const {
     return depth_ >= 0;
 }
 
-template <typename T, template <typename> typename C>
-bool virtual_accessor<T, C>::operator==(
-    const virtual_accessor<T, C> &other) const {
+template <class C>
+bool virtual_accessor<C>::operator==(const virtual_accessor<C> &other) const {
     return static_cast<const base_type *>(this)->operator==(
                static_cast<const base_type>(other)) &&
            depth_ == other.depth_;
 }
 
-template <typename T, template <typename> typename C>
-bool virtual_accessor<T, C>::operator!=(
-    const virtual_accessor<T, C> &other) const {
+template <class C>
+bool virtual_accessor<C>::operator!=(const virtual_accessor<C> &other) const {
     return !(other == *this);
 }
 
-template <typename T, template <typename> typename C>
-bool virtual_accessor<T, C>::is_root() const {
+template <class C>
+bool virtual_accessor<C>::is_root() const {
     return depth_ == 0;
 }
 
-template <typename T, template <typename> typename C>
-uint32_t virtual_accessor<T, C>::depth() const {
+template <class C>
+uint32_t virtual_accessor<C>::depth() const {
     return depth_;
 }
 
-template <typename T, template <typename> typename C>
-void virtual_accessor<T, C>::up() {
-    if (depth_ == -1) {
-        return;
-    }
+template <class C>
+void virtual_accessor<C>::up() {
+    if (depth_ == -1) { return; }
 
-    if (depth_) {
-        static_cast<base_type *>(this)->up();
-    }
+    if (depth_) { static_cast<base_type *>(this)->up(); }
     --depth_;
 }
 
-template <typename T, template <typename> typename C>
-void virtual_accessor<T, C>::root() {
+template <class C>
+void virtual_accessor<C>::root() {
     if (depth_ == -1) {
         depth_ = 0;
         return;
@@ -59,9 +53,9 @@ void virtual_accessor<T, C>::root() {
     for (; !is_root(); up()) {}
 }
 
-template <typename T, template <typename> typename C>
+template <class C>
 template <side wing>
-bool virtual_accessor<T, C>::down() {
+bool virtual_accessor<C>::down() {
     if (depth_ == -1) {
         depth_ = 0;
         return true;
@@ -75,8 +69,8 @@ bool virtual_accessor<T, C>::down() {
     return false;
 }
 
-template <typename T, template <typename> typename C>
-bool virtual_accessor<T, C>::down(side wing) {
+template <class C>
+bool virtual_accessor<C>::down(side wing) {
     if (static_cast<base_type *>(this)->template down(wing)) {
         ++depth_;
         return true;

@@ -1,8 +1,8 @@
 template <typename T>
 template <traversal_order order, side wing>
 raw_tree<T>::template iterator<order, wing>::iterator(raw_tree<T> &node)
-    : virtual_accessor<T>(
-          traverser<virtual_accessor<T>, order, wing>::begin(node)) {}
+    : raw_virtual_accessor<T>(
+          traverser<raw_virtual_accessor<T>, order, wing>::begin(node)) {}
 
 template <typename T>
 template <traversal_order order, side wing>
