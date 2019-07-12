@@ -116,7 +116,7 @@ class mutator {
     template <side wing>
     std::optional<raw_tree<T>> clip(raw_tree<T> &node, const T &value) const;
 
-    Comparator comparator_;
+    const Comparator comparator_;
 };
 
 #include "tree/mutator.hh"

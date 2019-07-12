@@ -22,9 +22,11 @@ template <typename T, typename C>
 template <class ContainerType>
 accessor<ContainerType> mutator<T, C>::find(ContainerType &tree,
                                             const T &value) const {
-    accessor<ContainerType> pos = lower_bound(tree, value);
-    if (!pos || !equal(*pos, value)) { return accessor<ContainerType>(); }
-    return pos;
+    if (accessor<ContainerType> pos = lower_bound(tree, value);
+        pos && equal(*pos, value)) {
+        return pos;
+    }
+    return accessor<ContainerType>();
 }
 
 template <typename T, typename C>
@@ -51,6 +53,7 @@ accessor<ContainerType> mutator<T, C>::upper_bound(ContainerType &tree,
     }
 
     if (!pos->has_parent()) { return accessor<ContainerType>(); }
+
     pos.up();
     return pos;
 }
@@ -60,8 +63,19 @@ template <class ContainerType>
 accessor<ContainerType> mutator<T, C>::lower_bound(ContainerType &tree,
                                                    const T &value) const {
     auto pos = upper_bound(tree, value);
-    if (!pos) { pos = accessor<ContainerType>(tree); }
-    for (; equal(*pos, value) && pos.template down<side::left>();) {}
+    if (pos) {
+        if (comparator_.template horizontal<side::right>(value, *pos)) {
+            if (!pos.template down<side::right>()) { return pos; }
+        } else {
+            if (!pos.template down<side::left>()) { return pos; }
+        }
+    } else {
+        pos = accessor<ContainerType>(tree);
+    }
+
+    for (; equal(*pos, value);) {
+        if (!pos.template down<side::left>()) { return pos; }
+    }
 
     if (!pos->has_parent()) { return accessor<ContainerType>(); }
 
@@ -75,59 +89,84 @@ accessor<raw_tree<T>> mutator<T, C>::insert(T &&value, raw_tree<T> &node,
     // NOTE: We can cast away the const from 'hint' because we have been given
     // a reference to 'node'; 'hint' points to a node in the tree accessible
     // from 'node'.
-    accessor<raw_tree<T>> pos(node);
-    if (hint) { pos = hint.non_const(); }
+    accessor<raw_tree<T>> &pos =
+        *reinterpret_cast<accessor<raw_tree<T>> *>(&hint);
+
+    if (!pos) { pos = accessor<raw_tree<T>>(node); }
     for (; pos->has_parent() && comparator_.tall(value, *pos); pos.up()) {}
     if (!in_subtree(pos.node(), value)) { pos = accessor<raw_tree<T>>(node); }
 
-    std::unique_ptr<raw_tree<T>> displaced_child;
     if (auto vert_pos = lower_bound(pos.node(), value); vert_pos) {
         pos = vert_pos;
+        // FIXME(ghochee): Private member function template for DRY-ing this.
         if (comparator_.template horizontal<side::right>(value, *pos)) {
-            if (pos->template has_child<side::right>()) {
-                displaced_child = std::make_unique<raw_tree<T>>(
-                    pos->template detach<side::right>());
+            if (!pos->template has_child<side::right>()) {
+                pos->template emplace<side::right>(std::move(value));
+                pos.template down<side::right>();
+                return pos;
             }
-            pos->template emplace<side::right>(std::move(value));
+
+            if (comparator_.template horizontal<side::right>(
+                    *pos->template child<side::right>(), value)) {
+                pos->template splice<side::right, side::right>(std::move(value));
+            } else {
+                pos->template splice<side::right, side::left>(std::move(value));
+            }
             pos.template down<side::right>();
         } else {
-            if (pos->template has_child<side::left>()) {
-                displaced_child = std::make_unique<raw_tree<T>>(
-                    pos->template detach<side::left>());
+            if (!pos->template has_child<side::left>()) {
+                pos->template emplace<side::left>(std::move(value));
+                pos.template down<side::left>();
+                return pos;
             }
-            bool is_equal_value = !comparator_.left(value, *pos);
-            pos->template emplace<side::left>(std::move(value));
-            pos.template down<side::left>();
 
-            // If the value is left-equal to parent node we don't need to clip
-            // the subtree, we already know it's all left-smaller.
-            if (is_equal_value) {
-                pos->template replace<side::left>(std::move(*displaced_child));
-                displaced_child.reset();
+            // When equal_left, we don't need to do clipping or other
+            // comparison. The child will move further left as this node gets
+            // inserted.
+            if (comparator_.equal_left(value, *pos)) {
+                pos->template splice<side::left, side::left>(std::move(value));
+                pos.template down<side::left>();
+                return pos;
             }
+
+            if (comparator_.template horizontal<side::right>(
+                    *pos->template child<side::left>(), value)) {
+                pos->template splice<side::left, side::right>(std::move(value));
+            } else {
+                pos->template splice<side::left, side::left>(std::move(value));
+            }
+            pos.template down<side::left>();
         }
     } else {
         raw_tree<T> node(std::move(value));
         swap(node, pos.node());
-        displaced_child = std::make_unique<raw_tree<T>>(std::move(node));
-    }
-
-    if (displaced_child) {
-        if (comparator_.template horizontal<side::right>(**displaced_child,
-                                                         *pos)) {
-            auto clipped = clip<side::left>(*displaced_child, *pos);
-            pos->template replace<side::right>(std::move(*displaced_child));
-            if (clipped) {
-                pos->template replace<side::left>(std::move(*clipped));
+        if (comparator_.template horizontal<side::right>(*node, *pos)) {
+            pos->template replace<side::right>(std::move(node));
+            if (!pos->template child<side::right>()
+                     .template has_child<side::left>()) {
+                return pos;
             }
         } else {
-            auto clipped = clip<side::right>(*displaced_child, *pos);
-            pos->template replace<side::left>(std::move(*displaced_child));
-            if (clipped) {
-                pos->template replace<side::right>(std::move(*clipped));
+            pos->template replace<side::left>(std::move(node));
+            if (!pos->template child<side::left>()
+                     .template has_child<side::right>()) {
+                return pos;
             }
         }
-        displaced_child.reset();
+    }
+
+    if (pos->template has_child<side::right>()) {
+        if (auto clipped =
+                clip<side::left>(pos->template child<side::right>(), *pos);
+            clipped) {
+            pos->template replace<side::left>(std::move(*clipped));
+        }
+    } else {
+        if (auto clipped =
+                clip<side::right>(pos->template child<side::left>(), *pos);
+            clipped) {
+            pos->template replace<side::right>(std::move(*clipped));
+        }
     }
 
     return pos;
@@ -145,10 +184,12 @@ template <typename T, typename C>
 void mutator<T, C>::erase(raw_tree<T> &,
                           accessor<const raw_tree<T>> const_pos) {
     if (!const_pos) { return; }
+
     // NOTE: We can cast away the const from 'const_pos' because we have been
     // given a reference to the tree that it is part of; 'const_pos' points to
     // a node in the tree accessible from 'node'.
-    accessor<raw_tree<T>> pos(const_cast<raw_tree<T> &>(const_pos.node()));
+    accessor<raw_tree<T>> &pos =
+        *reinterpret_cast<accessor<raw_tree<T>> *>(&const_pos);
 
     bool left = pos->template has_child<side::left>();
     bool right = pos->template has_child<side::right>();
@@ -225,10 +266,6 @@ void mutator<T, C>::stable_sort(raw_tree<T> &tree) {
 
 template <typename T, typename C>
 raw_tree<T> mutator<T, C>::zip(raw_tree<T> &&left, raw_tree<T> &&right) const {
-    // NOTE: It's important to choose 'right' when equally tall to effect the
-    // 'equal' nodes structure through erases of some of the equal nodes.
-    // FIXME(ghochee): Should this comparison be vertical<side::left> to be on
-    // the safe side.
     if (comparator_.tall(*left, *right)) {
         return zip<side::right>(std::move(left), std::move(right));
     } else {
