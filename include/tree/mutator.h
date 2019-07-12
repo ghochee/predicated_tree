@@ -109,8 +109,6 @@ class mutator {
     void stable_sort(raw_tree<T> &tree);
 
   private:
-    bool equal(const T &first, const T &second) const;
-
     template <side wing>
     raw_tree<T> zip(raw_tree<T> &&merged, raw_tree<T> &&incoming) const;
     template <side wing>

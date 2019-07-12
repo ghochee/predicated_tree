@@ -23,7 +23,7 @@ template <class ContainerType>
 accessor<ContainerType> mutator<T, C>::find(ContainerType &tree,
                                             const T &value) const {
     if (accessor<ContainerType> pos = lower_bound(tree, value);
-        pos && equal(*pos, value)) {
+        pos && comparator_.equal(*pos, value)) {
         return pos;
     }
     return accessor<ContainerType>();
@@ -73,7 +73,7 @@ accessor<ContainerType> mutator<T, C>::lower_bound(ContainerType &tree,
         pos = accessor<ContainerType>(tree);
     }
 
-    for (; equal(*pos, value);) {
+    for (; comparator_.equal(*pos, value);) {
         if (!pos.template down<side::left>()) { return pos; }
     }
 
@@ -300,12 +300,6 @@ raw_tree<T> mutator<T, C>::zip(raw_tree<T> &&main,
 
         incoming.swap(zipper.node());
     }
-}
-
-template <typename T, typename C>
-bool mutator<T, C>::equal(const T &first, const T &second) const {
-    return comparator_.equal_left(first, second) &&
-           comparator_.equal_tall(first, second);
 }
 
 template <typename T, typename C>

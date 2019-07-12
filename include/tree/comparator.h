@@ -63,6 +63,9 @@ class comparator {
     bool equal_tall(const T &first, const T &second) const;
     bool equal_left(const T &first, const T &second) const;
 
+    // True iff equal_tall and equal_left.
+    bool equal(const T &first, const T &second) const;
+
     // Should be read as, 'Is first vertically higher than second if it's to
     // the wing-side'. So for example vertical<side::left>(a, b) == true would
     // mean a should be taller than b when it's to the left.

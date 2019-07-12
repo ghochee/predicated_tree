@@ -13,6 +13,11 @@ bool comparator<T, H, L>::equal_left(const T &first, const T &second) const {
 }
 
 template <class T, class H, class L>
+bool comparator<T, H, L>::equal(const T &first, const T &second) const {
+    return equal_left(first, second) && equal_tall(first, second);
+}
+
+template <class T, class H, class L>
 template <side wing>
 bool comparator<T, H, L>::vertical(const T &first, const T &second) const {
     if (tall(first, second)) { return true; }
