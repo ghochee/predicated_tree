@@ -40,11 +40,17 @@
 // contents are switched. This would cause the first memory location to
 // 'become' the tree rooted at the second location. Accessors are tied to
 // memory locations and hence will not port across swaps.
-template <class ContainerType>
+template <class ContainerType, bool is_const=false>
 class accessor {
   public:
-    using value_type_t = typename ContainerType::value_type;
-    using node_type = ContainerType;
+    using node_type =
+        typename std::conditional<is_const,
+                                  const ContainerType,
+                                  ContainerType>::type;
+    using value_type_t =
+        typename std::conditional<is_const,
+                                  const typename node_type::value_type,
+                                  typename node_type::value_type>::type;
 
     // An accessor which is specifically pointing to 'node'.
     //
@@ -54,10 +60,23 @@ class accessor {
     //     modifications don't affect the accessor. See note above.
     explicit accessor(node_type &node);
     accessor() = default;
-    accessor(const accessor &) = default;
     accessor(accessor &&) = default;
     accessor &operator=(const accessor &) = default;
     accessor &operator=(accessor &&) = default;
+
+    // We specifically define the following constructor instead of using the
+    // following signature:
+    //
+    // accessor(const accessor &) = default;
+    // 
+    // but the functionality is equivalent. When 'is_const' is false, this is a
+    // copy constructor, when is_const is true this is a 'conversion'
+    // constructor which converts from the non-const accessor to the const
+    // accessor.
+    //
+	// Detailed notes at
+	// http://www.drdobbs.com/the-standard-librarian-defining-iterato/184401331
+    accessor(const accessor<ContainerType, false> &);
 
     // Dereferences.
     value_type_t &operator*() const;
@@ -127,9 +146,9 @@ class accessor {
 // raw_accessors are a family (T-parameterize) of accessors which work over
 // 'raw_tree' container types.
 template <class T>
-using raw_accessor = accessor<raw_tree<T>>;
+using raw_accessor = accessor<raw_tree<T>, false>;
 
 template <class T>
-using const_raw_accessor = accessor<const raw_tree<T>>;
+using const_raw_accessor = accessor<raw_tree<T>, true>;
 
 #endif  // TREE_ACCESSOR_H
