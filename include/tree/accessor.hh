@@ -53,21 +53,12 @@ uint32_t accessor<C, is_const>::depth() const {
     if (is_root()) { return 0; }
 
     uint32_t levels = 0;
-    for (auto it = *this; !it.is_root(); ++levels, it.unsafe_up()) {}
+    for (auto it = *this; !it.is_root(); ++levels, it.up()) {}
     return levels;
 }
 
 template <class C, bool is_const>
 void accessor<C, is_const>::up() {
-    if (node_->has_parent()) {
-        unsafe_up();
-    } else {
-        node_ = nullptr;
-    }
-}
-
-template <class C, bool is_const>
-void accessor<C, is_const>::unsafe_up() {
     node_ = &node_->parent();
 }
 
@@ -75,7 +66,7 @@ template <class C, bool is_const>
 void accessor<C, is_const>::root() {
     if (!*this) { return; }
 
-    for (; !is_root(); unsafe_up()) {}
+    for (; !is_root(); up()) {}
 }
 
 template <class C, bool is_const>
@@ -106,8 +97,8 @@ accessor<C, is_const> accessor<C, is_const>::common_ancestor(
         height_difference = other_depth - depth;
     }
 
-    for (; height_difference; --height_difference) { lower.unsafe_up(); }
-    for (; lower && lower != higher; lower.unsafe_up(), higher.unsafe_up()) {}
+    for (; height_difference; --height_difference) { lower.up(); }
+    for (; lower && lower != higher; lower.up(), higher.up()) {}
     return lower;
 }
 

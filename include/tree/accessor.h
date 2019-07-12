@@ -108,9 +108,7 @@ class accessor {
 
     // Moves to the parent node if possible.
     // Complexity: O(1).
-    // NOTE: Calling up on:
-    //   'root' node moves to 'end' node.
-    //   'end' node is a no-op. This is end_safe.
+    // NOTE: Calling up on 'root' is a no-op.
     void up();
     // Sets accessor to 'root' node.
     // Complexity: Depends on the shape of the tree.
@@ -142,8 +140,6 @@ class accessor {
     accessor<ContainerType, false> non_const() const;
 
   private:
-    void unsafe_up();
-
     // The node that we are pointing to currently in the tree or nullptr at
     // 'end'.
     node_type *node_ = nullptr;
