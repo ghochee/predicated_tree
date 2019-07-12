@@ -16,28 +16,223 @@ using namespace std;
 
 using int_tree = raw_tree<uint32_t>;
 
-TEST_CASE("pointed single node", "[integer_tree, raw_tree]") {
+TEST_CASE("height0", "[integer_tree, raw_tree]") {
     int_tree t(10);
 
     SECTION("accessors") {
-        SECTION("values") {
+        SECTION("value") {
             CHECK(*t == 10);
-            CHECK(!t.has_parent());
+            *t = 20;
+            CHECK(*t == 20);
         }
 
         SECTION("children") {
+            CHECK(!t.has_parent());
             CHECK(!t.has_child<side::left>());
             CHECK(!t.has_child<side::right>());
         }
 
-        SECTION("iterators") {
+        SECTION("iterator") {
             CHECK(range_eq(t.inlbegin(), t.inlend(), {10}));
+        }
+
+        SECTION("size") {
+            CHECK(t.size() == 1);
         }
     }
 
-    SECTION("modify") {
-        *t = 20;
-        CHECK(*t == 20);
+    SECTION("modifiers") {
+        SECTION("replace") {
+            SECTION("right") {
+                t.replace<side::right>(int_tree(20));
+                REQUIRE(t.has_child<side::right>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {10, 20}));
+            }
+
+            SECTION("left") {
+                t.replace<side::left>(int_tree(5));
+                REQUIRE(t.has_child<side::left>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10}));
+            }
+
+            SECTION("both") {
+                t.replace<side::left>(int_tree(5));
+                t.replace<side::right>(int_tree(20));
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+            }
+        }
+
+        SECTION("emplace") {
+            SECTION("right") {
+                t.emplace<side::right>(20);
+                REQUIRE(t.has_child<side::right>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {10, 20}));
+            }
+
+            SECTION("left") {
+                t.emplace<side::left>(5);
+                REQUIRE(t.has_child<side::left>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10}));
+            }
+
+            SECTION("both") {
+                t.emplace<side::left>(5);
+                t.emplace<side::right>(20);
+                REQUIRE(t.has_child<side::left>());
+                REQUIRE(t.has_child<side::right>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+            }
+        }
+    }
+}
+
+TEST_CASE("height1", "[integer_tree, raw_tree]") {
+    int_tree t(10);
+    t.emplace<side::left>(5);
+    t.emplace<side::right>(20);
+
+    SECTION("accessors") {
+        SECTION("value") {
+            CHECK(*t == 10);
+            CHECK(*(t.child<side::left>()) == 5);
+            *(t.child<side::right>()) = 21;
+            CHECK(*(t.child<side::right>()) == 21);
+        }
+
+        SECTION("children") {
+            CHECK(!t.has_parent());
+            CHECK(t.has_child<side::left>());
+            CHECK(t.has_child<side::right>());
+            CHECK(!t.child<side::left>().has_child<side::left>());
+        }
+
+        SECTION("iterator") {
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+        }
+
+        SECTION("size") {
+            CHECK(t.size() == 3);
+        }
+    }
+
+    SECTION("modifiers") {
+        SECTION("replace") {
+            SECTION("right") {
+                t.replace<side::right>(int_tree(30));
+                REQUIRE(t.has_child<side::right>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 30}));
+            }
+
+            SECTION("left") {
+                t.replace<side::left>(int_tree(7));
+                REQUIRE(t.has_child<side::left>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {7, 10, 20}));
+            }
+
+            SECTION("both") {
+                t.replace<side::left>(int_tree(8));
+                t.replace<side::right>(int_tree(21));
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {8, 10, 21}));
+            }
+        }
+
+        SECTION("emplace") {
+            SECTION("right") {
+                t.emplace<side::right>(30);
+                REQUIRE(t.has_child<side::right>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 30}));
+            }
+
+            SECTION("left") {
+                t.emplace<side::left>(7);
+                REQUIRE(t.has_child<side::left>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {7, 10, 20}));
+            }
+
+            SECTION("both") {
+                t.emplace<side::left>(8);
+                t.emplace<side::right>(21);
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {8, 10, 21}));
+            }
+        }
+
+        SECTION("reshape") {
+            SECTION("left-left") {
+                t.reshape<side::left, side::left>();
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+            }
+
+            SECTION("left-right") {
+                t.reshape<side::left, side::right>();
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+            }
+
+            SECTION("right-left") {
+                t.reshape<side::right, side::left>();
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+            }
+
+            SECTION("right-right") {
+                t.reshape<side::right, side::right>();
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+            }
+
+            SECTION("all") {
+                t.reshape<side::left, side::left>();
+                t.reshape<side::right, side::right>();
+                t.reshape<side::right, side::left>();
+                t.reshape<side::left, side::left>();
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 20}));
+            }
+        }
+
+        SECTION("detach") {
+            SECTION("left") {
+                auto child = t.detach<side::left>();
+                CHECK(!t.has_child<side::left>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {10, 20}));
+                CHECK(*child == 5);
+            }
+
+            SECTION("both") {
+                auto child = t.detach<side::right>();
+                CHECK(!t.has_child<side::right>());
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10}));
+                CHECK(*child == 20);
+
+                auto left_child = t.detach<side::left>();
+                CHECK(t.size() == 1);
+                CHECK(range_eq(t.inlbegin(), t.inlend(), {10}));
+                CHECK(*left_child == 5);
+            }
+        }
+
+        SECTION("move") {
+            int_tree child(std::move(t.child<side::left>()));
+            CHECK(!t.has_child<side::left>());
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {10, 20}));
+            CHECK(*child == 5);
+        }
+
+        SECTION("swap") {
+            int_tree t2(15);
+            t2.emplace<side::left>(7);
+            swap(t.child<side::right>(), t2.child<side::left>());
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10, 7}));
+            CHECK(range_eq(t2.inlbegin(), t2.inlend(), {20, 15}));
+        }
+
+        SECTION("flip") {
+            t.flip();
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {20, 10, 5}));
+            t.detach<side::left>();
+            t.flip();
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {5, 10}));
+            t.detach<side::left>();
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {10}));
+            t.flip();
+            CHECK(range_eq(t.inlbegin(), t.inlend(), {10}));
+        }
     }
 }
 
@@ -112,6 +307,16 @@ TEST_CASE("pointed multiple nodes", "[integer_tree, raw_tree]") {
         auto b = t.detach<side::left>();
         CHECK(*b == 35);  CHECK(!b.has_parent());
     }
+
+    /*
+    SECTION("swap") {
+        std::swap(t.child<side::left>(),
+                  t.child<side::right>().child<side::left>());
+        std::copy(t.inlbegin(), t.inlend(),
+                  std::ostream_iterator<uint32_t>(std::cout, " "));
+        std::cout << "\n";
+    }
+    */
 }
 
 TEST_CASE("coarse string", "[string_tree, raw_tree]") {

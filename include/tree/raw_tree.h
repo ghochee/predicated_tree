@@ -10,6 +10,9 @@ constexpr traversal_order operator~(const traversal_order order);
 enum class side : uint8_t { left, right };
 constexpr side operator!(const side wing);
 
+template <class ContainerType, traversal_order, side>
+class iterator;
+
 // There are a large number of wrapper functions of the following type
 //     returnType functionName(side wing, args...);
 //
@@ -46,9 +49,6 @@ class raw_tree {
     typedef const value_type &const_reference;
     typedef ptrdiff_t difference_type;
     typedef size_t size_type;
-
-    template <traversal_order, side>
-    class iterator;
 
     raw_tree() = delete;
     explicit raw_tree(T &&value) : value_(std::move(value)) {}
@@ -160,7 +160,10 @@ class raw_tree {
 
     // Construct iterators for the tree.
     template <traversal_order order, side wing>
-    iterator<order, wing> begin();
+    iterator<raw_tree<T>, order, wing> begin();
+    template <traversal_order order, side wing>
+    iterator<const raw_tree<T>, order, wing> begin() const;
+
 
     // Returns an iterator which compares equal with an iterator which starts
     // from begin and has navigated through all the nodes (depending on the
@@ -177,15 +180,21 @@ class raw_tree {
     //
     // See accessor<T>::accessor(...) for information on 'end' for iterators.
     template <traversal_order order, side wing>
-    iterator<order, wing> end();
+    iterator<raw_tree<T>, order, wing> end();
+    template <traversal_order order, side wing>
+    iterator<const raw_tree<T>, order, wing> end() const;
 
 #define RAW_TREE_MAKE_ALIAS(prefix, order, wing)                  \
-    inline auto prefix##begin()->decltype(                        \
-        begin<traversal_order::order, side::wing>()) {            \
+    inline auto prefix##begin() {                                 \
         return this->begin<traversal_order::order, side::wing>(); \
     }                                                             \
-    inline auto prefix##end()->decltype(                          \
-        end<traversal_order::order, side::wing>()) {              \
+    inline auto prefix##begin() const {                           \
+        return this->begin<traversal_order::order, side::wing>(); \
+    }                                                             \
+    inline auto prefix##end() {                                   \
+        return this->end<traversal_order::order, side::wing>();   \
+    }                                                             \
+    inline auto prefix##end() const {                             \
         return this->end<traversal_order::order, side::wing>();   \
     }
 

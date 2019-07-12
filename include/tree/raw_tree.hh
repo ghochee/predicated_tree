@@ -250,14 +250,26 @@ raw_tree<T> raw_tree<T>::detach(side wing) {
 
 template <typename T>
 template <traversal_order order, side wing>
-typename raw_tree<T>::template iterator<order, wing> raw_tree<T>::begin() {
-    return raw_tree<T>::iterator<order, wing>(*this);
+iterator<raw_tree<T>, order, wing> raw_tree<T>::begin() {
+    return iterator<raw_tree<T>, order, wing>(*this);
 }
 
 template <typename T>
 template <traversal_order order, side wing>
-typename raw_tree<T>::template iterator<order, wing> raw_tree<T>::end() {
-    return raw_tree<T>::iterator<order, wing>(*this, -1);
+iterator<const raw_tree<T>, order, wing> raw_tree<T>::begin() const {
+    return iterator<const raw_tree<T>, order, wing>(*this);
+}
+
+template <typename T>
+template <traversal_order order, side wing>
+iterator<raw_tree<T>, order, wing> raw_tree<T>::end() {
+    return iterator<raw_tree<T>, order, wing>(*this, -1);
+}
+
+template <typename T>
+template <traversal_order order, side wing>
+iterator<const raw_tree<T>, order, wing> raw_tree<T>::end() const {
+    return iterator<const raw_tree<T>, order, wing>(*this, -1);
 }
 
 template <typename T>

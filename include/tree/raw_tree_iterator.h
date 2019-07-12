@@ -3,13 +3,17 @@
 
 #include "accessor.h"
 
-template <typename T>
-template <traversal_order order, side wing>
-class raw_tree<T>::iterator
-    : public raw_virtual_accessor<T>,
-      public std::iterator<std::bidirectional_iterator_tag, T> {
+template <class C, traversal_order order, side wing>
+class iterator : public virtual_accessor<C>,
+                 public std::iterator<std::bidirectional_iterator_tag,
+                                      typename C::value_type> {
   public:
-    using raw_virtual_accessor<T>::raw_virtual_accessor;
+    using base_type = virtual_accessor<C>;
+    using container_type = typename base_type::container_type;
+    using node_type = typename base_type::node_type;
+    using value_type_t = typename base_type::value_type_t;
+
+    using base_type::virtual_accessor;
 
     // Construct a 'begin' iterator with 'node' as the root of a tree. This is
     // different from the raw accessors created through the accessor
@@ -20,7 +24,7 @@ class raw_tree<T>::iterator
     // the reference to the rightmost descendant of 'node'. See
     // accessor<T>::next NOTE regarding 'end' and general documentation in the
     // file about 'end' for more information.
-    iterator(raw_tree<T> &node);
+    iterator(node_type &node);
 
     iterator &operator++();
     iterator operator++(int);
