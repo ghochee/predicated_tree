@@ -10,7 +10,7 @@
 #include <iterator>
 #include <vector>
 
-#include "raw_tree_test.h"
+#include "raw_tree.h"
 
 using namespace std;
 

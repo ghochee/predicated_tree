@@ -10,5 +10,5 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -fno-exceptions -fno-omit-frame-pointer -O3")
 
 add_subdirectory(include)
 
-enable_testing()
+add_subdirectory(benchmark)
 add_subdirectory(test)

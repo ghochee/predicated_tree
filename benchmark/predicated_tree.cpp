@@ -2,15 +2,11 @@
 #include <iostream>
 
 #include "tree.h"
+#include "tree/util/predicates.h"
 
 #include <random>
 
 using namespace std;
-
-template <typename T>
-static bool more_even(const T &a, const T &b) {
-    return (a ^ (a - 1)) > (b ^ (b - 1));
-}
 
 static void Find(benchmark::State &state) {
     std::random_device dev;
