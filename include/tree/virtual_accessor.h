@@ -98,10 +98,4 @@ class virtual_accessor : public accessor<ContainerType> {
 
 #include "virtual_accessor.hh"
 
-template <class T>
-using raw_virtual_accessor = virtual_accessor<raw_tree<T>>;
-
-template <class T>
-using const_raw_virtual_accessor = virtual_accessor<const raw_tree<T>>;
-
 #endif  // TREE_VIRTUAL_ACCESSOR_H

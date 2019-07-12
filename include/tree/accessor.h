@@ -158,12 +158,4 @@ class accessor {
 
 #include "accessor.hh"
 
-// raw_accessors are a family (T-parameterize) of accessors which work over
-// 'raw_tree' container types.
-template <class T>
-using raw_accessor = accessor<raw_tree<T>>;
-
-template <class T>
-using const_raw_accessor = accessor<const raw_tree<T>>;
-
 #endif  // TREE_ACCESSOR_H
