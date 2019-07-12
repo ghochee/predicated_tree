@@ -168,6 +168,9 @@ class predicated_tree {
     //   O(lg(N)).
     void erase(accessor<const raw_tree<T>> pos);
 
+    // Removes all values from the tree.
+    void clear();
+
     // Get the value at root.
     const T &operator*() const;
 

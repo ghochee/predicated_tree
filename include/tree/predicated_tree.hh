@@ -41,8 +41,18 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
 
 template <typename T, typename C>
 void predicated_tree<T, C>::erase(accessor<const raw_tree<T>> pos) {
-    // TODO(ghochee): Handle erasing last element.
+    // FIXME(ghochee): Faster processing of only-one test.
+    if (tree_ && !tree_->template has_child<side::left>() &&
+        !tree_->template has_child<side::right>()) {
+        pos = accessor<const raw_tree<T>>();
+        return tree_.reset();
+    }
     return mutator_.erase(tree_.value(), pos);
+}
+
+template <typename T, typename C>
+void predicated_tree<T, C>::clear() {
+    tree_.reset();
 }
 
 template <typename T, typename C>
