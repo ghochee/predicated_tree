@@ -4,43 +4,57 @@
 #include <cstdint>
 #include <type_traits>
 
-// An accessor object is used for referencing a node in a raw_tree<T> tree and
-// for navigating through the various nodes in the tree. It is a single object
-// that can be used to visit through all the nodes in the tree.
-//
-// Example usage:
-//     raw_tree<uint32_t> t(...);
-//     ...
-//     accessor<raw_tree<uint32_t>> a(t);
-//     a.descendant<side::left>();
-//     a.descendant<side::right>();
-//
-// Clients should see this object as a more fundamental object than 'iterator's
-// are because these objects don't know 'next' and can navigate freely through
-// the container. Freely doesn't imply cheaply, complexity costs are indicated
-// on the various methods.
-//
-// Other than nodes in a tree, accessor objects may be put in a state we call
-// 'end' (because typically this is useful when done as an iterator). In this
-// state the accessor refers to an invalid object. This accessor may be seen
-// like a virtual node which is the parent of the 'root' node of this tre with
-// the difference that it is impossible to navigate down after reaching there.
-//
-// Once in 'end' state doing any operations on the accessor or dereferenced
-// tree nodes is undefined unless specified otherwise as being end_safe.
-//
-// NOTE: Accessor objects are stable. They remain valid if the tree that the
-// node they point to is modified in any way including detaching enveloping
-// subtrees. So long as the node pointed to is not deleted (detach with dropped
-// reference or replace) any accessors pointing to it are valid. Their
-// behaviour may be seen analogous to that of std::list<..>::iterators which
-// remain valid across inward and outward splice operations done on the lists.
-//
-// NOTE: Accessors would lose some semantic relevance across 'swap' operations.
-// In swaps, the memory allocation of two nodes remains the same and the
-// contents are switched. This would cause the first memory location to
-// 'become' the tree rooted at the second location. Accessors are tied to
-// memory locations and hence will not port across swaps.
+/// accessors are used for creating *pointers* to nodes in a `raw_tree`.
+///
+/// # Overview
+///
+/// Accessor objects are used for referencing a node in a tree and for
+/// navigating through the various nodes in the tree. It is a single object
+/// that can be used to visit all the nodes in the tree.
+///
+/// Clients should see these classes as more fundamental than `iterator`s are
+/// because objects of these classes don't know *next* and can navigate freely
+/// through the container. Freely doesn't imply cheaply; complexity costs are
+/// indicated on the various methods.
+///
+/// # End accessor
+///
+/// Other than nodes in a tree, accessor objects may be put in a state we call
+/// *end* (because typically this state is useful when done as an iterator). In
+/// this state the accessor refers to an invalid object. This accessor may be
+/// seen like a virtual node which is the parent of the *root* node of this
+/// tree with the difference that it is impossible to navigate down after
+/// reaching there.
+///
+/// # Properties
+///
+/// ## Validity in the face of Mutating methods
+///
+/// Accessor objects are generally stable. They remain valid if the tree that
+/// the node they point to is modified in any way including detaching
+/// enveloping subtrees. So long as the node pointed to is not deleted (detach
+/// with dropped reference or replace) any accessors pointing to it are valid.
+///
+/// Their behaviour may be seen analogous to that of `std::list<..>::iterator`s
+/// which remain valid across inward and outward splice operations done on the
+/// lists.
+///
+/// ## Operations on end accessors
+///
+/// Once in *end* state doing any operations on the accessor or dereferenced
+/// tree nodes is undefined unless specified otherwise as being end_safe.
+///
+/// ## Swap operations
+///
+/// Accessors would lose some semantic relevance across `swap` operations. In
+/// swaps, the memory allocation of two nodes remains the same and the contents
+/// are switched. This would cause the first memory location to *become* the
+/// tree rooted at the second location. Accessors are tied to memory locations
+/// and hence will not port across swaps.
+///
+/// @tparam Container is the tree container type that this accessor works over.
+/// Methods like `parent()`, `child<side::left>()` etc. are expected to be
+/// defined over this type.
 template <class Container>
 class accessor {
   public:
@@ -53,48 +67,32 @@ class accessor {
                                   const typename container_type::value_type,
                                   typename container_type::value_type>::type;
 
-    // An accessor which is specifically pointing to 'node'.
-    //
-    // 'node' must be part of a raw_tree<T> structure. A reference to 'node' is
-    //     maintained inside this object and hence it must remain valid until
-    //     at least the accessor is used to dereference it's value. Tree
-    //     modifications don't affect the accessor. See note above.
     explicit accessor(node_type &node);
     accessor() = default;
     accessor(accessor &&) = default;
     accessor &operator=(const accessor &) = default;
     accessor &operator=(accessor &&) = default;
 
-    // We specifically define the following constructor instead of using the
-    // following signature:
-    //
-    // accessor(const accessor &) = default;
-    //
-    // but the functionality is equivalent. When 'is_const' is false, this is a
-    // copy constructor, when is_const is true this is a 'conversion'
-    // constructor which converts from the non-const accessor to the const
-    // accessor.
-    //
-    // Detailed notes at
-    // http://www.drdobbs.com/the-standard-librarian-defining-iterato/184401331
-    accessor(const accessor<container_type> &);
-    accessor(const accessor<const container_type> &);
+    accessor(const accessor<container_type> &pos);
+    accessor(const accessor<const container_type> &post);
 
     // Dereferences.
     value_type_t &operator*() const;
     node_type &node() const;
     node_type *operator->() const;
 
-    // Equality and position queries. These are end_safe operations.
-    // Returns false iff iterator is in 'end' state.
+    // @returns false iff iterator is in *end* state.
     operator bool() const;
+    /// Equality and position queries. These are end_safe operations.
     bool operator==(const accessor &other) const;
     bool operator!=(const accessor &other) const;
-    // Returns true if the node we point to is a 'root' node.
+
+    // @returns true iff the node we point to is a *root* node.
     bool is_root() const;
-    // Returns the 'depth' of the node. Invalid result is returned when we are
-    // at end.
-    // Complexity: O(lg(n))
+
+    /// **Complexity: O(lg(n))**
+    /// @returns the 'depth' of the node. Invalid result is returned when we are
+    /// at end.
     uint32_t depth() const;
 
     // Movement operations allow this accessor / visitor to move over the tree
