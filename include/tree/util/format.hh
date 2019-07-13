@@ -52,7 +52,7 @@ void format::print_internal(Tree &tree, std::string &output) const {
 }
 
 template <typename T>
-std::ostream &operator<<(std::ostream &out, raw_tree<T> &t) {
+std::ostream &operator<<(std::ostream &out, const raw_tree<T> &t) {
     format f;
     out << f.print(t);
     return out;
