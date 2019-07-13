@@ -66,6 +66,11 @@ const raw_tree<T> *predicated_tree<T, C>::operator->() const {
 }
 
 template <typename T, typename C>
+const raw_tree<T> &predicated_tree<T, C>::node() const {
+    return tree_.value();
+}
+
+template <typename T, typename C>
 raw_tree<T> predicated_tree<T, C>::release() {
     auto detached = std::move(tree_.value());
     tree_.reset();

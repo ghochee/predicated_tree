@@ -176,6 +176,7 @@ class predicated_tree {
 
     // Return a pointer to the underlying tree root for performing operations.
     const raw_tree<T> *operator->() const;
+    const raw_tree<T> &node() const;
 
     // Releases ownership of the underlying tree to the call site. This is the
     // only way to get a mutable reference to the underlying tree. This ensures
