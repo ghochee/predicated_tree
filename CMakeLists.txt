@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
-set(TREE_VERSION_MAJOR 0)
-set(TREE_VERSION_MINOR 1)
-set(TREE_VERSION_PATCH 0)
+file(READ VERSION.txt VERSION_INFORMATION)
+string(STRIP ${VERSION_INFORMATION} VERSION_INFORMATION)
+project(predicated_tree VERSION ${VERSION_INFORMATION} LANGUAGES CXX)
 
 include(${CMAKE_SOURCE_DIR}/.conan/conanbuildinfo.cmake)
 conan_basic_setup()
