@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>template class virtual_accessor &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/target-highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="template class traverser" href="class_traverser-4.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Predicated Tree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="enum_side.html">enum side</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_traversal_order.html">enum traversal_order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_indifferent.html">template struct indifferent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_stable_random.html">template struct stable_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_wrapper.html">template struct wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_accessor.html">template class accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_comparator.html">template class comparator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_format.html">class format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_iterator.html">template class iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_mutator.html">template class mutator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_predicated_tree.html">template class predicated_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_raw_tree.html">template class raw_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser.html">template class traverser&lt;A, traversal_order::post, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-2.html">template class traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-3.html">template class traverser&lt;A, traversal_order::in, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-4.html">template class traverser</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">template class virtual_accessor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inherited-members">Inherited Members</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#doxid-classvirtual-accessor-1autotoc-md26">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#operations-on-end-accessors">Operations on end accessors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validity-in-the-face-of-mutating-methods">Validity in the face of Mutating methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#construction">Construction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Predicated Tree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="global.html">Global Namespace</a> &raquo;</li>
+        
+      <li>template class virtual_accessor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/class_virtual_accessor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="template-class-virtual-accessor">
+<span id="doxid-classvirtual-accessor"></span><span id="index-0"></span><h1>template class virtual_accessor<a class="headerlink" href="#template-class-virtual-accessor" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference internal" href="#doxid-classvirtual-accessor"><span class="std std-ref">virtual_accessor</span></a> is an accessor on a <em>virtual</em> tree. <a class="reference internal" href="#details-classvirtual-accessor"><span class="std std-ref">More…</span></a></p>
+<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;virtual_accessor.h&gt;</span><span class="cp"></span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">ContainerType</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">virtual_accessor</span><span class="o">:</span> <span class="k">public</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// typedefs</span>
+
+    <span class="k">typedef</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="n">ContainerType</span><span class="o">&gt;</span> <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1a17d034042e2e3d69b5d8cd8663e10b17">base_type</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a84d4805394b797518f31eb0c248e6103"><span class="std std-ref">base_type::container_type</span></a><span></span> <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1ad9d7699b4b47c5abc827deb9fe4e405b">container_type</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a591b87c9180fb0ac4fc4a9f50dafec37"><span class="std std-ref">base_type::node_type</span></a><span></span> <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1aeb0c0cb050a3ba82f4b720bc46d321ee">node_type</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1aff6e1321b37e4f48f57491276bcc721f"><span class="std std-ref">base_type::value_type_t</span></a><span></span> <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1a55bc873724c28c00c9635a9733a29dcd">value_type_t</span><span></span><span class="p">;</span>
+
+    <span class="c1">// construction</span>
+
+    <a class="reference internal" href="#doxid-classvirtual-accessor-1aab89c19eb6a62e06719708206a9d3b3a"><span class="std std-ref">virtual_accessor</span></a><span></span><span class="p">(</span><a class="reference internal" href="#doxid-classvirtual-accessor-1a17d034042e2e3d69b5d8cd8663e10b17"><span class="std std-ref">base_type</span></a><span></span><span class="o">&amp;</span> <span class="n">pos</span><span class="p">);</span>
+    <a class="reference internal" href="#doxid-classvirtual-accessor-1a23359845af1a66514ea01738ae23acf4"><span class="std std-ref">virtual_accessor</span></a><span></span><span class="p">(</span><a class="reference internal" href="#doxid-classvirtual-accessor-1aeb0c0cb050a3ba82f4b720bc46d321ee"><span class="std std-ref">node_type</span></a><span></span><span class="o">&amp;</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int16_t</span> <span class="n">depth</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1aa184d9200f00988ca3e9cf06f72a4906">virtual_accessor</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">virtual_accessor</span><span class="o">&amp;</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1a7b67b36f1e251ddbf62ed41e1a55f72f">virtual_accessor</span><span></span><span class="p">(</span><span class="n">virtual_accessor</span><span class="o">&amp;&amp;</span><span class="p">);</span>
+
+    <span class="c1">// methods</span>
+
+    <span class="n">virtual_accessor</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1ab3e70d2ac3d4a3ddea9c54bfd2ce149e">operator=</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">virtual_accessor</span><span class="o">&amp;</span><span class="p">);</span>
+
+    <span class="n">virtual_accessor</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1ac9e6a3a9f0fbbe22108d202c156abdd1">operator=</span><span></span><span class="p">(</span><span class="n">virtual_accessor</span><span class="o">&amp;&amp;</span><span class="p">);</span>
+
+    <a class="reference internal" href="#doxid-classvirtual-accessor-1aad116949e2788e02036b08db536785c2"><span class="std std-ref">operator bool</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="#doxid-classvirtual-accessor-1abc9c26342ba5dae1c3259bd9eb17c6b4"><span class="std std-ref">operator==</span></a><span></span><span class="p">(</span><span class="k">const</span> <span class="n">virtual_accessor</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1ac505cfd61d5c991d11895d3466062161">operator!=</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">virtual_accessor</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1ab4200e64760f7255edf27b56ae2c530f">is_root</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">uint32_t</span>
+    <a class="reference internal" href="#doxid-classvirtual-accessor-1a10e31f5c64f95f5da8e164c9f625cc3f"><span class="std std-ref">depth</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1a3dbcb231f3f9fbfbe2954b710623d74f">up</span><span></span><span class="p">();</span>
+
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classvirtual-accessor-1ab35a15b04e127870abd7b35ef3b2384d"><span class="std std-ref">root</span></a><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">bool</span>
+    <a class="reference internal" href="#doxid-classvirtual-accessor-1a727e82836e2655e27d2aea6432569fed"><span class="std std-ref">down</span></a><span></span><span class="p">();</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classvirtual-accessor-1abbcab1acc4855106846977175faa9b5e">down</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+<span class="p">};</span></pre>
+<div class="section" id="inherited-members">
+<h3>Inherited Members<a class="headerlink" href="#inherited-members" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-overview-inherited-code-block literal-block"><span></span><span class="k">public</span><span class="o">:</span>
+    <span class="c1">// typedefs</span>
+
+    <span class="k">typedef</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">remove_cv</span><span class="o">&lt;</span><span class="n">Container</span><span class="o">&gt;::</span><span class="n">type</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a84d4805394b797518f31eb0c248e6103"><span class="std std-ref">container_type</span></a><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a4e9c37b468cf05eaf0dd733672d8b621"><span class="std std-ref">is_const</span></a><span></span><span class="p">,</span> <span class="k">const</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a84d4805394b797518f31eb0c248e6103"><span class="std std-ref">container_type</span></a><span></span><span class="p">,</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a84d4805394b797518f31eb0c248e6103"><span class="std std-ref">container_type</span></a><span></span><span class="o">&gt;::</span><span class="n">type</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a591b87c9180fb0ac4fc4a9f50dafec37"><span class="std std-ref">node_type</span></a><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a4e9c37b468cf05eaf0dd733672d8b621"><span class="std std-ref">is_const</span></a><span></span><span class="p">,</span> <span class="k">const</span> <span class="k">typename</span> <span class="n">container_type</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span> <span class="k">typename</span> <span class="n">container_type</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;::</span><span class="n">type</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1aff6e1321b37e4f48f57491276bcc721f"><span class="std std-ref">value_type_t</span></a><span></span><span class="p">;</span>
+
+    <span class="c1">// fields</span>
+
+    <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">bool</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a4e9c37b468cf05eaf0dd733672d8b621"><span class="std std-ref">is_const</span></a><span></span> <span class="o">=</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">is_const</span><span class="o">&lt;</span><span class="n">Container</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">;</span>
+
+    <span class="c1">// methods</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&amp;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1ab0c62a4f0fccbd1cd720c657ae2fcddf"><span class="std std-ref">operator=</span></a><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&amp;</span><span class="p">);</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&amp;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a94640ec1f8ad94fa4c4fa358b4f6210f"><span class="std std-ref">operator=</span></a><span></span><span class="p">(</span><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&amp;&amp;</span><span class="p">);</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1aff6e1321b37e4f48f57491276bcc721f"><span class="std std-ref">value_type_t</span></a><span></span><span class="o">&amp;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1aa1e60daa710352f01542754e8b6b2d23"><span class="std std-ref">operator*</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a591b87c9180fb0ac4fc4a9f50dafec37"><span class="std std-ref">node_type</span></a><span></span><span class="o">&amp;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a6f26601bbb4b47b8d99ad171e04166b5"><span class="std std-ref">node</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a591b87c9180fb0ac4fc4a9f50dafec37"><span class="std std-ref">node_type</span></a><span></span><span class="o">*</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a60c281ee9556a20ffd6c5e9f67f4a501"><span class="std std-ref">operator-&gt;</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a3f79c7136cdde4f1660e062b80228f6c"><span class="std std-ref">operator bool</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a5154144ea42d5e069e15855c315c851a"><span class="std std-ref">operator==</span></a><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a731c3a60b6849b9298f20d70408bbbe8"><span class="std std-ref">operator!=</span></a><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1ae3c3907a4a21f15ed33354183bfb3263"><span class="std std-ref">is_root</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">uint32_t</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a6cec3a1354a83d75005491253c0e65b7"><span class="std std-ref">depth</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a7c7006bcc4d87e5466a7efbe746e1806"><span class="std std-ref">up</span></a><span></span><span class="p">();</span>
+
+    <span class="kt">void</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a3713d9f1dd14a9d41f57f2e462cfe70e"><span class="std std-ref">root</span></a><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">bool</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a91ce4c81cd2bec0602c0f597d83df97f"><span class="std std-ref">down</span></a><span></span><span class="p">();</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a1cefcac06893ed46efa1be3b33d7be4f"><span class="std std-ref">down</span></a><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">bool</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1abba9db9b45214eebc47150fd8b191982"><span class="std std-ref">ancestor</span></a><span></span><span class="p">();</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a2d53d3f6cc1eccf09c4c873af6a12a3b"><span class="std std-ref">ancestor</span></a><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1abe70df46e2f43d661766e9322b54b87f"><span class="std std-ref">common_ancestor</span></a><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><a class="reference internal" href="class_accessor.html#doxid-classaccessor-1a84d4805394b797518f31eb0c248e6103"><span class="std std-ref">container_type</span></a><span></span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor-1af87d098b18f9eb7548f20cfe87d5e4ea"><span class="std std-ref">non_const</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span></pre>
+</div>
+</div>
+<div class="section" id="detailed-documentation">
+<span id="details-classvirtual-accessor"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference internal" href="#doxid-classvirtual-accessor"><span class="std std-ref">virtual_accessor</span></a> is an accessor on a <em>virtual</em> tree.</p>
+</div>
+<div class="section" id="doxid-classvirtual-accessor-1autotoc-md26">
+<span id="id1"></span><h2>Overview<a class="headerlink" href="#doxid-classvirtual-accessor-1autotoc-md26" title="Permalink to this headline">¶</a></h2>
+<p>It’s domain of operation may be limited to a subtree of a <em>physical</em> tree. All objects created from copying moving this object will retain this behaviour. All virtual_accessors created with the same logical subtree are semantically compatible. See constructor for notes.</p>
+<p>Minor modifications are done on methods defined on the parent <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code> class. These are not done through virtual methods for efficiency but also because clients are reasonably expected to not need to erase type information when dealing with <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code> and <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classvirtual-accessor"><span class="std std-ref"><span class="pre">virtual_accessor</span></span></a></code> class family objects.</p>
+</div>
+<div class="section" id="properties">
+<span id="doxid-classvirtual-accessor-1autotoc-md27"></span><h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="operations-on-end-accessors">
+<span id="doxid-classvirtual-accessor-1autotoc-md28"></span><h3>Operations on end accessors<a class="headerlink" href="#operations-on-end-accessors" title="Permalink to this headline">¶</a></h3>
+<p>All operations are well-defined on <em>end</em> accessor except the derefernce operations. Specifically movement operations on <em>end</em> accessor are well defined. Even more specifically in <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code> an *end*ed accessor can in no way be navigated back to the tree (except through reassignment which is really not navigating it). In the <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classvirtual-accessor"><span class="std std-ref"><span class="pre">virtual_accessor</span></span></a></code> objects navigatiion using <code class="docutils literal notranslate"><span class="pre">down</span></code> / <code class="docutils literal notranslate"><span class="pre">root</span></code> etc. for navigating back to the tree is well defined.</p>
+</div>
+<div class="section" id="validity-in-the-face-of-mutating-methods">
+<span id="doxid-classvirtual-accessor-1autotoc-md29"></span><h3>Validity in the face of Mutating methods<a class="headerlink" href="#validity-in-the-face-of-mutating-methods" title="Permalink to this headline">¶</a></h3>
+<p>virtual_accessors are not <em>stable</em> (see accessor <em>Validity in the face of …</em>). Specifically modifying the underlying tree may make the iterator invalid. More specifically modifying the ‘virtual tree’ in such a way as to change the ‘depth’ of a node that any <a class="reference internal" href="#doxid-classvirtual-accessor"><span class="std std-ref">virtual_accessor</span></a> is pointing to would invalidate this accessor. This also means that modifications <em>including</em> height changes done to any physical ancestor of the virtual root of the tree would <em>not</em> invalidate an accessor. A clean way to read it is ‘any modification which changes the ‘depth’ of the pointed-to node <em>in</em> the virtual tree that an accessor is referring to would invalidate it.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ContainerType</p></td>
+<td><p>is the same as that for <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="construction">
+<h3>Construction<a class="headerlink" href="#construction" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classvirtual-accessor-1aab89c19eb6a62e06719708206a9d3b3a"><span id="index-1"></span><span></span><span class="n">virtual_accessor</span><span class="p">(</span><a class="reference internal" href="#doxid-classvirtual-accessor-1a17d034042e2e3d69b5d8cd8663e10b17"><span class="std std-ref">base_type</span></a><span></span><span class="o">&amp;</span> <span class="n">pos</span><span class="p">)</span></pre>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>pos</p></td>
+<td><p>is the position of the accessor type which is treated as <em>root</em>.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classvirtual-accessor-1a23359845af1a66514ea01738ae23acf4"><span id="index-2"></span><span></span><span class="n">virtual_accessor</span><span class="p">(</span><a class="reference internal" href="#doxid-classvirtual-accessor-1aeb0c0cb050a3ba82f4b720bc46d321ee"><span class="std std-ref">node_type</span></a><span></span><span class="o">&amp;</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int16_t</span> <span class="n">depth</span><span class="p">)</span></pre>
+<p>An accessor with <code class="docutils literal notranslate"><span class="pre">node</span></code> set as the root of a virtual tree. All operations on this object will restrict the accessor to this virtual tree. See <a class="reference internal" href="#doxid-classvirtual-accessor-1a3dbcb231f3f9fbfbe2954b710623d74f"><span class="std std-ref">up()</span></a>, <a class="reference internal" href="#doxid-classvirtual-accessor-1ab35a15b04e127870abd7b35ef3b2384d"><span class="std std-ref">root()</span></a> for noticeable differences from how <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code> objects behave.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>node</p></td>
+<td><p>is used in <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor-1aff4b2a161914eb343b359ddae303cbfb"><span class="std std-ref"><span class="pre">accessor::accessor()</span></span></a></code> parent constructor call.</p></td>
+</tr>
+<tr class="row-even"><td><p>depth</p></td>
+<td><p>of 0 indicates the <em>root</em> node. It can also be given a special value of -1 which indicates an accessor which is indicative of an <em>end</em> accessor. Any other value will cause a std::abort.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classvirtual-accessor-1aad116949e2788e02036b08db536785c2"><span id="index-3"></span><span></span><span class="k">operator</span> <span class="kt">bool</span><span class="p">()</span> <span class="k">const</span></pre>
+<p class="rubric">Returns:</p>
+<p>true iff we are not at <em>end</em>.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classvirtual-accessor-1abc9c26342ba5dae1c3259bd9eb17c6b4"><span id="index-4"></span><span></span><span class="kt">bool</span>
+<span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">virtual_accessor</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span></pre>
+<p class="rubric">Returns:</p>
+<p>true iff node being pointed to is the same <em>and</em> the virtual tree that we are part of is the same.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classvirtual-accessor-1a10e31f5c64f95f5da8e164c9f625cc3f"><span id="index-5"></span><span></span><span class="kt">uint32_t</span>
+<span class="n">depth</span><span class="p">()</span> <span class="k">const</span></pre>
+<p>Depth with respect to the <em>virtual</em> root that we operating under. 0 at virtual root. See class documentation for more information. Invalid at <em>end</em>.</p>
+<p><strong>Complexity: O(1)</strong></p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classvirtual-accessor-1ab35a15b04e127870abd7b35ef3b2384d"><span id="index-6"></span><span></span><span class="kt">void</span>
+<span class="n">root</span><span class="p">()</span></pre>
+<p>Same as parent with the difference that calling on <em>end</em> objects will move it to the virtual root of the subtree this is operating under.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classvirtual-accessor-1a727e82836e2655e27d2aea6432569fed"><span id="index-7"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="kt">bool</span>
+<span class="n">down</span><span class="p">()</span></pre>
+<p>Same as parent with the difference that calling down&lt;*&gt; on <em>end</em> objects is identical to calling <em>root</em> and always returns true in that case.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="class_traverser-4.html" class="btn btn-neutral float-left" title="template class traverser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Aditya Dalmia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>template class mutator &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/target-highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="template class predicated_tree" href="class_predicated_tree.html" />
+    <link rel="prev" title="template class iterator" href="class_iterator.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Predicated Tree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="enum_side.html">enum side</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_traversal_order.html">enum traversal_order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_indifferent.html">template struct indifferent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_stable_random.html">template struct stable_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_wrapper.html">template struct wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_accessor.html">template class accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_comparator.html">template class comparator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_format.html">class format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_iterator.html">template class iterator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">template class mutator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_predicated_tree.html">template class predicated_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_raw_tree.html">template class raw_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser.html">template class traverser&lt;A, traversal_order::post, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-2.html">template class traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-3.html">template class traverser&lt;A, traversal_order::in, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-4.html">template class traverser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_virtual_accessor.html">template class virtual_accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Predicated Tree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="global.html">Global Namespace</a> &raquo;</li>
+        
+      <li>template class mutator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/class_mutator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="template-class-mutator">
+<span id="doxid-classmutator"></span><span id="index-0"></span><h1>template class mutator<a class="headerlink" href="#template-class-mutator" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A mutator class object is strongly linked to the properties of a <code class="docutils literal notranslate"><a class="reference internal" href="class_predicated_tree.html#doxid-classpredicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code>. <a class="reference internal" href="#details-classmutator"><span class="std std-ref">More…</span></a></p>
+<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;mutator.h&gt;</span><span class="cp"></span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Comparator</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">mutator</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// construction</span>
+
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1aa40850f542ef335f0a8b8f39f98e831a">mutator</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">Comparator</span> <span class="o">=</span> <span class="n">Comparator</span><span class="p">());</span>
+
+    <span class="c1">// methods</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1a0532b1f23c37e9780250bbb861b8d98a">in_subtree</span><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">pos</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">ContainerType</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="n">ContainerType</span><span class="o">&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1af5eff1ec41cb8c7249a63eb967fac3d1">upper_bound</span><span></span><span class="p">(</span><span class="n">ContainerType</span><span class="o">&amp;</span> <span class="n">tree</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">ContainerType</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="n">ContainerType</span><span class="o">&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1abf2ef2200305426fd1da9f0d38ec5b9f">lower_bound</span><span></span><span class="p">(</span><span class="n">ContainerType</span><span class="o">&amp;</span> <span class="n">tree</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">ContainerType</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="n">ContainerType</span><span class="o">&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1aa1e97be0f6b2a04eef3fe805f4b0cd90">find</span><span></span><span class="p">(</span><span class="n">ContainerType</span><span class="o">&amp;</span> <span class="n">tree</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1ac34a7cb70aa69999bc1d6f82cea5af7b">insert</span><span></span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">value</span><span class="p">,</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">node</span><span class="p">,</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="k">const</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">pos</span> <span class="o">=</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="k">const</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">());</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">It</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1a4f52af44fdd3e52e46b75ef94ed9bb3e">insert</span><span></span><span class="p">(</span><span class="n">It</span> <span class="n">begin</span><span class="p">,</span> <span class="n">It</span> <span class="n">end</span><span class="p">,</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">node</span><span class="p">,</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="k">const</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">pos</span> <span class="o">=</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="k">const</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">());</span>
+
+    <span class="kt">void</span>
+    <span class="doxyrest-code-target target" id="doxid-classmutator-1aeb5fa62764b9bdf44e36a6b94cc796c3">erase</span><span></span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">node</span><span class="p">,</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="o">&lt;</span><span class="k">const</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">pos</span><span class="p">);</span>
+
+    <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <a class="reference internal" href="#doxid-classmutator-1a7e16eec3df6607508970c2815d2685ea"><span class="std std-ref">zip</span></a><span></span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">left</span><span class="p">,</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">right</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
+    <a class="reference internal" href="#doxid-classmutator-1ab49314989085748a6ba50d49a178ce39"><span class="std std-ref">clip</span></a><span></span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">node</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <a class="reference internal" href="#doxid-classmutator-1a56a54d9e4937ab25593ef448d22b4e9e"><span class="std std-ref">merge</span></a><span></span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">first</span><span class="p">,</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">second</span><span class="p">);</span>
+
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classmutator-1af6858422bc98aa25b009579bf7938c7f"><span class="std std-ref">stable_make_heap</span></a><span></span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">tree</span><span class="p">);</span>
+
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classmutator-1a50ab063ce012b6f6981bbf973eac97d2"><span class="std std-ref">stable_sort</span></a><span></span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">tree</span><span class="p">);</span>
+<span class="p">};</span></pre>
+</div>
+<div class="section" id="detailed-documentation">
+<span id="details-classmutator"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
+<p>A mutator class object is strongly linked to the properties of a <code class="docutils literal notranslate"><a class="reference internal" href="class_predicated_tree.html#doxid-classpredicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code>.</p>
+<p>Mutator objects allow <em>effecting</em> the properties of the <code class="docutils literal notranslate"><a class="reference internal" href="class_predicated_tree.html#doxid-classpredicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> but also provide some other facilities which a <code class="docutils literal notranslate"><a class="reference internal" href="class_predicated_tree.html#doxid-classpredicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> doesn’t use directly.</p>
+<p>Typical usage:</p>
+<pre class="highlight literal-block"><span></span><span class="k">struct</span> <span class="n">Taller</span><span class="p">;</span>
+<span class="k">struct</span> <span class="n">Lefter</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">r</span><span class="p">(...);</span>
+<span class="p">...</span>
+<span class="n">mutator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">m</span><span class="p">(</span><span class="n">comparator</span><span class="o">&lt;</span><span class="n">Taller</span><span class="p">,</span> <span class="n">Lefter</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="p">...</span>
+<span class="n">m</span><span class="p">.</span><span class="n">insert</span><span class="p">(...);</span>
+<span class="n">m</span><span class="p">.</span><span class="n">insert</span><span class="p">(...);</span>
+<span class="n">m</span><span class="p">.</span><span class="n">insert</span><span class="p">(...);</span>
+<span class="n">m</span><span class="p">.</span><span class="n">insert</span><span class="p">(...);</span>
+<span class="p">...</span>
+<span class="n">m</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">accessor</span><span class="o">&lt;</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+<span class="p">...</span></pre>
+<p>The most effective usage of this class is as part of <code class="docutils literal notranslate"><a class="reference internal" href="class_predicated_tree.html#doxid-classpredicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code>.</p>
+<div class="section" id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classmutator-1a7e16eec3df6607508970c2815d2685ea"><span id="index-1"></span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="n">zip</span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">left</span><span class="p">,</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">right</span><span class="p">)</span> <span class="k">const</span></pre>
+<p>Combines <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> to give a single tree with all the elements in the two trees under <code class="docutils literal notranslate"><span class="pre">Comparator</span></code> predicates. If a represents elements of <code class="docutils literal notranslate"><span class="pre">left</span></code> and b elements of <code class="docutils literal notranslate"><span class="pre">right</span></code> <code class="docutils literal notranslate"><span class="pre">l(b,</span> <span class="pre">a)</span></code> is always <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>The uncommon name of this method reflects the operation being done, where <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> are correct under <code class="docutils literal notranslate"><span class="pre">H</span></code> and <code class="docutils literal notranslate"><span class="pre">L</span></code> and <code class="docutils literal notranslate"><span class="pre">left</span></code> has elements <em>less than</em> <code class="docutils literal notranslate"><span class="pre">right</span></code>, then the operation is <em>zipping up</em> the two halves along the middle.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classmutator-1ab49314989085748a6ba50d49a178ce39"><span id="index-2"></span><span></span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
+<span class="n">clip</span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">node</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span></pre>
+<p>Clips out the <em>extremal</em> part of the tree w.r.t value. Specifcally if <code class="docutils literal notranslate"><span class="pre">value</span></code> is less than node then returns a tree which comprises all elements <em>smaller</em> than <code class="docutils literal notranslate"><span class="pre">value</span></code>. If <code class="docutils literal notranslate"><span class="pre">value</span></code> is greater than that at node then returns a tree comprising elements <em>greater</em> than <code class="docutils literal notranslate"><span class="pre">value</span></code>. This is the reverse operation of <code class="docutils literal notranslate"><span class="pre">zip</span></code> governed by a value.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">std::optional</span></code> because <code class="docutils literal notranslate"><span class="pre">value</span></code> may be smaller (or greater) than all the values in the tree in which case we have to return an empty tree.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classmutator-1a56a54d9e4937ab25593ef448d22b4e9e"><span id="index-3"></span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="n">merge</span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">first</span><span class="p">,</span> <a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">second</span><span class="p">)</span></pre>
+<p><code class="docutils literal notranslate"><span class="pre">first</span></code> and <code class="docutils literal notranslate"><span class="pre">second</span></code> trees are set under H and L. This operation will merge the two trees to make a single tree which also meets the H and L criteria. FIXME(ghochee): Implementation pending.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classmutator-1af6858422bc98aa25b009579bf7938c7f"><span id="index-4"></span><span></span><span class="kt">void</span>
+<span class="n">stable_make_heap</span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">tree</span><span class="p">)</span></pre>
+<p>Heaps <code class="docutils literal notranslate"><span class="pre">tree</span></code> using <code class="docutils literal notranslate"><span class="pre">H</span></code> predicate while keeping relative <code class="docutils literal notranslate"><span class="pre">L</span></code> order unchanged. For <code class="docutils literal notranslate"><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref"><span class="pre">raw_tree</span></span></a><span class="pre">&lt;T&gt;</span></code> value <code class="docutils literal notranslate"><span class="pre">t</span></code>, the following:</p>
+<pre class="highlight literal-block"><span></span><span class="n">H</span> <span class="nf">h</span><span class="p">(...);</span> <span class="n">L</span> <span class="nf">l</span><span class="p">(...);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">inlbegin</span><span class="p">(),</span> <span class="n">t</span><span class="p">.</span><span class="n">inlend</span><span class="p">(),</span> <span class="n">l</span><span class="p">);</span>
+<span class="n">mutator</span><span class="o">&lt;</span><span class="n">t</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span> <span class="p">...</span><span class="o">&gt;</span> <span class="n">m</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
+<span class="n">m</span><span class="p">.</span><span class="n">stable_heap</span><span class="p">(</span><span class="n">t</span><span class="p">);</span></pre>
+<p>would result in <code class="docutils literal notranslate"><span class="pre">t</span></code> being correct in both predicates.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classmutator-1a50ab063ce012b6f6981bbf973eac97d2"><span id="index-5"></span><span></span><span class="kt">void</span>
+<span class="n">stable_sort</span><span class="p">(</span><a class="reference internal" href="class_raw_tree.html#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">tree</span><span class="p">)</span></pre>
+<p>Sorts ‘tree’ using ‘L’ predicate while keeping relative ‘H’ order unchanged. For raw_tree&lt;T&gt; value ‘t’, the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>H h(...); L l(...);
+std::make_heap(t.prerbegin(), t.prerend(), l);
+mutator&lt;t::value_type, ...&gt; m(h, l);
+m.stable_sort(t);
+</pre></div>
+</div>
+<p>would result in ‘t’ being correct in both predicates. FIXME(ghochee): Implementation pending.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="class_predicated_tree.html" class="btn btn-neutral float-right" title="template class predicated_tree" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="class_iterator.html" class="btn btn-neutral float-left" title="template class iterator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Aditya Dalmia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

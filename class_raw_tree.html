@@ -1,0 +1,783 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>template class raw_tree &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/target-highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="template class traverser&lt;A, traversal_order::post, wing&gt;" href="class_traverser.html" />
+    <link rel="prev" title="template class predicated_tree" href="class_predicated_tree.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Predicated Tree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="enum_side.html">enum side</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_traversal_order.html">enum traversal_order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_indifferent.html">template struct indifferent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_stable_random.html">template struct stable_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_wrapper.html">template struct wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_accessor.html">template class accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_comparator.html">template class comparator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_format.html">class format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_iterator.html">template class iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_mutator.html">template class mutator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_predicated_tree.html">template class predicated_tree</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">template class raw_tree</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#doxid-classraw-tree-1autotoc-md14">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#typical-usage">Typical usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recursive-container">Recursive Container</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#accessing-values">Accessing values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#relations">Relations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#children">Children</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parent">Parent</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#operations">Operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#safety-of-methods">Safety of methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#non-mutating-and-mutating-methods">Non-mutating and Mutating methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#side-as-template-argument-vs-function-argument">Side as template argument vs function argument</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#construction">Construction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser.html">template class traverser&lt;A, traversal_order::post, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-2.html">template class traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-3.html">template class traverser&lt;A, traversal_order::in, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-4.html">template class traverser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_virtual_accessor.html">template class virtual_accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Predicated Tree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="global.html">Global Namespace</a> &raquo;</li>
+        
+      <li>template class raw_tree</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/class_raw_tree.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="template-class-raw-tree">
+<span id="doxid-classraw-tree"></span><span id="index-0"></span><h1>template class raw_tree<a class="headerlink" href="#template-class-raw-tree" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a> is a <em>container</em> which behaves like a <em>tree</em>. <a class="reference internal" href="#details-classraw-tree"><span class="std std-ref">More…</span></a></p>
+<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;raw_tree.h&gt;</span><span class="cp"></span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">raw_tree</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// typedefs</span>
+
+    <span class="k">typedef</span> <span class="n">T</span> <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a18108443d03d4541bc719ff1835ee7d1">value_type</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <a class="reference internal" href="#doxid-classraw-tree-1a18108443d03d4541bc719ff1835ee7d1"><span class="std std-ref">value_type</span></a><span></span><span class="o">&amp;</span> <span class="doxyrest-code-target target" id="doxid-classraw-tree-1ac268294f956e159038058c6c4e7cebea">reference</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="kt">ptrdiff_t</span> <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a1ce12dce29605e10ecdd80ef7beb6e7d">difference_type</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="kt">size_t</span> <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a51e4137be7dda7d5d7a9f65be64d76e7">size_type</span><span></span><span class="p">;</span>
+
+    <span class="c1">// fields</span>
+
+    <span class="k">const</span> <span class="k">typedef</span> <a class="reference internal" href="#doxid-classraw-tree-1a18108443d03d4541bc719ff1835ee7d1"><span class="std std-ref">value_type</span></a><span></span><span class="o">&amp;</span> <span class="doxyrest-code-target target" id="doxid-classraw-tree-1acf92801f9b2289143527bdf87a2ae1be">const_reference</span><span></span><span class="p">;</span>
+
+    <span class="c1">// construction</span>
+
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1af3f58455f2fa922ca7e88adf57ad0820">raw_tree</span><span></span><span class="p">();</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a1b10bd34c76d25054db92ba4277624a1">raw_tree</span><span></span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">value</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a9576a7a74b4daec70c7059fdc04ca133">raw_tree</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">);</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1ae8fb2379a20dbd7000a448b058a6eb17"><span class="std std-ref">raw_tree</span></a><span></span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&amp;&amp;</span> <span class="n">other</span><span class="p">);</span>
+
+    <span class="c1">// methods</span>
+
+    <span class="n">raw_tree</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1aaef81533a822e9519e96edb9f35a95bd">operator=</span><span></span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&amp;&amp;</span> <span class="n">other</span><span class="p">);</span>
+
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1ac2ed94c9663af63f9036f70e869f9e2a"><span class="std std-ref">swap</span></a><span></span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">other</span><span class="p">);</span>
+
+    <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a92dd208eee86c41eae8e7e36f2f3b1bf"><span class="std std-ref">operator*</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="n">T</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a14cebfaafeb1bb9a0bb66c7fda41044b">operator*</span><span></span><span class="p">();</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1afefab4d84904a183fe337b1f526d66e2"><span class="std std-ref">has_parent</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="n">raw_tree</span><span class="o">&amp;</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a5e9f83d611dba17d089e3ff7feb82854"><span class="std std-ref">parent</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="n">raw_tree</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1ae6b20a1bd7a50aa84ec5c9608ae54202">parent</span><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">bool</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1aac9b402282963b23119277298c391f17"><span class="std std-ref">is_side</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1af2553e2e75e90a6c6770528955d0d965">is_side</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">bool</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a690a9fa3f1b2c72179cc599ad3640456"><span class="std std-ref">has_child</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1afc4731413e1966d7898efb39bd2e55f3">has_child</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="k">const</span> <span class="n">raw_tree</span><span class="o">&amp;</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a656522ed9891bca243b2c27edb90bb08"><span class="std std-ref">child</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="n">raw_tree</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a57481589e4bce5e528499b83d922ff23">child</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="n">raw_tree</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a91be6597cb68aab8bba4dfefe7699aba">child</span><span></span><span class="p">();</span>
+
+    <span class="n">raw_tree</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1abed3f8f2366082e6b52dc11c55fb830d">child</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+
+    <span class="kt">size_t</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1aaaeac713a9fde22f7bb320fd14f188b1"><span class="std std-ref">size</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">child</span><span class="p">,</span> <span class="n">side</span> <span class="n">grand_child</span><span class="o">&gt;</span>
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a00d7effb49f5643d727ea3a0bd84b5a8"><span class="std std-ref">reshape</span></a><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1afdfe54071bdc1f9b59a88b822f440499"><span class="std std-ref">rotate</span></a><span></span><span class="p">();</span>
+
+    <span class="kt">void</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1ade2d6f0eaecdbbcf83d12f18f21e4176">rotate</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1ac11cb7e3d45f604d1d2363735cd818eb"><span class="std std-ref">flip</span></a><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a2428fc5922152f4df34e4d67ff09d193"><span class="std std-ref">replace</span></a><span></span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">child</span><span class="p">);</span>
+
+    <span class="kt">void</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a450bd00758afe52c7c61b25e7451b1eb">replace</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">,</span> <span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">child</span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1aee11ad62f1b9cea494b02016e1858c1e"><span class="std std-ref">emplace</span></a><span></span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+    <span class="kt">void</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1ab1bd636af327bab7cd9107d101ef4a2b">emplace</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">,</span> <span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="p">,</span> <span class="n">side</span> <span class="n">gc_wing</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a3273ac000f8ce01b03df6e45b154387c"><span class="std std-ref">splice</span></a><span></span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="n">raw_tree</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a1eb3ce60f2dd021f594eac6c0e520a91"><span class="std std-ref">detach</span></a><span></span><span class="p">();</span>
+
+    <span class="n">raw_tree</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1aafa9d4d61bf6adc1d8f860584cc4ef47">detach</span><span></span><span class="p">(</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref">iterator</span></a><span></span><span class="o">&lt;</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1a70da200e7d48a4da3cce6a25b1749d70"><span class="std std-ref">begin</span></a><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref">iterator</span></a><span></span><span class="o">&lt;</span><span class="k">const</span> <span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a4409c4a23ce0b1ed81b8a1b355d2ffe9">begin</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref">iterator</span></a><span></span><span class="o">&lt;</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <a class="reference internal" href="#doxid-classraw-tree-1aca23f03331397e1b9be5bafe8d9742c4"><span class="std std-ref">end</span></a><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref">iterator</span></a><span></span><span class="o">&lt;</span><span class="k">const</span> <span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1aa463597ace0cee6d3dd4c06cabd49b70">end</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a918c04a11194171308ef9030341c6f0a">RAW_TREE_MAKE_ALIAS</span><span></span><span class="p">(</span><span class="n">inl</span><span class="p">,</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda13b5bfe96f3e2fe411c9f66f4a582adf"><span class="std std-ref">in</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">left</span></a><span></span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a5a1d67acc055498e041c75eda7d08b93">RAW_TREE_MAKE_ALIAS</span><span></span><span class="p">(</span><span class="n">inr</span><span class="p">,</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda13b5bfe96f3e2fe411c9f66f4a582adf"><span class="std std-ref">in</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">right</span></a><span></span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a09083ef36712a28cb15c9563cc95682e">RAW_TREE_MAKE_ALIAS</span><span></span><span class="p">(</span><span class="n">prel</span><span class="p">,</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda6bf9e70a1f928aba143ef1eebe2720b5"><span class="std std-ref">pre</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">left</span></a><span></span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a994f4e7023d2f5bdc4a1860242bcc884">RAW_TREE_MAKE_ALIAS</span><span></span><span class="p">(</span><span class="n">prer</span><span class="p">,</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda6bf9e70a1f928aba143ef1eebe2720b5"><span class="std std-ref">pre</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">right</span></a><span></span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1ac6ae73fa6d3c0a9c60fabfa63b3753b0">RAW_TREE_MAKE_ALIAS</span><span></span><span class="p">(</span><span class="n">postl</span><span class="p">,</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda42b90196b487c54069097a68fe98ab6f"><span class="std std-ref">post</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">left</span></a><span></span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a6c2f77f6716f58cd04514c40b5fbdfc5">RAW_TREE_MAKE_ALIAS</span><span></span><span class="p">(</span><span class="n">postr</span><span class="p">,</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda42b90196b487c54069097a68fe98ab6f"><span class="std std-ref">post</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">right</span></a><span></span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="k">const</span> <span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1a417cb6d74754d877730fa119d9edaeb7">child</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1ac76f59a66f0d5d3eff2c5af7dd84cc3c">child</span><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classraw-tree-1af9c7a9d66ead93ab24b2ad101b582cfe">detach</span><span></span><span class="p">();</span>
+<span class="p">};</span></pre>
+</div>
+<div class="section" id="detailed-documentation">
+<span id="details-classraw-tree"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a> is a <em>container</em> which behaves like a <em>tree</em>.</p>
+</div>
+<div class="section" id="doxid-classraw-tree-1autotoc-md14">
+<span id="id1"></span><h2>Overview<a class="headerlink" href="#doxid-classraw-tree-1autotoc-md14" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typical-usage">
+<span id="doxid-classraw-tree-1autotoc-md15"></span><h3>Typical usage<a class="headerlink" href="#typical-usage" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight literal-block"><a class="reference internal" href="#doxid-classraw-tree"><span class="std std-ref">raw_tree&lt;std::string&gt;</span></a><span></span> <span class="n">messages</span><span class="p">(</span><span class="s">&quot;world &quot;</span><span class="p">);</span>
+<span class="n">messages</span><span class="p">.</span><span class="n">replace</span><span class="o">&lt;</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">side::left</span></a><span></span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Hello &quot;</span><span class="p">);</span>
+<span class="n">messages</span><span class="p">.</span><span class="n">replace</span><span class="o">&lt;</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">side::right</span></a><span></span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;!&quot;</span><span class="p">);</span></pre>
+</div>
+<div class="section" id="recursive-container">
+<span id="doxid-classraw-tree-1autotoc-md16"></span><h3>Recursive Container<a class="headerlink" href="#recursive-container" title="Permalink to this headline">¶</a></h3>
+<p>It is a <em>container</em> because it allows storing elements of a fixed type and allows client-code meaningful ways to access the elements. It is foundationally unlike other containers in that it’s internal storage is recursive. This allows usage patterns which allow treating a <em>subtree</em> like a tree.</p>
+</div>
+<div class="section" id="accessing-values">
+<span id="doxid-classraw-tree-1autotoc-md17"></span><h3>Accessing values<a class="headerlink" href="#accessing-values" title="Permalink to this headline">¶</a></h3>
+<p>Clients may create <code class="docutils literal notranslate"><a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref"><span class="pre">iterator</span></span></a></code> s to <em>iterate</em> over the contained values. See <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a70da200e7d48a4da3cce6a25b1749d70"><span class="std std-ref"><span class="pre">raw_tree::begin()</span></span></a></code> for more. Other than this <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1ae6b20a1bd7a50aa84ec5c9608ae54202"><span class="std std-ref"><span class="pre">raw_tree::parent()</span></span></a></code>, <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a656522ed9891bca243b2c27edb90bb08"><span class="std std-ref"><span class="pre">raw_tree::child</span></span></a></code> etc. are methods which can be used for accessing other nodes from a tree node.</p>
+<div class="section" id="similarity-with-std-containers">
+<span id="doxid-classraw-tree-1autotoc-md18"></span><h4>Similarity with std containers<a class="headerlink" href="#similarity-with-std-containers" title="Permalink to this headline">¶</a></h4>
+<p>It is most closely related to <code class="docutils literal notranslate"><span class="pre">std::list</span></code> for the following reasons:</p>
+<ul class="simple">
+<li><p><em>Nodes</em> are stored on the heap.</p></li>
+<li><p>The <em>head</em> / <em>root</em> node is stored on the stack like a standard container head.</p></li>
+<li><p>It has <em>splice</em> like operations which allow stitching pieces from one container object to another container object.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code> s pointing to nodes in a tree are valid across <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a1eb3ce60f2dd021f594eac6c0e520a91"><span class="std std-ref"><span class="pre">raw_tree::detach</span></span></a></code> and <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a2428fc5922152f4df34e4d67ff09d193"><span class="std std-ref"><span class="pre">raw_tree::replace</span></span></a></code> operations (but read <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code> documentation for exceptions).</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="relations">
+<span id="doxid-classraw-tree-1autotoc-md19"></span><h2>Relations<a class="headerlink" href="#relations" title="Permalink to this headline">¶</a></h2>
+<p>Other than the data stored at a <em>node</em> the other elements that a <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree"><span class="std std-ref"><span class="pre">raw_tree</span></span></a></code> object contains are references to a <em>parent</em> and upto two children (<em>left</em> and <em>right</em>).</p>
+<div class="section" id="children">
+<span id="doxid-classraw-tree-1autotoc-md20"></span><h3>Children<a class="headerlink" href="#children" title="Permalink to this headline">¶</a></h3>
+<p>Each node has two children which it owns (a.k.a. deletes when going out of scope). The first child is referred to as <em>left</em> and the second is <em>right</em>.</p>
+<p>Methods which are used for performing operations on any one of the two children are non-type-templated with the side enum (<code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a690a9fa3f1b2c72179cc599ad3640456"><span class="std std-ref"><span class="pre">raw_tree::has_child</span></span></a><span class="pre">&lt;</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code> for example). Each child is guaranteed to refer to <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
+</div>
+<div class="section" id="parent">
+<span id="doxid-classraw-tree-1autotoc-md21"></span><h3>Parent<a class="headerlink" href="#parent" title="Permalink to this headline">¶</a></h3>
+<p>Parent relations are non-owning (i.e. we may die without affecting the parent). We are guaranteed to be found at either the <code class="docutils literal notranslate"><span class="pre">right</span></code> or <code class="docutils literal notranslate"><span class="pre">left</span></code> child position of the parent node.</p>
+<p>Root nodes are exceptions. See the <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1ae6b20a1bd7a50aa84ec5c9608ae54202"><span class="std std-ref"><span class="pre">parent()</span></span></a></code> methods for details on the result for these.</p>
+</div>
+</div>
+<div class="section" id="operations">
+<span id="doxid-classraw-tree-1autotoc-md22"></span><h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<p>Operations (methods) of the tree objects are categorizable and the following notes help in remembering the classification and specific gotchas.</p>
+<div class="section" id="safety-of-methods">
+<span id="doxid-classraw-tree-1autotoc-md23"></span><h3>Safety of methods<a class="headerlink" href="#safety-of-methods" title="Permalink to this headline">¶</a></h3>
+<p>Almost all <em>referential</em> operations are unsafe and client code should be satisfied before attempting to access or modify a relation. For example <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a1eb3ce60f2dd021f594eac6c0e520a91"><span class="std std-ref"><span class="pre">raw_tree::detach</span></span></a><span class="pre">&lt;</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref"><span class="pre">side::right</span></span></a><span class="pre">&gt;()</span></code> when there no <code class="docutils literal notranslate"><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref"><span class="pre">side::right</span></span></a></code> child present is undefined access.</p>
+<p>The above is done for efficiency. Many algorithmic situations would result in preconditions being true without any effective way to determine it beforehand (meaning we wouldn’t know them at compile time). Clients can be efficient by bypassing safety checks in those situations.</p>
+</div>
+<div class="section" id="non-mutating-and-mutating-methods">
+<span id="doxid-classraw-tree-1autotoc-md24"></span><h3>Non-mutating and Mutating methods<a class="headerlink" href="#non-mutating-and-mutating-methods" title="Permalink to this headline">¶</a></h3>
+<p><em>Non-mutating</em> operations allow client code to access data on the tree including through a chain of relation nodes without modifying the tree in any way. Values stored at nodes are also accessible and classified as <em>non-mutating</em> operations.</p>
+<p>Additionally non-mutating operations have two forms. non-const and <code class="docutils literal notranslate"><span class="pre">...</span> <span class="pre">const;</span></code> ones. For example:</p>
+<pre class="highlight literal-block"><span></span><span class="k">const</span> <span class="n">raw_tree</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">raw_tree</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">();</span></pre>
+<p>They are functionally equivalent and present to enable client code to work effectively with both <code class="docutils literal notranslate"><span class="pre">const</span></code> and non-const references.</p>
+<p><em>Mutating</em> operations allow client code to add, remove or reshape the tree. <code class="docutils literal notranslate"><span class="pre">reshape</span></code>, <code class="docutils literal notranslate"><span class="pre">rotate</span></code>, <code class="docutils literal notranslate"><span class="pre">detach</span></code> are examples of these.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Generated documentation will list out a subset of the methods (one&#39;s for
+which documentation is listed typically). The actual class has non-const
+and non-templated versions of many of the methods.
+</pre></div>
+</div>
+</div>
+<div class="section" id="side-as-template-argument-vs-function-argument">
+<span id="doxid-classraw-tree-1autotoc-md25"></span><h3>Side as template argument vs function argument<a class="headerlink" href="#side-as-template-argument-vs-function-argument" title="Permalink to this headline">¶</a></h3>
+<p>Methods which deal with child (and grandchild) nodes require specifying the specific child. Two methods are provided for this category of methods, ones in which this specification is given through:</p>
+<ul class="simple">
+<li><p>A <em>template</em> argument (<code class="docutils literal notranslate"><span class="pre">has_child&lt;</span><a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code>)</p></li>
+<li><p>A <em>function</em> argument (<code class="docutils literal notranslate"><span class="pre">has_child(side::left)</span></code>)</p></li>
+</ul>
+<p>The template argument is specified when the wing being sought is available at compile time. These can be inlined during compilation and optimizers can optimize across these boundaries. The function-argument version uses the template version.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>T</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MoveConstructible</span></code> and <code class="docutils literal notranslate"><span class="pre">MoveAssignable</span></code>) is the value type of the stored element. <a class="reference internal" href="#doxid-classraw-tree"><span class="std std-ref">raw_tree</span></a> itself is <code class="docutils literal notranslate"><span class="pre">MoveConstructible</span></code> and <code class="docutils literal notranslate"><span class="pre">MoveAssignable</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="construction">
+<h3>Construction<a class="headerlink" href="#construction" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1ae8fb2379a20dbd7000a448b058a6eb17"><span id="index-1"></span><span></span><span class="n">raw_tree</span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&amp;&amp;</span> <span class="n">other</span><span class="p">)</span></pre>
+<p>Move operations would <em>deep</em> -move a node. Parent if any has it’s reference updated as well. <code class="docutils literal notranslate"><span class="pre">other</span></code> may be a <em>root</em> node.</p>
+<p><strong>Complexity: O(1)</strong></p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>other</p></td>
+<td><p>refers to the node we are moving into this location.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1ac2ed94c9663af63f9036f70e869f9e2a"><span id="index-2"></span><span></span><span class="kt">void</span>
+<span class="n">swap</span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">other</span><span class="p">)</span></pre>
+<p><em>Deep</em> swaps <code class="docutils literal notranslate"><span class="pre">this</span></code> with <code class="docutils literal notranslate"><span class="pre">other</span></code>. To do a shallow swap, call swap on the values (<code class="docutils literal notranslate"><span class="pre">swap(*first,</span> <span class="pre">*second)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">swap(first,</span> <span class="pre">second)</span></code>).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Neither node can be an ancestor of the other. `other` need not be part
+of the same tree. Either may be a *root* node. Calling swap between
+ancestrally related nodes would result in undefined behaviour
+(eventually a segfault but could also result in a busy loop). This
+isn&#39;t just an implementation defect, *deep* swap between such nodes is
+nonsensical.
+</pre></div>
+</div>
+<p><strong>Complexity: O(1)</strong></p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>other</p></td>
+<td><p>refers to the other tree node we wish to swap with.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a92dd208eee86c41eae8e7e36f2f3b1bf"><span id="index-3"></span><span></span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span>
+<span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span></pre>
+<p class="rubric">Returns:</p>
+<p>the stored value.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1afefab4d84904a183fe337b1f526d66e2"><span id="index-4"></span><span></span><span class="kt">bool</span>
+<span class="n">has_parent</span><span class="p">()</span> <span class="k">const</span></pre>
+<p class="rubric">Returns:</p>
+<p><code class="docutils literal notranslate"><span class="pre">true</span></code> iff we are not a root node.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a5e9f83d611dba17d089e3ff7feb82854"><span id="index-5"></span><span></span><span class="k">const</span> <span class="n">raw_tree</span><span class="o">&amp;</span>
+<span class="n">parent</span><span class="p">()</span> <span class="k">const</span></pre>
+<p class="rubric">Returns:</p>
+<p>a reference to the parent node, undefined if we are <em>root</em> node.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1aac9b402282963b23119277298c391f17"><span id="index-6"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="kt">bool</span>
+<span class="n">is_side</span><span class="p">()</span> <span class="k">const</span></pre>
+<p class="rubric">Returns:</p>
+<p><code class="docutils literal notranslate"><span class="pre">true</span></code> iff we are <em>wing</em> -sided child of our parent. Always <code class="docutils literal notranslate"><span class="pre">false</span></code> for <em>root</em> node.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a690a9fa3f1b2c72179cc599ad3640456"><span id="index-7"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="kt">bool</span>
+<span class="n">has_child</span><span class="p">()</span> <span class="k">const</span></pre>
+<p class="rubric">Returns:</p>
+<p>true iff <em>wing</em> -sided child is present.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a656522ed9891bca243b2c27edb90bb08"><span id="index-8"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="k">const</span> <span class="n">raw_tree</span><span class="o">&amp;</span>
+<span class="n">child</span><span class="p">()</span> <span class="k">const</span></pre>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>wing</p></td>
+<td><p>is the side that we want.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Returns:</p>
+<p>a reference to our <em>wing</em> -side child.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1aaaeac713a9fde22f7bb320fd14f188b1"><span id="index-9"></span><span></span><span class="kt">size_t</span>
+<span class="n">size</span><span class="p">()</span> <span class="k">const</span></pre>
+<p><strong>Complexity: O(N)</strong> since we don’t maintain counts so we have to iterate.</p>
+<p class="rubric">Returns:</p>
+<p>the size of the tree.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a00d7effb49f5643d727ea3a0bd84b5a8"><span id="index-10"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">child</span><span class="p">,</span> <span class="n">side</span> <span class="n">grand_child</span><span class="o">&gt;</span>
+<span class="kt">void</span>
+<span class="n">reshape</span><span class="p">()</span></pre>
+<p>Reshapes <code class="docutils literal notranslate"><span class="pre">this</span></code> node and the relative positions of the children (and grand-children) while maintaining the <code class="docutils literal notranslate"><a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda13b5bfe96f3e2fe411c9f66f4a582adf"><span class="std std-ref"><span class="pre">traversal_order::in</span></span></a></code> sequence. The specification of what reshaping is to be done is specified through the parameters <code class="docutils literal notranslate"><span class="pre">child</span></code> and <code class="docutils literal notranslate"><span class="pre">grand_child</span></code>. Specified with the parameters, the function call may be treated as a <em>command</em>.</p>
+<p><strong>Complexity: O(1)</strong></p>
+<p>After the reshaping command the value at <code class="docutils literal notranslate"><span class="pre">this</span></code> will change (because we reshape without moving <code class="docutils literal notranslate"><span class="pre">this</span></code> node). Any reshaping command which would make an absent node the root will cause undefined behaviour (likely segfault). For example R, R when the left child is absent is an error.</p>
+<p>Examples:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Before:
+                     1 === this node
+                    /             \
+                   /               \
+  child&lt;side::left&gt; === 0         child&lt;side::right&gt; === 2
+          /          \               /           \
+         /            \             /             \
+     left-left     left-right   right-left    right-right
+
+command: L, R
+
+                    right(2)
+                   /        \
+                  /          \
+               left(0)     right-right
+              /       \
+             /         \
+         left-left    this(1)
+                             \
+                              \
+                           right-left
+
+command: R, R
+
+                     left(0)
+                    /       \
+                   /         \
+               left-left   this(1)
+                          /       \
+                         /         \
+                   left-right    right(2)
+                                /        \
+                               /          \
+                         right-left    right-right
+</pre></div>
+</div>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>child</p></td>
+<td><p>is the <code class="docutils literal notranslate"><span class="pre">side</span></code> that the child of post-operation <code class="docutils literal notranslate"><span class="pre">this</span></code> should be.</p></td>
+</tr>
+<tr class="row-even"><td><p>grand_child</p></td>
+<td><p>is the <code class="docutils literal notranslate"><span class="pre">side</span></code> that the <em>grand-child</em> of post-operation <code class="docutils literal notranslate"><span class="pre">this</span></code> should be.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1afdfe54071bdc1f9b59a88b822f440499"><span id="index-11"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="kt">void</span>
+<span class="n">rotate</span><span class="p">()</span></pre>
+<p>Performs <em>wing</em> -side rotation as described in common literature (e.g. left-rotation).</p>
+<p><code class="docutils literal notranslate"><span class="pre">rotate&lt;wing&gt;()</span></code> is identical to <code class="docutils literal notranslate"><span class="pre">reshape&lt;wing,</span> <span class="pre">wing&gt;()</span></code>.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>wing</p></td>
+<td><p>is the side to which we want rotation.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1ac11cb7e3d45f604d1d2363735cd818eb"><span id="index-12"></span><span></span><span class="kt">void</span>
+<span class="n">flip</span><span class="p">()</span></pre>
+<p>Switch the left and right children.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a2428fc5922152f4df34e4d67ff09d193"><span id="index-13"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="kt">void</span>
+<span class="n">replace</span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">child</span><span class="p">)</span></pre>
+<p>Replace <em>wing</em> -sided child of <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>child</p></td>
+<td><p>is the node we wish to bring in.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1aee11ad62f1b9cea494b02016e1858c1e"><span id="index-14"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="kt">void</span>
+<span class="n">emplace</span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span></pre>
+<p>Create <em>wing</em> -sided child of <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Args</p></td>
+<td><p>are the types of the arguments for emplacement construction.</p></td>
+</tr>
+<tr class="row-even"><td><p>args</p></td>
+<td><p>are the constructor args for construction of <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a18108443d03d4541bc719ff1835ee7d1"><span class="std std-ref"><span class="pre">raw_tree::value_type</span></span></a></code>, discarding any existing values.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a3273ac000f8ce01b03df6e45b154387c"><span id="index-15"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="p">,</span> <span class="n">side</span> <span class="n">gc_wing</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="kt">void</span>
+<span class="n">splice</span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span></pre>
+<p>Equivalent emplacing a node and moving existing node to a <em>grand_child</em> location.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>wing</p></td>
+<td><p>is the side where we wish to emplace.</p></td>
+</tr>
+<tr class="row-even"><td><p>gc_wing</p></td>
+<td><p>is the side where we wish to move the existing node.</p></td>
+</tr>
+<tr class="row-odd"><td><p>args</p></td>
+<td><p>are the constructor arguments for construction of <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classraw-tree-1a18108443d03d4541bc719ff1835ee7d1"><span class="std std-ref"><span class="pre">raw_tree::value_type</span></span></a></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a1eb3ce60f2dd021f594eac6c0e520a91"><span id="index-16"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="n">raw_tree</span>
+<span class="n">detach</span><span class="p">()</span></pre>
+<p>Detaches a child node making it a root node. Undefined is not present.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>wing</p></td>
+<td><p>is the child <code class="docutils literal notranslate"><span class="pre">side</span></code> we wish to detach.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1a70da200e7d48a4da3cce6a25b1749d70"><span id="index-17"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref">iterator</span></a><span></span><span class="o">&lt;</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="n">begin</span><span class="p">()</span></pre>
+<p>Returns an iterator for the tree rooted at <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
+<p>For example <code class="docutils literal notranslate"><span class="pre">begin&lt;</span><a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda6bf9e70a1f928aba143ef1eebe2720b5"><span class="std std-ref"><span class="pre">traversal_order::pre</span></span></a><span class="pre">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code> would return an <code class="docutils literal notranslate"><span class="pre">iterator</span></code> which would follow <em>left</em> -sided <em>inorder</em> traversal over the <em>subtree</em> rooted at <code class="docutils literal notranslate"><span class="pre">this</span></code>. Due to the nature of this container it is possible to have the following construct:</p>
+<pre class="highlight literal-block"><span></span><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">root_node</span><span class="p">.</span><span class="n">begin</span><span class="o">&lt;</span><a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda42b90196b487c54069097a68fe98ab6f"><span class="std std-ref">traversal_order::post</span></a><span></span><span class="p">,</span>
+       <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">side::left</span></a><span></span><span class="o">&gt;</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">root_node</span><span class="p">.</span><span class="n">end</span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">meets_some_condition</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">jt</span> <span class="o">=</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">begin</span><span class="o">&lt;</span><a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda13b5bfe96f3e2fe411c9f66f4a582adf"><span class="std std-ref">traversal_order::in</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">side::left</span></a><span></span><span class="o">&gt;</span><span class="p">();</span>
+             <span class="n">jt</span> <span class="o">!=</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">end</span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">();</span> <span class="o">++</span><span class="n">jt</span><span class="p">)</span> <span class="p">{</span>
+            <span class="p">...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre>
+<p>which effectively iterates through a subtree at <code class="docutils literal notranslate"><span class="pre">*it</span></code> inorder if <code class="docutils literal notranslate"><span class="pre">meets_some_condition</span></code> is satisfied. This kind of construction allows for complex algorithmic expressiveness cleanly.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>order</p></td>
+<td><p>is the <code class="docutils literal notranslate"><span class="pre">traversal_order</span></code> that the returned <code class="docutils literal notranslate"><span class="pre">iterator</span></code> should follow.</p></td>
+</tr>
+<tr class="row-even"><td><p>wing</p></td>
+<td><p>is the <code class="docutils literal notranslate"><span class="pre">side</span></code> from which the <code class="docutils literal notranslate"><span class="pre">order</span></code> must be followed.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Returns:</p>
+<p>an <code class="docutils literal notranslate"><span class="pre">iterator</span></code> for the tree rooted at <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classraw-tree-1aca23f03331397e1b9be5bafe8d9742c4"><span id="index-18"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref">iterator</span></a><span></span><span class="o">&lt;</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="n">end</span><span class="p">()</span></pre>
+<p>Returns an iterator which compares equal with an iterator which starts from begin and has navigated through all the nodes (depending on the specific order and wing).</p>
+<p>Specifically</p>
+<pre class="highlight literal-block"><span></span><span class="n">std</span><span class="o">::</span><span class="n">advance</span><span class="p">(</span><span class="n">tree</span><span class="p">.</span><span class="n">begin</span><span class="o">&lt;</span><a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda42b90196b487c54069097a68fe98ab6f"><span class="std std-ref">traversal_order::post</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">side::right</span></a><span></span><span class="o">&gt;</span><span class="p">(),</span>
+             <span class="n">tree</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="o">==</span> \
+    <span class="n">tree</span><span class="p">.</span><span class="n">end</span><span class="o">&lt;</span><a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59eda42b90196b487c54069097a68fe98ab6f"><span class="std std-ref">traversal_order::post</span></a><span></span><span class="p">,</span> <a class="reference internal" href="enum_side.html#doxid-raw-tree-8h-1a65835d66f7f02eb4a206fa1eabbf5545a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">side::right</span></a><span></span><span class="o">&gt;</span><span class="p">()</span></pre>
+<p>is always true. Note that the traversal_order, wing pair has to be the same for the begin and end iterators (even though they are convertible from one to another). Comparing iterators with different orders / wings is not guaranteed to be correct.</p>
+<p>See <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor-1aff4b2a161914eb343b359ddae303cbfb"><span class="std std-ref"><span class="pre">accessor::accessor()</span></span></a></code> for information on <em>end</em> for iterators.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="class_traverser.html" class="btn btn-neutral float-right" title="template class traverser&lt;A, traversal_order::post, wing&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="class_predicated_tree.html" class="btn btn-neutral float-left" title="template class predicated_tree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Aditya Dalmia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>template class traverser &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/target-highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="template class virtual_accessor" href="class_virtual_accessor.html" />
+    <link rel="prev" title="template class traverser&lt;A, traversal_order::in, wing&gt;" href="class_traverser-3.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Predicated Tree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="enum_side.html">enum side</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_traversal_order.html">enum traversal_order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_indifferent.html">template struct indifferent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_stable_random.html">template struct stable_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_wrapper.html">template struct wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_accessor.html">template class accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_comparator.html">template class comparator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_format.html">class format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_iterator.html">template class iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_mutator.html">template class mutator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_predicated_tree.html">template class predicated_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_raw_tree.html">template class raw_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser.html">template class traverser&lt;A, traversal_order::post, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-2.html">template class traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_traverser-3.html">template class traverser&lt;A, traversal_order::in, wing&gt;</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">template class traverser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_virtual_accessor.html">template class virtual_accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Predicated Tree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="global.html">Global Namespace</a> &raquo;</li>
+        
+      <li>template class traverser</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/class_traverser-4.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="template-class-traverser">
+<span id="doxid-classtraverser"></span><span id="index-0"></span><h1>template class traverser<a class="headerlink" href="#template-class-traverser" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>traverser implements a single static method ‘next’. <a class="reference internal" href="#details-classtraverser"><span class="std std-ref">More…</span></a></p>
+<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;traverser.h&gt;</span><span class="cp"></span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">A</span><span class="p">,</span> <span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">traverser</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// methods</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Container</span><span class="o">&gt;</span>
+    <span class="k">static</span>
+    <span class="n">A</span>
+    <a class="reference internal" href="#doxid-classtraverser-1a0327fe6922f5457343ce35e716e36ab8"><span class="std std-ref">begin</span></a><span></span><span class="p">(</span><span class="n">Container</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">);</span>
+
+    <span class="k">static</span>
+    <span class="kt">void</span>
+    <a class="reference internal" href="#doxid-classtraverser-1a38aa52ba5c0f930cf21895237d548277"><span class="std std-ref">next</span></a><span></span><span class="p">(</span><span class="n">A</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span>
+<span class="p">};</span></pre>
+</div>
+<div class="section" id="detailed-documentation">
+<span id="details-classtraverser"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
+<p>traverser implements a single static method ‘next’.</p>
+<p>Typical usage:</p>
+<pre class="highlight literal-block"><span></span><span class="n">Accessor</span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">(...);</span>
+<span class="p">...</span>
+<span class="n">traverser</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">traversal_order</span><span class="o">::</span><span class="n">pre</span><span class="p">,</span> <span class="n">side</span><span class="o">::</span><span class="n">left</span><span class="o">&gt;::</span><span class="n">next</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="p">...</span></pre>
+<p>which would move the <code class="docutils literal notranslate"><span class="pre">a</span></code> accessor to the next inorder position when starting from left side.</p>
+<p>This functionality could be in a few other locations instead of as is, the following notes cover some details:</p>
+<ul class="simple">
+<li><p>This is not a static function because we need to do partial specialization.</p></li>
+<li><p>This is not a member function of <code class="docutils literal notranslate"><a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref"><span class="pre">accessor</span></span></a></code> because there are multiple types of accessors which implement the accessor <em>concept</em> with varying degrees of efficiency. Doing an inorder traversal of such an accessor has nothing to do with the accessor itself and making this functionality a member function would result in code duplication.</p></li>
+<li><p>This is not a part of <code class="docutils literal notranslate"><a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref"><span class="pre">iterator</span></span></a></code> because given an accessor the ability to <em>traverse</em> it to the <em>next</em> inorder position is different from a pre-baked C++ construct which ties the accessor along with the traversal order. OTOH this functionality will definitely need to be used in the iterator.</p></li>
+<li><p>The other way to implement it is using CRTP but that would result in less readability (more structs, more template parameters).</p></li>
+</ul>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>order</p></td>
+<td><p>is the <code class="docutils literal notranslate"><a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59ed"><span class="std std-ref"><span class="pre">traversal_order</span></span></a></code> which this class template will follow.</p></td>
+</tr>
+<tr class="row-even"><td><p>wing</p></td>
+<td><p>denotes the side which the we prefer in the traversal.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classtraverser-1a0327fe6922f5457343ce35e716e36ab8"><span id="index-1"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Container</span><span class="o">&gt;</span>
+<span class="k">static</span>
+<span class="n">A</span>
+<span class="n">begin</span><span class="p">(</span><span class="n">Container</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span></pre>
+<p>Creates an accessor which points to the <em>first</em> element according to <code class="docutils literal notranslate"><span class="pre">order</span></code> on <code class="docutils literal notranslate"><span class="pre">wing</span></code>. For example: &lt;in, left&gt; would move to the leftmost descendant of the tree. &lt;pre, right&gt; would move to the root element of the tree. … Complexity: O(1) for preorder, O(lg(n)) for others.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classtraverser-1a38aa52ba5c0f930cf21895237d548277"><span id="index-2"></span><span></span><span class="k">static</span>
+<span class="kt">void</span>
+<span class="n">next</span><span class="p">(</span><span class="n">A</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span></pre>
+<p>Moves this accessor to the <em>next</em> element according to <code class="docutils literal notranslate"><span class="pre">order</span></code> on <code class="docutils literal notranslate"><span class="pre">wing</span></code> side.</p>
+<p>Calling next on <em>end</em> node attempts to move to the <em>first</em> element of the wing-sided order traversal. This may fail as an operation (but not compilation) if the accessor the operation is performed on is not bidirectional.</p>
+<p>Complexity: O(1) amortized but specific instances of <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classtraverser-1a38aa52ba5c0f930cf21895237d548277"><span class="std std-ref"><span class="pre">traverser::next</span></span></a></code> may be more expensive and cost would depend on the shape of the tree.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="class_virtual_accessor.html" class="btn btn-neutral float-right" title="template class virtual_accessor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="class_traverser-3.html" class="btn btn-neutral float-left" title="template class traverser&lt;A, traversal_order::in, wing&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Aditya Dalmia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
