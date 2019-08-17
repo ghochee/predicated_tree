@@ -47,7 +47,7 @@ makes ordering guarantees under these predicates. This would be analogous to
 giving a predicate to a `std::vector` to make it a `std::multiset` where the
 `std::multiset` makes ordering guarantees under the predicate.
 
-`predicated_tree`s effect this notion by allowing clients to build containers
-which would maintain upto two predicates. The first predicate is linked to the
-tree in a *heap tree*-like fashion and the second predicate is linked to the
-tree in a *binary search tree*-like arrangement.
+`detangled::predicated_tree`s effect this notion by allowing clients to build
+containers which would maintain upto two predicates. The first predicate is
+linked to the tree in a *heap tree*-like fashion and the second predicate is
+linked to the tree in a *binary search tree*-like arrangement.
