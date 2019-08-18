@@ -74,6 +74,6 @@ class iterator : public virtual_accessor<C>,
     iterator operator--(int);
 };
 
-#include "iterator.hh"
+#include "impl/iterator.hh"
 
 #endif  // TREE_ITERATOR_H

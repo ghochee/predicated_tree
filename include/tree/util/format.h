@@ -18,6 +18,6 @@ class format {
 template <typename T>
 std::ostream &operator<<(std::ostream &out, const raw_tree<T> &t);
 
-#include "tree/util/format.hh"
+#include "impl/format.hh"
 
 #endif  // TREE_FORMAT_H

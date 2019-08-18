@@ -267,6 +267,6 @@ auto make_predicated_tree() {
     return predicated_tree<T, decltype(c)>(c);
 }
 
-#include "predicated_tree/predicated_tree.hh"
+#include "impl/predicated_tree.hh"
 
 #endif  // TREE_PREDICATED_TREE_H

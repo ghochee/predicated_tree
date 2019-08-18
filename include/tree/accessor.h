@@ -154,6 +154,6 @@ class accessor {
     node_type *node_ = nullptr;
 };
 
-#include "accessor.hh"
+#include "impl/accessor.hh"
 
 #endif  // TREE_ACCESSOR_H

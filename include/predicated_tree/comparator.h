@@ -2,7 +2,7 @@
 #define TREE_COMPARATOR_H
 
 #include <functional>
-#include "predicated_tree/util/predicates.h"
+#include "util/predicates.h"
 
 /// Class template which tests if `T` is defined for `operator<`.
 ///
@@ -143,6 +143,6 @@ auto make_comparator() {
     return comparator<T, wrapper<T, F1>, wrapper<T, F2>>();
 }
 
-#include "predicated_tree/comparator.hh"
+#include "impl/comparator.hh"
 
 #endif  // TREE_COMPARATOR_H

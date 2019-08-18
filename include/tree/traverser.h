@@ -61,6 +61,6 @@ class traverser {
     static void next(A &a);
 };
 
-#include "traverser.hh"
+#include "impl/traverser.hh"
 
 #endif  // TREE_TRAVERSER_H

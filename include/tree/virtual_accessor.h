@@ -121,6 +121,6 @@ class virtual_accessor : public accessor<ContainerType> {
     int16_t depth_ = -1;
 };
 
-#include "virtual_accessor.hh"
+#include "impl/virtual_accessor.hh"
 
 #endif  // TREE_VIRTUAL_ACCESSOR_H

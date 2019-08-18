@@ -441,6 +441,6 @@ class raw_tree {
 template <typename T>
 void swap(raw_tree<T> &left, raw_tree<T> &right);
 
-#include "tree/raw_tree.hh"
+#include "impl/raw_tree.hh"
 
 #endif  // TREE_RAW_TREE_H
