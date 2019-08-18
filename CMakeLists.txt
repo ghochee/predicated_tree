@@ -15,6 +15,7 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -fno-exceptions -fno-omit-frame-pointer -O3")
 add_subdirectory(include)
 
 add_subdirectory(benchmark)
+add_subdirectory(doc)
 add_subdirectory(src)
 
 # This enable_testing call should be in the root directory as per
