@@ -96,6 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="class_accessor.html">template class accessor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_comparator.html">template class comparator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_format.html">class format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_has_lt.html">template class has_lt</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_iterator.html">template class iterator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_mutator.html">template class mutator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_predicated_tree.html">template class predicated_tree</a></li>
@@ -204,10 +205,13 @@
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Container</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_accessor.html#doxid-classaccessor"><span class="std std-ref">accessor</span></a><span></span><span class="p">;</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span> <span class="o">=</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span> <span class="o">=</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><span class="n">has_lt</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">less</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_comparator.html#doxid-classcomparator"><span class="std std-ref">comparator</span></a><span></span><span class="p">;</span>
 
 <span class="k">class</span> <a class="reference internal" href="class_format.html#doxid-classformat"><span class="std std-ref">format</span></a><span></span><span class="p">;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <a class="reference internal" href="class_has_lt.html#doxid-classhas-lt"><span class="std std-ref">has_lt</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">C</span><span class="p">,</span> <span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_iterator.html#doxid-classiterator"><span class="std std-ref">iterator</span></a><span></span><span class="p">;</span>
@@ -215,7 +219,7 @@
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Comparator</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_mutator.html#doxid-classmutator"><span class="std std-ref">mutator</span></a><span></span><span class="p">;</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">Comparator</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">Comparator</span> <span class="o">=</span> <span class="n">comparator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_predicated_tree.html#doxid-classpredicated-tree"><span class="std std-ref">predicated_tree</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
@@ -258,6 +262,34 @@
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F1</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F2</span><span class="o">&gt;</span>
 <span class="k">auto</span>
 <span class="doxyrest-code-target target" id="doxid-comparator-8h-1a77de5aeb9e36944e078aca9c0ef34633">make_comparator</span><span></span><span class="p">();</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">auto</span>
+<span class="doxyrest-code-target target" id="doxid-predicated-tree-8h-1a55e24b35ec5b2cb5111914b2c8e9c7ef">make_predicated_tree</span><span></span><span class="p">();</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span><span class="o">&gt;</span>
+<span class="k">auto</span>
+<span class="doxyrest-code-target target" id="doxid-predicated-tree-8h-1a110c080fdd2d8eafda7c1dcfb8f307b1">make_predicated_tree</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">H</span> <span class="n">h</span> <span class="o">=</span> <span class="n">H</span><span class="p">());</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">auto</span>
+<span class="doxyrest-code-target target" id="doxid-predicated-tree-8h-1af2a201b2f8262c294569ba61c654ce06">make_predicated_tree</span><span></span><span class="p">();</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span><span class="o">&gt;</span>
+<span class="k">auto</span>
+<span class="doxyrest-code-target target" id="doxid-predicated-tree-8h-1a3cedf35bdcce46f7eb06d64237392c34">make_predicated_tree</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">H</span> <span class="n">h</span> <span class="o">=</span> <span class="n">H</span><span class="p">(),</span> <span class="k">const</span> <span class="n">L</span> <span class="n">l</span> <span class="o">=</span> <span class="n">L</span><span class="p">());</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">auto</span>
+<span class="doxyrest-code-target target" id="doxid-predicated-tree-8h-1a2955ee5147bf38d1020d658b135c416f">make_predicated_tree</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">H</span> <span class="n">h</span> <span class="o">=</span> <span class="n">H</span><span class="p">());</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span><span class="o">&gt;</span>
+<span class="k">auto</span>
+<span class="doxyrest-code-target target" id="doxid-predicated-tree-8h-1ae3ba32977d0aafac7f7d2b585245bded">make_predicated_tree</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">L</span> <span class="n">l</span> <span class="o">=</span> <span class="n">L</span><span class="p">());</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F1</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F2</span><span class="o">&gt;</span>
+<span class="k">auto</span>
+<span class="doxyrest-code-target target" id="doxid-predicated-tree-8h-1afca695c7421c45dac0718e4806ea57fb">make_predicated_tree</span><span></span><span class="p">();</span>
 
 <span class="k">constexpr</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59ed"><span class="std std-ref">traversal_order</span></a><span></span>
 <a class="reference internal" href="#doxid-raw-tree-8h-1a45243af223290d49c00344e8e14b690d"><span class="std std-ref">operator~</span></a><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="enum_traversal_order.html#doxid-raw-tree-8h-1a1fea24162e2a6ed7daa34a37cacf59ed"><span class="std std-ref">traversal_order</span></a><span></span> <span class="n">order</span><span class="p">);</span>

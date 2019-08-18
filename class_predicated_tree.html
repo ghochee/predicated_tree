@@ -96,6 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="class_accessor.html">template class accessor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_comparator.html">template class comparator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_format.html">class format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_has_lt.html">template class has_lt</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_iterator.html">template class iterator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_mutator.html">template class mutator</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">template class predicated_tree</a><ul>
@@ -197,7 +198,7 @@
 <p>Predicated trees are containers which make <em>ordering</em> guarantees under specified predicates. <a class="reference internal" href="#details-classpredicated-tree"><span class="std std-ref">More…</span></a></p>
 <pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;predicated_tree.h&gt;</span><span class="cp"></span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">Comparator</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">Comparator</span> <span class="o">=</span> <span class="n">comparator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
 <span class="k">class</span> <span class="nc">predicated_tree</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="c1">// construction</span>

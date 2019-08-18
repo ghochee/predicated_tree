@@ -104,6 +104,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="class_format.html">class format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_has_lt.html">template class has_lt</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_iterator.html">template class iterator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_mutator.html">template class mutator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_predicated_tree.html">template class predicated_tree</a></li>
@@ -192,7 +193,7 @@
 <p>Class template which is instantiated for creating comparator objects. <a class="reference internal" href="#details-classcomparator"><span class="std std-ref">More…</span></a></p>
 <pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;comparator.h&gt;</span><span class="cp"></span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span> <span class="o">=</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span> <span class="o">=</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><span class="n">has_lt</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">less</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">comparator</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="c1">// fields</span>
@@ -235,12 +236,6 @@
 </ul>
 <p>Both the predicates have to support:</p>
 <pre class="highlight literal-block"><span></span><span class="kt">bool</span> <span class="nf">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">first</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">second</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span></pre>
-<p>To effect (or test) properties this wrapper object should be used instead of the underlying predicates. This is because some tweaks are made to the SWOs to enable full and efficient use in implementing the predicated tree.</p>
-<p>In the documentation the two predicates are described differently and each serves a different purpose. These are described below.</p>
-<p>Height Predicate</p>
-<p>The first predicate is called the <code class="docutils literal notranslate"><span class="pre">Height</span></code> predicate in documentation and variable naming. <code class="docutils literal notranslate"><span class="pre">Height</span></code>, H, <em>tall</em>, <em>short</em> are nouns used in documentation to refer to this property and outcomes. This predicate is the primary criterion for deciding the height of a node in a predicated tree.</p>
-<p>Left Predicate</p>
-<p>The second predicate describes the total ordering relation. <code class="docutils literal notranslate"><span class="pre">Left</span></code>, <code class="docutils literal notranslate"><span class="pre">L</span></code>, <em>left</em>, <em>right</em>, <em>side</em>, <em>wing</em> are nouns used in documentation and code to describe notes related to it. This predicate is the primary criterion for deciding the left-ness of a node in a predicated tree.</p>
 <p>It is useful to have <em>unambiguity</em> when determining height and left. This is because ambiguity would mean that lookup operations would have to traverse multiple paths. As such we use the predicates in a special way (using side enum) and sometimes using the other predicate when we have to break ties (equal nodes). This extension is done minimally to ensure we have an effiently operable tree. More details on this are available on the <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classcomparator-1a014622ff5c84145e947b1a3a18fdc8b2"><span class="std std-ref"><span class="pre">horizontal()</span></span></a></code> and <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classcomparator-1a591aa52fcbefd7736d14f2cba4ed596a"><span class="std std-ref"><span class="pre">vertical()</span></span></a></code> methods.</p>
 <p class="rubric">Parameters:</p>
 <table class="colwidths-given docutils align-default">
@@ -253,10 +248,10 @@
 <td><p>is the type of the object which this comparator object will be comparing.</p></td>
 </tr>
 <tr class="row-even"><td><p>H</p></td>
-<td><p>See L</p></td>
+<td><p>predicate which governs <code class="docutils literal notranslate"><span class="pre">Height</span></code> comparison operations in the tree. <code class="docutils literal notranslate"><span class="pre">Height</span></code>, <code class="docutils literal notranslate"><span class="pre">H</span></code>, <em>tall</em>, <em>short</em> are nouns used in documentation to refer to this property and outcomes. Default: <code class="docutils literal notranslate"><a class="reference internal" href="struct_indifferent.html#doxid-structindifferent"><span class="std std-ref"><span class="pre">indifferent</span></span></a></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>L</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">H</span></code> eight and <code class="docutils literal notranslate"><span class="pre">L</span></code> eft are SWO binary predicate functors used for comparing.</p></td>
+<td><p>predicate which goversn <code class="docutils literal notranslate"><span class="pre">Left</span></code> comparison in the tree. <code class="docutils literal notranslate"><span class="pre">Left</span></code>, <code class="docutils literal notranslate"><span class="pre">L</span></code>, <em>left</em>, <em>right</em>, <em>side</em>, <em>wing</em> are nouns used in documentation and code to describe notes related to it. This defaulted to <code class="docutils literal notranslate"><span class="pre">::std::less&lt;T&gt;</span></code> if <code class="docutils literal notranslate"><span class="pre">T</span></code> has <code class="docutils literal notranslate"><span class="pre">operator&lt;</span></code> defined on it else it becomes <code class="docutils literal notranslate"><a class="reference internal" href="struct_indifferent.html#doxid-structindifferent"><span class="std std-ref"><span class="pre">indifferent</span></span></a></code>.</p></td>
 </tr>
 </tbody>
 </table>
