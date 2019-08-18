@@ -3,3 +3,6 @@ venv/
 .conan/
 # Needed for some clangd vim autocompletion settings.
 compile_commands.json
+
+# Personal dev environment options.
+.vscode/
