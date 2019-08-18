@@ -22,6 +22,6 @@ struct stable_random {
 template <typename T>
 bool more_even(const T &a, const T &b);
 
-#include "tree/util/predicates.hh"
+#include "predicated_tree/util/predicates.hh"
 
 #endif  // TREE_UTIL_PREDICATES_H

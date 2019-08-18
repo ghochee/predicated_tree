@@ -114,6 +114,6 @@ class mutator {
     const Comparator comparator_;
 };
 
-#include "tree/mutator.hh"
+#include "predicated_tree/mutator.hh"
 
 #endif  // TREE_MUTATOR_H

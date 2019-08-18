@@ -1,6 +1,6 @@
 #include "tree.h"
-#include "tree/util/predicates.h"
 #include "tree/util/format.h"
+#include "predicated_tree/util/predicates.h"
 
 #include <iostream>
 #include <random>

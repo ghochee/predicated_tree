@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "tree.h"
-#include "tree/util/predicates.h"
+#include "predicated_tree/util/predicates.h"
 
 #include <random>
 

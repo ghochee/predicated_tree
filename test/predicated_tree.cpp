@@ -1,5 +1,5 @@
 #include "tree.h"
-#include "tree/util/predicates.h"
+#include "predicated_tree/util/predicates.h"
 
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
