@@ -1,3 +1,5 @@
+namespace detangled {
+
 template <typename T, typename C>
 predicated_tree<T, C>::predicated_tree(const C c) : mutator_(c) {}
 
@@ -76,3 +78,5 @@ raw_tree<T> predicated_tree<T, C>::release() {
     tree_.reset();
     return std::move(detached);
 }
+
+}  // namespace detangled

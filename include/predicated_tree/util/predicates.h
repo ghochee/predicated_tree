@@ -1,6 +1,8 @@
 #ifndef TREE_UTIL_PREDICATES_H
 #define TREE_UTIL_PREDICATES_H
 
+namespace detangled {
+
 // Some simple useful predicates which can be used with predicated_tree.
 
 // Indifferent always returns false.
@@ -21,6 +23,8 @@ struct stable_random {
 
 template <typename T>
 bool more_even(const T &a, const T &b);
+
+}  // namespace detangled
 
 #include "impl/predicates.hh"
 

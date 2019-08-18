@@ -12,6 +12,7 @@
 
 #include "raw_tree.h"
 
+using namespace detangled;
 using namespace std;
 
 using int_tree = raw_tree<uint32_t>;

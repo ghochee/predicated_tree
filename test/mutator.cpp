@@ -8,6 +8,8 @@
 #include <random>
 #include <utility>
 
+using namespace detangled;
+
 TEST_CASE("make_heap", "[make_heap]") {
     std::random_device dev;
     std::mt19937 rng(dev());

@@ -1,3 +1,5 @@
+namespace detangled {
+
 template <class C, traversal_order order, side wing>
 iterator<C, order, wing>::iterator(node_type &node)
     : base_type(traverser<base_type, order, wing>::begin(node)) {}
@@ -27,3 +29,5 @@ iterator<C, order, wing> iterator<C, order, wing>::operator--(int) {
     --(*this);
     return return_value;
 }
+
+}  // namespace detangled

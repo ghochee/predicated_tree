@@ -1,5 +1,9 @@
 #include "tree.h"
 
+// NOTE: This is fine because this header is used only in a test file and only
+// because the various template instantiations had to be DRYed.
+using namespace detangled;
+
 template <typename T>
 void build_bst(raw_tree<T> &root, uint32_t levels, uint32_t min_value) {
     if (levels == 0) { return; }

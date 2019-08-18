@@ -1,3 +1,5 @@
+namespace detangled {
+
 template <class C>
 virtual_accessor<C>::virtual_accessor(base_type &pos)
     : base_type(pos), depth_(pos->depth()) {}
@@ -77,3 +79,5 @@ bool virtual_accessor<C>::down(side wing) {
     }
     return false;
 }
+
+}  // namespace detangled

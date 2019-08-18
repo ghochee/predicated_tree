@@ -5,6 +5,7 @@
 #include <iostream>
 #include <random>
 
+using namespace detangled;
 using namespace std;
 
 int main(int, char **) {

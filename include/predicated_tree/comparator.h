@@ -4,9 +4,11 @@
 #include <functional>
 #include "util/predicates.h"
 
+namespace detangled {
+
 /// Class template which tests if `T` is defined for `operator<`.
 ///
-/// We need to be able to perform this test to determine if `::std::less` can be
+/// We need to be able to perform this test to determine if `std::less` can be
 /// used as a default for `T`.
 template <typename T>
 class has_lt {
@@ -29,8 +31,9 @@ class has_lt {
 /// Class template which is instantiated for creating comparator objects.
 ///
 /// Instantiated classes of this template *define* the properties in
-/// `::predicated_tree` that should be upheld. Instantiated classes and their
-/// objects serve the same purpose as `Comparator` does for `std::set`.
+/// `detangled::predicated_tree` that should be upheld. Instantiated classes
+/// and their objects serve the same purpose as `Comparator` does for
+/// `std::set`.
 ///
 /// Both predicates are:
 /// * Binary predicates meeting the strict-weak-ordering requirements.
@@ -55,11 +58,11 @@ class has_lt {
 /// @tparam H predicate which governs `Height` comparison operations in the
 ///     tree. `Height`, `H`, *tall*, *short* are nouns used in documentation to
 ///     refer to this property and outcomes.
-///     Default: `::indifferent`.
+///     Default: `indifferent`.
 /// @tparam L predicate which goversn `Left` comparison in the tree. `Left`,
 ///     `L`, *left*, *right*, *side*, *wing* are nouns used in documentation and
-///     code to describe notes related to it. This defaulted to `::std::less<T>`
-///     if `T` has `operator<` defined on it else it becomes `::indifferent`.
+///     code to describe notes related to it. This defaulted to `std::less<T>`
+///     if `T` has `operator<` defined on it else it becomes `indifferent`.
 template <class T, class H = indifferent<T>,
           class L = typename ::std::conditional<
               has_lt<T>::value, ::std::less<T>, indifferent<T>>::type>
@@ -142,6 +145,8 @@ template <class T, bool (*F1)(const T &, const T &),
 auto make_comparator() {
     return comparator<T, wrapper<T, F1>, wrapper<T, F2>>();
 }
+
+}  // namespace detangled
 
 #include "impl/comparator.hh"
 

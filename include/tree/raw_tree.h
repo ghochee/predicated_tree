@@ -5,6 +5,8 @@
 #include <memory>
 #include <type_traits>
 
+namespace detangled {
+
 /// traversal_order is an enum listing supported traversal orders.
 ///
 /// For example we have `traversal_order::pre` (which is preorder traversal).
@@ -55,10 +57,10 @@ class iterator;
 ///
 /// ## Accessing values
 ///
-/// Clients may create `::iterator`s to *iterate* over the contained values.
-/// See `::raw_tree::begin()` for more. Other than this `::raw_tree::parent()`,
-/// `::raw_tree::child` etc. are methods which can be used for accessing other
-/// nodes from a tree node.
+/// Clients may create `detangled::iterator`s to *iterate* over the contained
+/// values.  See `raw_tree::begin()` for more. Other than this
+/// `raw_tree::parent()`, `raw_tree::child` etc. are methods which can be used
+/// for accessing other nodes from a tree node.
 /// 
 /// ### Similarity with std containers
 ///
@@ -68,9 +70,9 @@ class iterator;
 ///   head.
 /// * It has *splice* like operations which allow stitching pieces from one
 ///   container object to another container object.
-/// * `::accessor`s pointing to nodes in a tree are valid across
-///   `::raw_tree::detach` and `::raw_tree::replace` operations (but read
-///   `::accessor` documentation for exceptions).
+/// * `detangled::accessor`s pointing to nodes in a tree are valid across
+///   `raw_tree::detach` and `raw_tree::replace` operations (but read
+///   `detangled::accessor` documentation for exceptions).
 ///
 /// # Relations
 ///
@@ -85,7 +87,7 @@ class iterator;
 ///
 /// Methods which are used for performing operations on any one of the two
 /// children are non-type-templated with the side enum
-/// (`::raw_tree::has_child<side::left>()` for example). Each child is
+/// (`raw_tree::has_child<side::left>()` for example). Each child is
 /// guaranteed to refer to `this`.
 ///
 /// ## Parent
@@ -107,7 +109,7 @@ class iterator;
 ///
 /// Almost all *referential* operations are unsafe and client code should be
 /// satisfied before attempting to access or modify a relation. For example
-/// `::raw_tree::detach<side::right>()` when there no `side::right` child
+/// `raw_tree::detach<side::right>()` when there no `side::right` child
 /// present is undefined access.
 ///
 /// The above is done for efficiency. Many algorithmic situations would result
@@ -390,7 +392,8 @@ class raw_tree {
     /// from one to another). Comparing iterators with different orders / wings
     /// is not guaranteed to be correct.
     ///
-    /// See `::accessor::accessor()` for information on *end* for iterators.
+    /// See `detangled::accessor::accessor()` for information on *end* for
+    /// iterators.
     template <traversal_order order, side wing>
     iterator<raw_tree<T>, order, wing> end();
     template <traversal_order order, side wing>
@@ -440,6 +443,8 @@ class raw_tree {
 
 template <typename T>
 void swap(raw_tree<T> &left, raw_tree<T> &right);
+
+}  // namespace detangled
 
 #include "impl/raw_tree.hh"
 

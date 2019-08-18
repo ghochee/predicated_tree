@@ -7,6 +7,7 @@
 #include <random>
 
 using namespace std;
+using namespace detangled;
 
 static void Find(benchmark::State &state) {
     std::random_device dev;

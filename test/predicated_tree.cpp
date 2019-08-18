@@ -8,6 +8,8 @@
 #include <random>
 #include <utility>
 
+using namespace detangled;
+
 // clang-format: off
 #define LIST_PREDICATES                                                                          \
     (std::pair<wrapper<uint32_t, more_even<uint32_t>>, wrapper<uint32_t, more_even<uint32_t>>>), \

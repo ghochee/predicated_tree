@@ -1,6 +1,8 @@
 #ifndef TREE_TRAVERSER_H
 #define TREE_TRAVERSER_H
 
+namespace detangled {
+
 /// traverser implements a single static method 'next'.
 ///
 /// Typical usage:
@@ -17,16 +19,16 @@
 /// following notes cover some details:
 /// - This is not a static function because we need to do partial
 ///   specialization.
-/// - This is not a member function of `::accessor` because there are multiple
-///   types of accessors which implement the accessor *concept* with varying
-///   degrees of efficiency. Doing an inorder traversal of such an accessor has
-///   nothing to do with the accessor itself and making this functionality a
-///   member function would result in code duplication.
-/// - This is not a part of `::iterator` because given an accessor the ability
-///   to *traverse* it to the *next* inorder position is different from a
-///   pre-baked C++ construct which ties the accessor along with the traversal
-///   order. OTOH this functionality will definitely need to be used in the
-///   iterator.
+/// - This is not a member function of `detangled::accessor` because there are
+///   multiple types of accessors which implement the accessor *concept* with
+///   varying degrees of efficiency. Doing an inorder traversal of such an
+///   accessor has nothing to do with the accessor itself and making this
+///   functionality a member function would result in code duplication.
+/// - This is not a part of `detangled::iterator` because given an accessor the
+///   ability to *traverse* it to the *next* inorder position is different from
+///   a pre-baked C++ construct which ties the accessor along with the
+///   traversal order. OTOH this functionality will definitely need to be used
+///   in the iterator.
 /// - The other way to implement it is using CRTP but that would result in less
 ///   readability (more structs, more template parameters).
 ///
@@ -60,6 +62,8 @@ class traverser {
     ///   more expensive and cost would depend on the shape of the tree.
     static void next(A &a);
 };
+
+}  // namespace detangled
 
 #include "impl/traverser.hh"
 

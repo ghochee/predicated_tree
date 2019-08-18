@@ -4,11 +4,13 @@
 #include <functional>
 #include <optional>
 
+namespace detangled {
+
 /// Predicated trees are containers which make *ordering* guarantees under
 /// specified predicates.
 ///
-/// They are containers built on top of standard trees (e.g. [raw_tree](@ref
-/// raw_tree)). They support all operations that a raw_tree would.
+/// They are containers built on top of standard trees (e.g.
+/// `detangled::raw_tree`). They support all operations that a raw_tree would.
 ///
 /// # Essence of Predicated Tree
 ///
@@ -139,9 +141,9 @@
 /// the child can be anywhere in a subtree, each nodes position can be 'fixed'
 /// to meet all requirements simultaneously.
 ///
-/// @tparam T similar to the `T` param for `::raw_tree<T>`.
-/// @tparam Comparator is a user supplied `::comparator` class defining the
-///     height and left predicates.
+/// @tparam T similar to the `T` param for `detangled::raw_tree<T>`.
+/// @tparam Comparator is a user supplied `detangled::comparator` class
+///     defining the height and left predicates.
 template <class T, class Comparator = comparator<T>>
 class predicated_tree {
   public:
@@ -266,6 +268,8 @@ auto make_predicated_tree() {
     auto c = comparator<T, wrapper<T, F1>, wrapper<T, F2>>();
     return predicated_tree<T, decltype(c)>(c);
 }
+
+}  // namespace detangled
 
 #include "impl/predicated_tree.hh"
 

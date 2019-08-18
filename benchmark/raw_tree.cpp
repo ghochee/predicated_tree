@@ -2,6 +2,8 @@
 
 #include "tree.h"
 
+using namespace detangled;
+
 static void NodeConstruct(benchmark::State& state) {
     for (auto _ : state)
         raw_tree<uint32_t> t(1002);

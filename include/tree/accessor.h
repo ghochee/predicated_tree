@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <type_traits>
 
+namespace detangled {
+
 /// accessors are used for creating *pointers* to nodes in a `raw_tree`.
 ///
 /// # Overview
@@ -12,10 +14,10 @@
 /// navigating through the various nodes in the tree. It is a single object
 /// that can be used to visit all the nodes in the tree.
 ///
-/// Clients should see these classes as more fundamental than `iterator`s are
-/// because objects of these classes don't know *next* and can navigate freely
-/// through the container. Freely doesn't imply cheaply; complexity costs are
-/// indicated on the various methods.
+/// Clients should see these classes as more fundamental than
+/// `detangled::iterator`s are because objects of these classes don't know
+/// *next* and can navigate freely through the container. Freely doesn't imply
+/// cheaply; complexity costs are indicated on the various methods.
 ///
 /// # End accessor
 ///
@@ -35,7 +37,7 @@
 /// enveloping subtrees. So long as the node pointed to is not deleted (detach
 /// with dropped reference or replace) any accessors pointing to it are valid.
 ///
-/// Their behaviour may be seen analogous to that of `std::list<..>::iterator`s
+/// Their behaviour may be seen analogous to that of `std::list::iterator`s
 /// which remain valid across inward and outward splice operations done on the
 /// lists.
 ///
@@ -153,6 +155,8 @@ class accessor {
     // 'end'.
     node_type *node_ = nullptr;
 };
+
+}  // namespace detangled
 
 #include "impl/accessor.hh"
 

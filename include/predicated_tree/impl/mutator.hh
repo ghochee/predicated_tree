@@ -1,5 +1,7 @@
 #include <optional>
 
+namespace detangled {
+
 template <typename T, typename C>
 mutator<T, C>::mutator(const C comparator) : comparator_(comparator) {}
 
@@ -342,3 +344,5 @@ std::optional<raw_tree<T>> mutator<T, C>::clip(raw_tree<T> &node,
         seam->template replace<!wing>(main->template detach<wing>());
     }
 }
+
+}  // namespace detangled

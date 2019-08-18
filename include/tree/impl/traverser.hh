@@ -1,3 +1,5 @@
+namespace detangled {
+
 template <typename A, side wing>
 class traverser<A, traversal_order::pre, wing> {
   public:
@@ -94,3 +96,5 @@ void traverser<A, traversal_order::post, wing>::next(A &a) {
     for (a.up(), a.template down<!wing>();
          a.template down<wing>() || a.template down<!wing>();) {}
 }
+
+}  // namespace detangled

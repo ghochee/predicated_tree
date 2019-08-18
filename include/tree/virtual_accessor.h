@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+namespace detangled {
+
 /// A virtual_accessor is an accessor on a *virtual* tree.
 ///
 /// # Overview
@@ -12,11 +14,11 @@
 /// behaviour. All virtual_accessors created with the same logical subtree are
 /// semantically compatible. See constructor for notes.
 ///
-/// Minor modifications are done on methods defined on the parent `::accessor`
-/// class. These are not done through virtual methods for efficiency but also
-/// because clients are reasonably expected to not need to erase type
-/// information when dealing with `::accessor` and `::virtual_accessor` class
-/// family objects.
+/// Minor modifications are done on methods defined on the parent
+/// `detangled::accessor` class. These are not done through virtual methods for
+/// efficiency but also because clients are reasonably expected to not need to
+/// erase type information when dealing with `detangled::accessor` and
+/// `virtual_accessor` class family objects.
 ///
 /// # Properties
 ///
@@ -24,10 +26,11 @@
 ///
 /// All operations are well-defined on *end* accessor except the derefernce
 /// operations. Specifically movement operations on *end* accessor are well
-/// defined. Even more specifically in `::accessor` an *end*ed accessor can in
-/// no way be navigated back to the tree (except through reassignment which is
-/// really not navigating it). In the `::virtual_accessor` objects navigatiion
-/// using `down` / `root` etc. for navigating back to the tree is well defined.
+/// defined. Even more specifically in `detangled::accessor` an *end*ed
+/// accessor can in no way be navigated back to the tree (except through
+/// reassignment which is really not navigating it). In the `virtual_accessor`
+/// objects navigatiion using `down` / `root` etc. for navigating back to the
+/// tree is well defined.
 ///
 /// ## Validity in the face of Mutating methods
 ///
@@ -41,7 +44,7 @@
 /// modification which changes the 'depth' of the pointed-to node *in* the
 /// virtual tree that an accessor is referring to would invalidate it.
 ///
-/// @tparam ContainerType is the same as that for `::accessor`.
+/// @tparam ContainerType is the same as that for `detangled::accessor`.
 template <class ContainerType>
 class virtual_accessor : public accessor<ContainerType> {
   public:
@@ -56,10 +59,11 @@ class virtual_accessor : public accessor<ContainerType> {
 
     /// An accessor with `node` set as the root of a virtual tree. All
     /// operations on this object will restrict the accessor to this virtual
-    /// tree. See up(), root() for noticeable differences from how `::accessor`
-    /// objects behave.
+    /// tree. See up(), root() for noticeable differences from how
+    /// `detangled::accessor` objects behave.
     ///
-    /// @param node is used in `::accessor::accessor()` parent constructor call.
+    /// @param node is used in `detangled::accessor::accessor()` parent
+    ///     constructor call.
     /// @param depth of 0 indicates the *root* node. It can also be given a
     ///     special value of -1 which indicates an accessor which is indicative
     ///     of an *end* accessor. Any other value will cause a std::abort.
@@ -120,6 +124,8 @@ class virtual_accessor : public accessor<ContainerType> {
     ///   together.
     int16_t depth_ = -1;
 };
+
+}  // namespace detangled
 
 #include "impl/virtual_accessor.hh"
 

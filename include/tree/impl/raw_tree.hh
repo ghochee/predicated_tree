@@ -1,3 +1,5 @@
+namespace detangled {
+
 constexpr side operator!(const side wing) {
     if (wing == side::left) {
         return side::right;
@@ -311,3 +313,5 @@ size_t raw_tree<T>::size() const {
     return 1 + (has_child<side::left>() ? children_[_left]->size() : 0) +
            (has_child<side::right>() ? children_[_right]->size() : 0);
 }
+
+}  // namespace detangled

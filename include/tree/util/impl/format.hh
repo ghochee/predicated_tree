@@ -2,6 +2,8 @@
 #include <sstream>
 #include <vector>
 
+namespace detangled {
+
 template <typename Tree>
 std::string format::print(Tree &tree) const {
     std::string output;
@@ -51,9 +53,11 @@ void format::print_internal(Tree &tree, std::string &output) const {
     }
 }
 
+}  // namespace detangled
+
 template <typename T>
-std::ostream &operator<<(std::ostream &out, const raw_tree<T> &t) {
-    format f;
+std::ostream &operator<<(std::ostream &out, const ::detangled::raw_tree<T> &t) {
+    ::detangled::format f;
     out << f.print(t);
     return out;
 }

@@ -3,7 +3,9 @@
 
 #include "accessor.h"
 
-/// Objects of this class allow *sequentially* accessing ::raw_tree elements.
+namespace detangled {
+
+/// Objects of this class allow *sequentially* accessing `raw_tree` elements.
 ///
 /// The constructed iterators are *BidirectionalIterator*s and can be
 /// decremented from `end` state as well.
@@ -19,7 +21,7 @@
 /// ```
 ///
 /// The above allows accessing elements of the tree in pre-order (left first).
-/// Note that `prelend` is a mnemonic which construcst
+/// Note that `prelend` is a mnemonic which constructs
 /// `raw_tree::end<traversal_order::pre, side::left>()`. See
 /// `::RAW_TREE_MAKE_ALIAS` for details.
 ///
@@ -33,8 +35,8 @@
 ///
 /// This is a slight generalization over the `iterator`/`reverse_iterator` type
 /// pair in standard containers. The generalization would fit better if we
-/// called the standard iterators, `iterator<side::left>` and
-/// `iterator<side::right>` instead.
+/// called the standard iterators, `detangled::iterator<side::left>` and
+/// `detangled::iterator<side::right>` instead.
 ///
 /// @tparam C is the *tree* container type that we are trying to make the
 ///     iterator for. We specify this to DRY the code that we would have to
@@ -73,6 +75,8 @@ class iterator : public virtual_accessor<C>,
     iterator &operator--();
     iterator operator--(int);
 };
+
+}  // namespace detangled
 
 #include "impl/iterator.hh"
 

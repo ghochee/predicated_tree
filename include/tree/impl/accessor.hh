@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <cstdlib>
 
+namespace detangled {
+
 template <class C>
 accessor<C>::accessor(node_type &node) : node_(&node) {}
 
@@ -133,3 +135,5 @@ accessor<typename accessor<C>::container_type> accessor<C>::non_const() const {
     }
     return accessor<container_type>(const_cast<container_type &>(*node_));
 }
+
+}  // namespace detangled

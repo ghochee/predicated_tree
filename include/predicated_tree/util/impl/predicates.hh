@@ -1,6 +1,8 @@
 #include <type_traits>
 #include <random>
 
+namespace detangled {
+
 template <typename T>
 std::hash<T> stable_random<T>::hash_computer_;
 
@@ -18,3 +20,5 @@ bool more_even(const T &a, const T &b) {
                   "Calling more even on non integral type");
     return (a ^ (a - 1)) > (b ^ (b - 1));
 }
+
+}  // namespace detangled

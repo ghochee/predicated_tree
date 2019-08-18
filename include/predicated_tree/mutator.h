@@ -4,12 +4,14 @@
 #include <functional>
 #include <optional>
 
+namespace detangled {
+
 /// A mutator class object is strongly linked to the properties of a
-/// `::predicated_tree`.
+/// `detangled::predicated_tree`.
 ///
-/// Mutator objects allow *effecting* the properties of the `::predicated_tree`
-/// but also provide some other facilities which a `::predicated_tree` doesn't
-/// use directly.
+/// Mutator objects allow *effecting* the properties of the
+/// `detangled::predicated_tree` but also provide some other facilities which a
+/// `detangled::predicated_tree` doesn't use directly.
 ///
 /// Typical usage:
 /// ```
@@ -29,7 +31,8 @@
 ///     ...
 /// ```
 ///
-/// The most effective usage of this class is as part of `::predicated_tree`.
+/// The most effective usage of this class is as part of
+/// `detangled::predicated_tree`.
 template <typename T, typename Comparator>
 class mutator {
   public:
@@ -83,7 +86,7 @@ class mutator {
     raw_tree<T> merge(raw_tree<T> &&first, raw_tree<T> &&second);
 
     /// Heaps `tree` using `H` predicate while keeping relative `L` order
-    /// unchanged. For `::raw_tree<T>` value `t`, the following:
+    /// unchanged. For `detangled::raw_tree<T>` value `t`, the following:
     /// ```
     ///     H h(...); L l(...);
     ///     std::sort(t.inlbegin(), t.inlend(), l);
@@ -113,6 +116,8 @@ class mutator {
 
     const Comparator comparator_;
 };
+
+}  // namespace detangled
 
 #include "impl/mutator.hh"
 

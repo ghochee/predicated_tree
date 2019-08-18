@@ -1,6 +1,8 @@
 #ifndef TREE_FORMAT_H
 #define TREE_FORMAT_H
 
+namespace detangled {
+
 // 'Format' tree objects for printability.
 // TODO(ghochee): Formatting options, indent level coloring?
 class format {
@@ -15,8 +17,10 @@ class format {
     void print_internal(Tree &tree, std::string &output) const;
 };
 
+}  // namespace detangled
+
 template <typename T>
-std::ostream &operator<<(std::ostream &out, const raw_tree<T> &t);
+std::ostream &operator<<(std::ostream &out, const ::detangled::raw_tree<T> &t);
 
 #include "impl/format.hh"
 
