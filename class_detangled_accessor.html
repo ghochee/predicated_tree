@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>template class detangled::accessor &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/target-highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="template class detangled::comparator" href="class_detangled_comparator.html" />
+    <link rel="prev" title="template struct detangled::wrapper" href="struct_detangled_wrapper.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Predicated Tree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="namespace_detangled.html">namespace detangled</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="enum_detangled_side.html">enum detangled::side</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum_detangled_traversal_order.html">enum detangled::traversal_order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="struct_detangled_indifferent.html">template struct detangled::indifferent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="struct_detangled_stable_random.html">template struct detangled::stable_random</a></li>
+<li class="toctree-l3"><a class="reference internal" href="struct_detangled_wrapper.html">template struct detangled::wrapper</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::accessor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#doxid-classdetangled-1-1accessor-1autotoc-md7">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#end-accessor">End accessor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#properties">Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_comparator.html">template class detangled::comparator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_lt.html">template class detangled::has_lt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_iterator.html">template class detangled::iterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_mutator.html">template class detangled::mutator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_raw_tree.html">template class detangled::raw_tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-3.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="global.html#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Predicated Tree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="global.html">Global Namespace</a> &raquo;</li>
+        
+          <li><a href="namespace_detangled.html">namespace detangled</a> &raquo;</li>
+        
+      <li>template class detangled::accessor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/class_detangled_accessor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="template-class-detangled-accessor">
+<span id="doxid-classdetangled-1-1accessor"></span><span id="index-0"></span><h1>template class detangled::accessor<a class="headerlink" href="#template-class-detangled-accessor" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>accessors are used for creating <em>pointers</em> to nodes in a <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">raw_tree</span></span></a></code>. <a class="reference internal" href="#details-classdetangled-1-1accessor"><span class="std std-ref">More…</span></a></p>
+<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;accessor.h&gt;</span><span class="cp"></span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Container</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">accessor</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// typedefs</span>
+
+    <span class="k">typedef</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">remove_cv</span><span class="o">&lt;</span><span class="n">Container</span><span class="o">&gt;::</span><span class="n">type</span> <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a7554c1bb6cecbcf6b08afa4a856c40c8">container_type</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><a class="reference internal" href="#doxid-classdetangled-1-1accessor-1ac9c7699ca484c9c694b97b5c88c96454"><span class="std std-ref">is_const</span></a><span></span><span class="p">,</span> <span class="k">const</span> <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a7554c1bb6cecbcf6b08afa4a856c40c8"><span class="std std-ref">container_type</span></a><span></span><span class="p">,</span> <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a7554c1bb6cecbcf6b08afa4a856c40c8"><span class="std std-ref">container_type</span></a><span></span><span class="o">&gt;::</span><span class="n">type</span> <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a4ece2c7baeea224562b590a63160f27e">node_type</span><span></span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><a class="reference internal" href="#doxid-classdetangled-1-1accessor-1ac9c7699ca484c9c694b97b5c88c96454"><span class="std std-ref">is_const</span></a><span></span><span class="p">,</span> <span class="k">const</span> <span class="k">typename</span> <span class="n">container_type</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span> <span class="k">typename</span> <span class="n">container_type</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;::</span><span class="n">type</span> <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a23eb70bdba11dca20bede78ec9c9334b">value_type_t</span><span></span><span class="p">;</span>
+
+    <span class="c1">// fields</span>
+
+    <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">bool</span> <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1ac9c7699ca484c9c694b97b5c88c96454">is_const</span><span></span> <span class="o">=</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">is_const</span><span class="o">&lt;</span><span class="n">Container</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">;</span>
+
+    <span class="c1">// construction</span>
+
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a54fb1a03027f226c8f471682e6995b49">accessor</span><span></span><span class="p">(</span><a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a4ece2c7baeea224562b590a63160f27e"><span class="std std-ref">node_type</span></a><span></span><span class="o">&amp;</span> <span class="n">node</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1aeffe7e23564bc364ccb16d7a06c7617d">accessor</span><span></span><span class="p">();</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a4586591cbb56184a8994fa16fa7d3781">accessor</span><span></span><span class="p">(</span><span class="n">accessor</span><span class="o">&amp;&amp;</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a6523c3d9b32adcb10cfea50acea1cfd3">accessor</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">accessor</span><span class="o">&lt;</span><a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a7554c1bb6cecbcf6b08afa4a856c40c8"><span class="std std-ref">container_type</span></a><span></span><span class="o">&gt;&amp;</span> <span class="n">pos</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1acd9eb2e363e2dd06f661620d433f18f5">accessor</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">accessor</span><span class="o">&lt;</span><span class="k">const</span> <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a7554c1bb6cecbcf6b08afa4a856c40c8"><span class="std std-ref">container_type</span></a><span></span><span class="o">&gt;&amp;</span> <span class="n">post</span><span class="p">);</span>
+
+    <span class="c1">// methods</span>
+
+    <span class="n">accessor</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a540e665a3923cbfb1318557b7ce2cfb9">operator=</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">accessor</span><span class="o">&amp;</span><span class="p">);</span>
+
+    <span class="n">accessor</span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1ab72f41d132168e3621df33741fb3b7d2">operator=</span><span></span><span class="p">(</span><span class="n">accessor</span><span class="o">&amp;&amp;</span><span class="p">);</span>
+
+    <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a23eb70bdba11dca20bede78ec9c9334b"><span class="std std-ref">value_type_t</span></a><span></span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a928d7b82f1795307869ab94107613e2a">operator*</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a4ece2c7baeea224562b590a63160f27e"><span class="std std-ref">node_type</span></a><span></span><span class="o">&amp;</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a103ed350dbd8aaba3572a30cbc0e155d">node</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a4ece2c7baeea224562b590a63160f27e"><span class="std std-ref">node_type</span></a><span></span><span class="o">*</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1aedd2263d473d97f20014bdf7e1411011">operator-&gt;</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1aece74c9f0d585db9fe7b4bdd7c6e9ced">operator bool</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a83700ccdcb84dd4e1e8591bbe816b311"><span class="std std-ref">operator==</span></a><span></span><span class="p">(</span><span class="k">const</span> <span class="n">accessor</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a92c4d36eed7c103545e11d92470fc422">operator!=</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">accessor</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1ac677ea39334283ecbaf24f2bfc1aa133">is_root</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">uint32_t</span>
+    <a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a4b1eb2b50da156fd1c859cedde02e54d"><span class="std std-ref">depth</span></a><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1aa9832bd92fcad3564ad5bb0b5d269d77">up</span><span></span><span class="p">();</span>
+
+    <span class="kt">void</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1abf9bd98a165e6de0e213911ea4bfd23f">root</span><span></span><span class="p">();</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a3015255f0650b79bec2b5f8e0acb4f82">down</span><span></span><span class="p">();</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1affbf9875a867bdb96c5c131d7b47f39c">down</span><span></span><span class="p">(</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1aa2b4e54f5c9b29c045815e2327019538">ancestor</span><span></span><span class="p">();</span>
+
+    <span class="kt">bool</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a4b9e2bda32e9fda016928e0daa992bb4">ancestor</span><span></span><span class="p">(</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
+
+    <span class="n">accessor</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1ad4d536209f644d6d1eba021a952068f9">common_ancestor</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">accessor</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="n">accessor</span><span class="o">&lt;</span><a class="reference internal" href="#doxid-classdetangled-1-1accessor-1a7554c1bb6cecbcf6b08afa4a856c40c8"><span class="std std-ref">container_type</span></a><span></span><span class="o">&gt;</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1accessor-1a385f45da841966aeea47b625db25c148">non_const</span><span></span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="p">};</span></pre>
+</div>
+<div class="section" id="detailed-documentation">
+<span id="details-classdetangled-1-1accessor"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
+<p>accessors are used for creating <em>pointers</em> to nodes in a <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">raw_tree</span></span></a></code>.</p>
+</div>
+<div class="section" id="doxid-classdetangled-1-1accessor-1autotoc-md7">
+<span id="id1"></span><h2>Overview<a class="headerlink" href="#doxid-classdetangled-1-1accessor-1autotoc-md7" title="Permalink to this headline">¶</a></h2>
+<p>Accessor objects are used for referencing a node in a tree and for navigating through the various nodes in the tree. It is a single object that can be used to visit all the nodes in the tree.</p>
+<p>Clients should see these classes as more fundamental than <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_iterator.html#doxid-classdetangled-1-1iterator"><span class="std std-ref"><span class="pre">detangled::iterator</span></span></a></code> s are because objects of these classes don’t know <em>next</em> and can navigate freely through the container. Freely doesn’t imply cheaply; complexity costs are indicated on the various methods.</p>
+</div>
+<div class="section" id="end-accessor">
+<span id="doxid-classdetangled-1-1accessor-1autotoc-md8"></span><h2>End accessor<a class="headerlink" href="#end-accessor" title="Permalink to this headline">¶</a></h2>
+<p>Other than nodes in a tree, accessor objects may be put in a state we call <em>end</em> (because typically this state is useful when done as an iterator). In this state the accessor refers to an invalid object. This accessor may be seen like a virtual node which is the parent of the <em>root</em> node of this tree with the difference that it is impossible to navigate down after reaching there.</p>
+</div>
+<div class="section" id="properties">
+<span id="doxid-classdetangled-1-1accessor-1autotoc-md9"></span><h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="validity-in-the-face-of-mutating-methods">
+<span id="doxid-classdetangled-1-1accessor-1autotoc-md10"></span><h3>Validity in the face of Mutating methods<a class="headerlink" href="#validity-in-the-face-of-mutating-methods" title="Permalink to this headline">¶</a></h3>
+<p>Accessor objects are generally stable. They remain valid if the tree that the node they point to is modified in any way including detaching enveloping subtrees. So long as the node pointed to is not deleted (detach with dropped reference or replace) any accessors pointing to it are valid.</p>
+<p>Their behaviour may be seen analogous to that of <code class="docutils literal notranslate"><span class="pre">std::list::iterator</span></code> s which remain valid across inward and outward splice operations done on the lists.</p>
+</div>
+<div class="section" id="operations-on-end-accessors">
+<span id="doxid-classdetangled-1-1accessor-1autotoc-md11"></span><h3>Operations on end accessors<a class="headerlink" href="#operations-on-end-accessors" title="Permalink to this headline">¶</a></h3>
+<p>Once in <em>end</em> state doing any operations on the accessor or dereferenced tree nodes is undefined unless specified otherwise as being end_safe.</p>
+</div>
+<div class="section" id="swap-operations">
+<span id="doxid-classdetangled-1-1accessor-1autotoc-md12"></span><h3>Swap operations<a class="headerlink" href="#swap-operations" title="Permalink to this headline">¶</a></h3>
+<p>Accessors would lose some semantic relevance across <code class="docutils literal notranslate"><span class="pre">swap</span></code> operations. In swaps, the memory allocation of two nodes remains the same and the contents are switched. This would cause the first memory location to <em>become</em> the tree rooted at the second location. Accessors are tied to memory locations and hence will not port across swaps.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Container</p></td>
+<td><p>is the tree container type that this accessor works over. Methods like <code class="docutils literal notranslate"><span class="pre">parent()</span></code>, <code class="docutils literal notranslate"><span class="pre">child&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code> etc. are expected to be defined over this type.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classdetangled-1-1accessor-1a83700ccdcb84dd4e1e8591bbe816b311"><span id="index-1"></span><span></span><span class="kt">bool</span>
+<span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">accessor</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span></pre>
+<p>Equality and position queries. These are end_safe operations.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classdetangled-1-1accessor-1a4b1eb2b50da156fd1c859cedde02e54d"><span id="index-2"></span><span></span><span class="kt">uint32_t</span>
+<span class="n">depth</span><span class="p">()</span> <span class="k">const</span></pre>
+<p><strong>Complexity: O(lg(n))</strong></p>
+<p class="rubric">Returns:</p>
+<p>the ‘depth’ of the node. Invalid result is returned when we are at end.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="class_detangled_comparator.html" class="btn btn-neutral float-right" title="template class detangled::comparator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="struct_detangled_wrapper.html" class="btn btn-neutral float-left" title="template struct detangled::wrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Aditya Dalmia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
