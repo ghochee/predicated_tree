@@ -1,6 +1,31 @@
 #ifndef TREE_COMPARATOR_H
 #define TREE_COMPARATOR_H
 
+#include <functional>
+#include "tree/util/predicates.h"
+
+/// Class template which tests if `T` is defined for `operator<`.
+///
+/// We need to be able to perform this test to determine if `::std::less` can be
+/// used as a default for `T`.
+template <typename T>
+class has_lt {
+  private:
+    /// Weakest template overload, only fires if all else fails.
+    template <typename>
+    static constexpr std::false_type check(...);
+
+    /// Template overload which is successfully chosen if `*ptr < *ptr` is a
+    /// valid expression.
+    template <typename U>
+    static constexpr auto check(U *ptr) ->
+        typename std::is_same<decltype(*ptr < *ptr), bool>::type;
+
+  public:
+    static const bool value =
+        decltype(check<T>(static_cast<T *>(nullptr)))::value;
+};
+
 /// Class template which is instantiated for creating comparator objects.
 ///
 /// Instantiated classes of this template *define* the properties in
@@ -17,27 +42,6 @@
 /// bool operator()(const T &first, const T &second) const;
 /// ```
 ///
-/// To effect (or test) properties this wrapper object should be used instead of
-/// the underlying predicates. This is because some tweaks are made to the SWOs
-/// to enable full and efficient use in implementing the predicated tree.
-///
-/// In the documentation the two predicates are described differently and each
-/// serves a different purpose. These are described below.
-///
-/// Height Predicate
-///
-/// The first predicate is called the `Height` predicate in documentation and
-/// variable naming. `Height`, `H', *tall*, *short* are nouns used in
-/// documentation to refer to this property and outcomes. This predicate is the
-/// primary criterion for deciding the height of a node in a predicated tree.
-///
-/// Left Predicate
-///
-/// The second predicate describes the total ordering relation. `Left`, `L`,
-/// *left*, *right*, *side*, *wing* are nouns used in documentation and code to
-/// describe notes related to it. This predicate is the primary criterion for
-/// deciding the left-ness of a node in a predicated tree.
-///
 /// It is useful to have *unambiguity* when determining height and left. This is
 /// because ambiguity would mean that lookup operations would have to traverse
 /// multiple paths. As such we use the predicates in a special way (using side
@@ -48,10 +52,17 @@
 ///
 /// @tparam T is the type of the object which this comparator object will be
 ///     comparing.
-/// @tparam H See L
-/// @tparam L `H`eight and `L`eft are SWO binary predicate functors used for
-///     comparing.
-template <class T, class H, class L>
+/// @tparam H predicate which governs `Height` comparison operations in the
+///     tree. `Height`, `H`, *tall*, *short* are nouns used in documentation to
+///     refer to this property and outcomes.
+///     Default: `::indifferent`.
+/// @tparam L predicate which goversn `Left` comparison in the tree. `Left`,
+///     `L`, *left*, *right*, *side*, *wing* are nouns used in documentation and
+///     code to describe notes related to it. This defaulted to `::std::less<T>`
+///     if `T` has `operator<` defined on it else it becomes `::indifferent`.
+template <class T, class H = indifferent<T>,
+          class L = typename ::std::conditional<
+              has_lt<T>::value, ::std::less<T>, indifferent<T>>::type>
 class comparator {
   public:
     comparator(H height_comparator = H(), L left_comparator = L());

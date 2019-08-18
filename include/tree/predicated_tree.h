@@ -142,7 +142,7 @@
 /// @tparam T similar to the `T` param for `::raw_tree<T>`.
 /// @tparam Comparator is a user supplied `::comparator` class defining the
 ///     height and left predicates.
-template <class T, class Comparator>
+template <class T, class Comparator = comparator<T>>
 class predicated_tree {
   public:
     explicit predicated_tree(const Comparator = Comparator());
@@ -223,6 +223,49 @@ class predicated_tree {
     ::std::optional<raw_tree<T>> tree_;
     mutator<T, Comparator> mutator_;
 };
+
+// Function template for easier creation of predicated_tree family objects.
+template <class T>
+auto make_predicated_tree() {
+    return predicated_tree<T>();
+}
+
+template <class T, class H>
+auto make_predicated_tree(const H h = H()) {
+    auto c = comparator<T, H>(h);
+    return predicated_tree<T, decltype(c)>(c);
+}
+
+template <class T, bool (*F)(const T &, const T &)>
+auto make_predicated_tree() {
+    auto c = comparator<T, wrapper<T, F>>(wrapper<T, F>());
+    return predicated_tree<T, decltype(c)>(c);
+}
+
+template <class T, class H, class L>
+auto make_predicated_tree(const H h = H(), const L l = L()) {
+    auto c = comparator<T, H, L>(h, l);
+    return predicated_tree<T, decltype(c)>(c);
+}
+
+template <class T, class H, bool (*F)(const T &, const T &)>
+auto make_predicated_tree(const H h = H()) {
+    auto c = comparator<T, H, wrapper<T, F>>(h);
+    return predicated_tree<T, decltype(c)>(c);
+}
+
+template <class T, bool (*F)(const T &, const T &), class L>
+auto make_predicated_tree(const L l = L()) {
+    auto c = comparator<T, wrapper<T, F>, L>(wrapper<T, F>(), l);
+    return predicated_tree<T, decltype(c)>(c);
+}
+
+template <class T, bool (*F1)(const T &, const T &),
+          bool (*F2)(const T &, const T &)>
+auto make_predicated_tree() {
+    auto c = comparator<T, wrapper<T, F1>, wrapper<T, F2>>();
+    return predicated_tree<T, decltype(c)>(c);
+}
 
 #include "tree/predicated_tree.hh"
 
