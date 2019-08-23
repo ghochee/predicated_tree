@@ -44,17 +44,32 @@ accessor<ContainerType> mutator<T, C>::upper_bound(ContainerType &tree,
         }
     }
 
+    // After navigating down through all *taller* nodes, we continue downward
+    // through all nodes which are either left or right of 'value' i.e. we
+    // continue downward until we go through nodes which are *not-equal* in
+    // *left-ness* property. If we return without doing this then there is a
+    // possibility of returning without finding an *equal* node which actually
+    // exists in the tree at a lower level.
     for (; !comparator_.tall(value, *pos);) {
         if (comparator_.left(value, *pos)) {
             if (!pos.template down<side::left>()) { return pos; }
-        } else if (comparator_.left(*pos, value)) {
-            if (!pos.template down<side::right>()) { return pos; }
-        } else {
-            break;
+            continue;
         }
+
+        if (comparator_.left(*pos, value)) {
+            if (!pos.template down<side::right>()) { return pos; }
+            continue;
+        }
+
+        // The values are left-equal if we reach here.
+        break;
     }
 
-    if (!pos->has_parent()) { return accessor<ContainerType>(); }
+    if (pos == accessor<ContainerType>(tree)) {
+        // If we are at 'root' of search tree (not necessarily physical tree)
+        // then we return 'end' accessor.
+        return accessor<ContainerType>();
+    }
 
     pos.up();
     return pos;
@@ -65,21 +80,14 @@ template <class ContainerType>
 accessor<ContainerType> mutator<T, C>::lower_bound(ContainerType &tree,
                                                    const T &value) const {
     auto pos = upper_bound(tree, value);
-    if (pos) {
-        if (comparator_.template horizontal<side::right>(value, *pos)) {
-            if (!pos.template down<side::right>()) { return pos; }
-        } else {
-            if (!pos.template down<side::left>()) { return pos; }
-        }
-    } else {
-        pos = accessor<ContainerType>(tree);
-    }
+    if (!pos) { return pos; }
+    if (!comparator_.equal(*pos, value)) { return pos; }
 
+    // Find the lowest node which is equal in value.
+    if (!pos.template down<side::left>()) { return pos; }
     for (; comparator_.equal(*pos, value);) {
         if (!pos.template down<side::left>()) { return pos; }
     }
-
-    if (!pos->has_parent()) { return accessor<ContainerType>(); }
 
     pos.up();
     return pos;
@@ -96,11 +104,15 @@ accessor<raw_tree<T>> mutator<T, C>::insert(T &&value, raw_tree<T> &node,
 
     if (!pos) { pos = accessor<raw_tree<T>>(node); }
     for (; pos->has_parent() && comparator_.tall(value, *pos); pos.up()) {}
+
+    // FIXME(ghochee): Insert called with non-root node might mess up the tree
+    // but maybe we are OK with that. This test can be deferred to if the node
+    // is getting inserted at a *periphery* i.e. at root or root-equal node. Or
+    // if the result of clipping is an empty tree.
     if (!in_subtree(pos.node(), value)) { pos = accessor<raw_tree<T>>(node); }
 
-    if (auto vert_pos = lower_bound(pos.node(), value); vert_pos) {
+    if (auto vert_pos = upper_bound(pos.node(), value); vert_pos) {
         pos = vert_pos;
-        // FIXME(ghochee): Private member function template for DRY-ing this.
         if (comparator_.template horizontal<side::right>(value, *pos)) {
             if (!pos->template has_child<side::right>()) {
                 pos->template emplace<side::right>(std::move(value));
@@ -122,15 +134,6 @@ accessor<raw_tree<T>> mutator<T, C>::insert(T &&value, raw_tree<T> &node,
                 return pos;
             }
 
-            // When equal_left, we don't need to do clipping or other
-            // comparison. The child will move further left as this node gets
-            // inserted.
-            if (comparator_.equal_left(value, *pos)) {
-                pos->template splice<side::left, side::left>(std::move(value));
-                pos.template down<side::left>();
-                return pos;
-            }
-
             if (comparator_.template horizontal<side::right>(
                     *pos->template child<side::left>(), value)) {
                 pos->template splice<side::left, side::right>(std::move(value));
@@ -144,16 +147,35 @@ accessor<raw_tree<T>> mutator<T, C>::insert(T &&value, raw_tree<T> &node,
         swap(node, pos.node());
         if (comparator_.template horizontal<side::right>(*node, *pos)) {
             pos->template replace<side::right>(std::move(node));
-            if (!pos->template child<side::right>()
-                     .template has_child<side::left>()) {
-                return pos;
-            }
         } else {
             pos->template replace<side::left>(std::move(node));
-            if (!pos->template child<side::left>()
-                     .template has_child<side::right>()) {
-                return pos;
+        }
+    }
+
+    if (pos->template has_child<side::left>()) {
+        auto existing = pos;
+        existing.template down<side::left>();
+        if (comparator_.equal(*pos, *existing)) {
+            if (existing->template has_child<side::right>()) {
+                pos->template replace<side::right>(
+                    existing->template detach<side::right>());
             }
+
+            if (existing->template has_child<side::left>() &&
+                comparator_.equal(*pos,
+                                  *existing->template child<side::left>())) {
+                auto left_child = pos->template detach<side::left>();
+                auto left_gchild = left_child.template detach<side::left>();
+                if (left_gchild.template has_child<side::right>()) {
+                    left_child.template replace<side::right>(
+                        left_gchild.template detach<side::right>());
+                }
+                left_gchild.template replace<side::right>(
+                    std::move(left_child));
+                pos->template replace<side::left>(std::move(left_gchild));
+            }
+
+            return pos;
         }
     }
 
