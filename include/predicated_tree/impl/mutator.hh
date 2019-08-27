@@ -215,32 +215,71 @@ void mutator<T, C>::erase(raw_tree<T> &,
     accessor<raw_tree<T>> &pos =
         *reinterpret_cast<accessor<raw_tree<T>> *>(&const_pos);
 
-    bool left = pos->template has_child<side::left>();
-    bool right = pos->template has_child<side::right>();
-
-    std::optional<raw_tree<T>> merged;
-    if (!left && right) {
-        merged.emplace(pos->template detach<side::right>());
-    } else if (left && !right) {
-        merged.emplace(pos->template detach<side::left>());
-    } else if (left && right) {
-        merged.emplace(zip(pos->template detach<side::left>(),
-                           pos->template detach<side::right>()));
+    accessor<raw_tree<T>> sifted_position = this->sift_out(pos.node());
+    bool has_left = sifted_position->template has_child<side::left>(),
+         has_right = sifted_position->template has_child<side::right>();
+    if (!has_left && !has_right) {
+        if (sifted_position->template is_side<side::left>()) {
+            sifted_position->parent().template detach<side::left>();
+        } else {
+            sifted_position->parent().template detach<side::right>();
+        }
+        return;
     }
 
-    if (pos->has_parent()) {
-        auto parent = pos;
-        parent.up();
-        side wing =
-            pos->template is_side<side::left>() ? side::left : side::right;
-        if (merged.has_value()) {
-            parent->replace(wing, std::move(merged.value()));
-        } else {
-            parent->detach(wing);
-        }
+    auto child_side = has_left ? side::left : side::right;
+    auto &child = sifted_position->child(child_side);
+    *sifted_position = std::move(*child);
+    if (child.has_child(!child_side)) {
+        sifted_position->replace(!child_side, child.detach(!child_side));
+    }
+    if (child.has_child(child_side)) {
+        sifted_position->replace(child_side, child.detach(child_side));
     } else {
-        // NOTE: Undefined if we are removing the last node in the tree.
-        pos.node() = std::move(merged.value());
+        sifted_position->detach(child_side);
+    }
+}
+
+template <typename T, typename C>
+accessor<raw_tree<T>> mutator<T, C>::sift_down(raw_tree<T> &root) {
+    for (auto pos = accessor<raw_tree<T>>(root);;) {
+        std::optional<side> rotation_side;
+        if (pos->template has_child<side::left>() &&
+            comparator_.tall(*pos->template child<side::left>(), *pos)) {
+            *rotation_side = side::right;
+        }
+
+        if (pos->template has_child<side::right>() &&
+            comparator_.tall(*pos->template child<side::right>(),
+                             rotation_side.has_value()
+                                 ? *pos->template child<side::left>()
+                                 : *pos)) {
+            *rotation_side = side::left;
+        }
+
+        if (!rotation_side.has_value()) { return pos; }
+
+        pos->rotate(*rotation_side);
+        pos.down(*rotation_side);
+    }
+}
+
+template <typename T, typename C>
+accessor<raw_tree<T>> mutator<T, C>::sift_out(raw_tree<T> &root) {
+    for (auto pos = accessor<raw_tree<T>>(root);;) {
+        if (!(pos->template has_child<side::left>() &&
+              pos->template has_child<side::right>())) {
+            return pos;
+        }
+
+        if (comparator_.tall(*pos->template child<side::left>(),
+                             *pos->template child<side::right>())) {
+            pos->template rotate<side::right>();
+            pos.template down<side::right>();
+        } else {
+            pos->template rotate<side::left>();
+            pos.template down<side::left>();
+        }
     }
 }
 
@@ -254,31 +293,7 @@ template <typename T, typename C>
 void mutator<T, C>::stable_make_heap(raw_tree<T> &tree) {
     for (auto it = tree.template begin<traversal_order::post, side::left>();
          it != tree.template end<traversal_order::post, side::left>(); ++it) {
-        bool leftTall =
-            it->template has_child<side::left>() &&
-            comparator_.tall(*it->template child<side::left>(), *it);
-        bool rightTall =
-            it->template has_child<side::right>() &&
-            comparator_.tall(*it->template child<side::right>(), *it);
-
-        if (!leftTall && !rightTall) { continue; }
-
-        if (!leftTall && rightTall) {
-            it->template reshape<side::left, side::left>();
-            continue;
-        }
-
-        if (leftTall && !rightTall) {
-            it->template reshape<side::right, side::right>();
-            continue;
-        }
-
-        if (comparator_.tall(*it->template child<side::left>(),
-                             *it->template child<side::right>())) {
-            it->template reshape<side::right, side::left>();
-        } else {
-            it->template reshape<side::left, side::right>();
-        }
+        this->sift_down(it.node());
     }
 }
 
@@ -286,44 +301,6 @@ template <typename T, typename C>
 void mutator<T, C>::stable_sort(raw_tree<T> &tree) {
     for (auto it = tree.template begin<traversal_order::post, side::left>();
          it != tree.template end<traversal_order::post, side::left>(); ++it) {}
-}
-
-template <typename T, typename C>
-raw_tree<T> mutator<T, C>::zip(raw_tree<T> &&left, raw_tree<T> &&right) const {
-    if (comparator_.tall(*left, *right)) {
-        return zip<side::right>(std::move(left), std::move(right));
-    } else {
-        return zip<side::left>(std::move(right), std::move(left));
-    }
-}
-
-template <typename T, typename C>
-template <side wing>
-raw_tree<T> mutator<T, C>::zip(raw_tree<T> &&main,
-                               raw_tree<T> &&incoming) const {
-    accessor<raw_tree<T>> zipper(main);
-
-    while (true) {
-        for (; !comparator_.template vertical<wing>(*incoming, *zipper);
-             zipper.template down<wing>()) {
-            if (!zipper->template has_child<wing>()) {
-                zipper->template replace<wing>(std::move(incoming));
-                return raw_tree<T>(std::move(main));
-            }
-        }
-
-        incoming.swap(zipper.node());
-
-        for (; !comparator_.template vertical<!wing>(*incoming, *zipper);
-             zipper.template down<!wing>()) {
-            if (!zipper->template has_child<!wing>()) {
-                zipper->template replace<!wing>(std::move(incoming));
-                return raw_tree<T>(std::move(main));
-            }
-        }
-
-        incoming.swap(zipper.node());
-    }
 }
 
 template <typename T, typename C>

@@ -57,22 +57,20 @@ class mutator {
         accessor<const raw_tree<T>> pos = accessor<const raw_tree<T>>());
     void erase(raw_tree<T> &node, accessor<const raw_tree<T>> pos);
 
-    /// Combines `left` and `right` to give a single tree with all the elements
-    /// in the two trees under `Comparator` predicates. If a represents
-    /// elements of `left` and b elements of `right` `l(b, a)` is always
-    /// `false`.
-    ///
-    /// The uncommon name of this method reflects the operation being done,
-    /// where `left` and `right` are correct under `H` and `L` and `left` has
-    /// elements *less than* `right`, then the operation is *zipping up* the
-    /// two halves along the middle.
-    raw_tree<T> zip(raw_tree<T> &&left, raw_tree<T> &&right) const;
+    /// Takes the element at `root` and heaps it down until it reaches it's
+    /// appropriate position. Doesn't affect inorder sequencing of elements in
+    /// the tree.
+    accessor<raw_tree<T>> sift_down(raw_tree<T> &root);
+
+    /// Same as `sift_down` but this sifts down all the way until this node can
+    /// become a leaf. This would be equivalent to sifting down as if the value
+    /// at `root` is the lowest possible value in the `H` predicate.
+    accessor<raw_tree<T>> sift_out(raw_tree<T> &root);
 
     /// Clips out the *extremal* part of the tree w.r.t value. Specifcally if
     /// `value` is less than node then returns a tree which comprises all
     /// elements *smaller* than `value`. If `value` is greater than that at node
-    /// then returns a tree comprising elements *greater* than `value`. This is
-    /// the reverse operation of `zip` governed by a value.
+    /// then returns a tree comprising elements *greater* than `value`.
     ///
     /// Returns `std::optional` because `value` may be smaller (or greater)
     /// than all the values in the tree in which case we have to return an
