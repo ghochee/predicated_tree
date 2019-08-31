@@ -180,8 +180,7 @@ class raw_tree {
     explicit raw_tree(T &&value) : value_(std::move(value)) {}
     explicit raw_tree(const T &value) : value_(value) {}
 
-    /// Move operations would *deep*-move a node. Parent if any has it's
-    /// reference updated as well. `other` may be a *root* node.
+    /// Move operations would *deep*-move a node. `other` may be a *root* node.
     ///
     /// **Complexity: O(1)**
     /// @param other refers to the node we are moving into this location.

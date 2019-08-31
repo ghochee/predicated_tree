@@ -58,34 +58,32 @@ constexpr std::underlying_type_t<side> _right = as_int(side::right);
 template <typename T>
 raw_tree<T>::raw_tree(raw_tree &&other)
     : value_(std::move(other.value_)),
-      parent_(other.parent_),
       children_(std::move(other.children_)) {
     if (children_[_left]) { children_[_left]->parent_ = this; }
     if (children_[_right]) { children_[_right]->parent_ = this; }
 
-    if (parent_ == &other) {
-        parent_ = this;
-    } else if (other.is_side<side::left>()) {
-        parent_->children_[_left].reset();
-    } else {
-        parent_->children_[_right].reset();
+    if (other.parent_ != &other) {
+        if (other.is_side<side::left>()) {
+            other.parent_->children_[_left].reset();
+        } else {
+            other.parent_->children_[_right].reset();
+        }
     }
 }
 
 template <typename T>
 raw_tree<T> &raw_tree<T>::operator=(raw_tree<T> &&other) {
     value_ = std::move(other.value_);
-    parent_ = other.parent_;
     children_ = std::move(other.children_);
     if (children_[_left]) { children_[_left]->parent_ = this; }
     if (children_[_right]) { children_[_right]->parent_ = this; }
 
-    if (parent_ == &other) {
-        parent_ = this;
-    } else if (other.is_side<side::left>()) {
-        parent_->children_[_left].reset();
-    } else {
-        parent_->children_[_right].reset();
+    if (other.parent_ != &other) {
+        if (other.is_side<side::left>()) {
+            other.parent_->children_[_left].reset();
+        } else {
+            other.parent_->children_[_right].reset();
+        }
     }
 
     return *this;
