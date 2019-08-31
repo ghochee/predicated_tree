@@ -318,7 +318,6 @@ std::optional<raw_tree<T>> mutator<T, C>::clip(raw_tree<T> &node,
                                                const T &value) const {
     accessor<raw_tree<T>> main(node);
 
-    if (!main.template down<wing>()) { return std::nullopt; }
     for (; !comparator_.template horizontal<!wing>(value, *main);) {
         if (!main.template down<wing>()) { return std::nullopt; }
     }
