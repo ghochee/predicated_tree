@@ -69,7 +69,11 @@ class accessor {
                                   const typename container_type::value_type,
                                   typename container_type::value_type>::type;
 
-    explicit accessor(node_type &node);
+    // The following single argument constructor is not explicit so that
+    // interfaces which accept `accessor`s can be called from client sites
+    // using accessor objects or trees directly and an automatic construction
+    // happens.
+    accessor(node_type &node);
     accessor() = default;
     accessor(accessor &&) = default;
     accessor &operator=(const accessor &) = default;
