@@ -12,7 +12,7 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::upper_bound(
     const T &value) const {
     accessor<const raw_tree<T>> pos(tree_.value());
     for (; comparator_.tall(*pos, value);) {
-        if (!(comparator_.template horizontal<side::right>(value, *pos)
+        if (!(comparator_.left(*pos, value)
                   ? pos.template down<side::right>()
                   : pos.template down<side::left>())) {
             return pos;
@@ -102,15 +102,15 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
 
     if (auto vert_pos = upper_bound(value); vert_pos) {
         pos = *reinterpret_cast<accessor<raw_tree<T>> *>(&vert_pos);
-        if (comparator_.template horizontal<side::right>(value, *pos)) {
+        if (comparator_.left(*pos, value)) {
             if (!pos->template has_child<side::right>()) {
                 pos->template emplace<side::right>(std::move(value));
                 pos.template down<side::right>();
                 return pos;
             }
 
-            if (comparator_.template horizontal<side::right>(
-                    *pos->template child<side::right>(), value)) {
+            if (comparator_.left(
+                    value, *pos->template child<side::right>())) {
                 pos->template splice<side::right, side::right>(
                     std::move(value));
             } else {
@@ -124,8 +124,8 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
                 return pos;
             }
 
-            if (comparator_.template horizontal<side::right>(
-                    *pos->template child<side::left>(), value)) {
+            if (comparator_.left(
+                    value, *pos->template child<side::left>())) {
                 pos->template splice<side::left, side::right>(std::move(value));
             } else {
                 pos->template splice<side::left, side::left>(std::move(value));
@@ -135,7 +135,7 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
     } else {
         raw_tree<T> node(std::move(value));
         swap(node, pos.node());
-        if (comparator_.template horizontal<side::right>(*node, *pos)) {
+        if (comparator_.left(*pos, *node)) {
             pos->template replace<side::right>(std::move(node));
         } else {
             pos->template replace<side::left>(std::move(node));
@@ -286,12 +286,17 @@ bool predicated_tree<T, C>::in_subtree(accessor<const raw_tree<T>> pos,
                                        const T &value) const {
     if (comparator_.tall(value, *pos)) { return false; }
 
-    if (comparator_.template horizontal<side::right>(value, *pos)) {
+    // Either an *outer*-bound ancestor does not exist or it bounds `value`
+    // correctly. For example, right sided ancestor of a node is a value which
+    // is inorder greater than the entire subtree. If value is not greater than
+    // this node then it is in the correct subtree. The left right variation
+    // because right is gt and left is le.
+    if (comparator_.left(*pos, value)) {
         return !pos.template ancestor<side::right>() ||
-               comparator_.template horizontal<side::left>(value, *pos);
+               !comparator_.left(*pos, value);
     } else {
         return !pos.template ancestor<side::left>() ||
-               comparator_.template horizontal<side::right>(value, *pos);
+               comparator_.left(*pos, value);
     }
 }
 
@@ -299,7 +304,7 @@ template <typename T, typename C>
 template <side wing>
 std::optional<raw_tree<T>> predicated_tree<T, C>::clip(
     accessor<raw_tree<T>> main, const T &value) const {
-    for (; !comparator_.template horizontal<!wing>(value, *main);) {
+    for (; !this->template horizontal<!wing>(value, *main);) {
         if (!main.template down<wing>()) { return std::nullopt; }
     }
     main.up();
@@ -309,19 +314,29 @@ std::optional<raw_tree<T>> predicated_tree<T, C>::clip(
 
     while (true) {
         for (seam.template down<!wing>();
-             !comparator_.template horizontal<wing>(value, *seam);) {
+             !this->template horizontal<wing>(value, *seam);) {
             if (!seam.template down<!wing>()) { return clipped; }
         }
         seam.up();
         main->template replace<wing>(seam->template detach<!wing>());
 
         for (main.template down<wing>();
-             !comparator_.template horizontal<!wing>(value, *main);) {
+             !this->template horizontal<!wing>(value, *main);) {
             if (!main.template down<wing>()) { return clipped; }
         }
         main.up();
         seam->template replace<!wing>(main->template detach<wing>());
     }
+}
+
+template <class T, class C>
+template <side wing>
+bool predicated_tree<T, C>::horizontal(const T &higher, const T &lower) const {
+    if constexpr (wing == side::left) {
+        return comparator_.left(higher, lower);
+    }
+
+    return !comparator_.left(higher, lower);
 }
 
 }  // namespace detangled

@@ -236,11 +236,22 @@ class predicated_tree {
     raw_tree<T> release();
 
   private:
+    /// Returns true iff `value` is supposed to lie in the subtree rooted at
+    /// `pos`. This is always true if `pos` points to a root node. In other
+    /// cases we check the ancestral values of `pos` to see the range of values
+    /// which should lie in the subtree and then respond.
     bool in_subtree(accessor<const raw_tree<T>> pos, const T &value) const;
 
     template <side wing>
     std::optional<raw_tree<T>> clip(accessor<raw_tree<T>> node,
                                     const T &value) const;
+
+    /// Returns true iff `higher` should be on the `wing` side of `lower`
+    /// value. This is true if left(higher, lower) is true when `wing` is
+    /// `side::left`. When `side::right` then lower must not be greater than
+    /// higher (i.e. left(higher, lower) must not be true).
+    template <side wing>
+    bool horizontal(const T &higher, const T &lower) const;
 
     ::std::optional<raw_tree<T>> tree_;
     Comparator comparator_;
