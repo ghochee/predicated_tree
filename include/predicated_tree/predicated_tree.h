@@ -147,7 +147,17 @@ namespace detangled {
 template <class T, class Comparator = comparator<T>>
 class predicated_tree {
   public:
+    using value_type = T;
+
+    /// Create an empty tree which behaves under the influence of `Comparator`.
+    /// This tree can subsequently be modified with `insert` and `erase`
+    /// operations.
     explicit predicated_tree(const Comparator = Comparator());
+
+    /// Takes ownership of `tree` which is assumed to be correct under
+    /// `comparator`. This is the standard way to construct a `predicated_tree`
+    /// from a well behaved (under the predicates) `raw_tree`.
+    predicated_tree(raw_tree<T> &&tree, const Comparator = Comparator());
 
     // The following two methods are equivalent to the following:
     // - Disregard the height property of 'value'.
@@ -179,6 +189,7 @@ class predicated_tree {
     //
     // Complexity:
     //   O(lg(N)).
+    // TODO(ghochee): Take hint positions.
     accessor<const raw_tree<T>> upper_bound(const T &value) const;
     accessor<const raw_tree<T>> lower_bound(const T &value) const;
     // Same as above but returns 'end' if 'value' is not found in the tree.
@@ -208,6 +219,9 @@ class predicated_tree {
     // Removes all values from the tree.
     void clear();
 
+    // Returns true iff tree has nodes.
+    explicit operator bool () const;
+
     // Get the value at root.
     const T &operator*() const;
 
@@ -218,12 +232,18 @@ class predicated_tree {
     // Releases ownership of the underlying tree to the call site. This is the
     // only way to get a mutable reference to the underlying tree. This ensures
     // client code cannot meddle with the tree while it is under the care of
-    // 'predicated_tree'.
+    // `predicated_tree`.
     raw_tree<T> release();
 
   private:
+    bool in_subtree(accessor<const raw_tree<T>> pos, const T &value) const;
+
+    template <side wing>
+    std::optional<raw_tree<T>> clip(accessor<raw_tree<T>> node,
+                                    const T &value) const;
+
     ::std::optional<raw_tree<T>> tree_;
-    mutator<T, Comparator> mutator_;
+    Comparator comparator_;
 };
 
 // Function template for easier creation of predicated_tree family objects.
