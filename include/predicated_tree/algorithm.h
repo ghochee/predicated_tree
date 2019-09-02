@@ -13,8 +13,8 @@ namespace detangled {
 ///     standard tree-accessor methods available on it.
 /// @tparam HeightPredicate is a BinaryPredicate as described in
 ///     `predictae_tree` `H`.
-template<typename AccessorType, typename HeightPredicate>
-bool is_heap(AccessorType pos, const HeightPredicate & = HeightPredicate());
+template <typename AccessorType, typename HeightPredicate>
+bool is_heap(AccessorType pos, const HeightPredicate& = HeightPredicate());
 
 }  // namespace detangled
 

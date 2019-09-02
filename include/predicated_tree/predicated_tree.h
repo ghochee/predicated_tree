@@ -259,7 +259,7 @@ class predicated_tree {
     void clear();
 
     // Returns true iff tree has nodes.
-    explicit operator bool () const;
+    explicit operator bool() const;
 
     // Get the value at root.
     const T &operator*() const;

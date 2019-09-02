@@ -14,9 +14,8 @@ accessor<const raw_tree<T>> predicated_tree<T, H, L>::upper_bound(
     const T &value) const {
     accessor<const raw_tree<T>> pos(tree_.value());
     for (; tall(*pos, value);) {
-        if (!(left(*pos, value)
-                  ? pos.template down<side::right>()
-                  : pos.template down<side::left>())) {
+        if (!(left(*pos, value) ? pos.template down<side::right>()
+                                : pos.template down<side::left>())) {
             return pos;
         }
     }
@@ -70,7 +69,8 @@ accessor<const raw_tree<T>> predicated_tree<T, H, L>::lower_bound(
 }
 
 template <typename T, typename H, typename L>
-accessor<const raw_tree<T>> predicated_tree<T, H, L>::find(const T &value) const {
+accessor<const raw_tree<T>> predicated_tree<T, H, L>::find(
+    const T &value) const {
     if (accessor<const raw_tree<T>> pos = lower_bound(value);
         pos && equal(*pos, value)) {
         return pos;
@@ -111,8 +111,7 @@ accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
                 return pos;
             }
 
-            if (left(
-                    value, *pos->template child<side::right>())) {
+            if (left(value, *pos->template child<side::right>())) {
                 pos->template splice<side::right, side::right>(
                     std::move(value));
             } else {
@@ -126,8 +125,7 @@ accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
                 return pos;
             }
 
-            if (left(
-                    value, *pos->template child<side::left>())) {
+            if (left(value, *pos->template child<side::left>())) {
                 pos->template splice<side::left, side::right>(std::move(value));
             } else {
                 pos->template splice<side::left, side::left>(std::move(value));
@@ -158,8 +156,7 @@ accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
             }
 
             if (existing->template has_child<side::left>() &&
-                equal(*pos,
-                                  *existing->template child<side::left>())) {
+                equal(*pos, *existing->template child<side::left>())) {
                 auto left_child = pos->template detach<side::left>();
                 auto left_gchild = left_child.template detach<side::left>();
                 if (left_gchild.template has_child<side::right>()) {
@@ -226,7 +223,7 @@ void predicated_tree<T, H, L>::erase(accessor<const raw_tree<T>> const_pos) {
     for (; pos->template has_child<side::left>() &&
            pos->template has_child<side::right>();) {
         if (tall(*pos->template child<side::left>(),
-                             *pos->template child<side::right>())) {
+                 *pos->template child<side::right>())) {
             pos->template rotate<side::right>();
             pos.template down<side::right>();
         } else {
@@ -285,7 +282,7 @@ raw_tree<T> predicated_tree<T, H, L>::release() {
 
 template <typename T, typename H, typename L>
 bool predicated_tree<T, H, L>::in_subtree(accessor<const raw_tree<T>> pos,
-                                       const T &value) const {
+                                          const T &value) const {
     if (tall(value, *pos)) { return false; }
 
     // Either an *outer*-bound ancestor does not exist or it bounds `value`
@@ -294,11 +291,9 @@ bool predicated_tree<T, H, L>::in_subtree(accessor<const raw_tree<T>> pos,
     // this node then it is in the correct subtree. The left right variation
     // because right is gt and left is le.
     if (left(*pos, value)) {
-        return !pos.template ancestor<side::right>() ||
-               !left(*pos, value);
+        return !pos.template ancestor<side::right>() || !left(*pos, value);
     } else {
-        return !pos.template ancestor<side::left>() ||
-               left(*pos, value);
+        return !pos.template ancestor<side::left>() || left(*pos, value);
     }
 }
 

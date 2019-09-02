@@ -61,7 +61,7 @@ class iterator;
 /// values.  See `raw_tree::begin()` for more. Other than this
 /// `raw_tree::parent()`, `raw_tree::child` etc. are methods which can be used
 /// for accessing other nodes from a tree node.
-/// 
+///
 /// ### Similarity with std containers
 ///
 /// It is most closely related to `std::list` for the following reasons:
@@ -95,7 +95,7 @@ class iterator;
 /// Parent relations are non-owning (i.e. we may die without affecting the
 /// parent). We are guaranteed to be found at either the ``right`` or ``left``
 /// child position of the parent node.
-/// 
+///
 /// @note Root nodes are exceptions. See the `parent()` methods for details on
 /// the result for these.
 ///
@@ -116,7 +116,7 @@ class iterator;
 /// in preconditions being true without any effective way to determine it
 /// beforehand (meaning we wouldn't know them at compile time). Clients
 /// can be efficient by bypassing safety checks in those situations.
-/// 
+///
 /// ## Non-mutating and Mutating methods
 ///
 /// *Non-mutating* operations allow client code to access data on the tree

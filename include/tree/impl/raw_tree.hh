@@ -57,8 +57,7 @@ constexpr std::underlying_type_t<side> _right = as_int(side::right);
 
 template <typename T>
 raw_tree<T>::raw_tree(raw_tree &&other)
-    : value_(std::move(other.value_)),
-      children_(std::move(other.children_)) {
+    : value_(std::move(other.value_)), children_(std::move(other.children_)) {
     if (children_[_left]) { children_[_left]->parent_ = this; }
     if (children_[_right]) { children_[_right]->parent_ = this; }
 
