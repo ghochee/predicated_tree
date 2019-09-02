@@ -36,9 +36,9 @@ using namespace detangled;
 TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
     raw_tree<uint32_t> t(10);
 
-    auto c = make_comparator<uint32_t, typename TestType::first_type,
-                             typename TestType::first_type>();
-    predicated_tree<uint32_t, decltype(c)> p(c);
+    predicated_tree<uint32_t, typename TestType::first_type,
+                    typename TestType::first_type>
+        p;
 
     SECTION("single") {
         p.insert(5);
@@ -52,7 +52,7 @@ TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
     SECTION("small") {
         for (uint32_t i = 0; i < 100; ++i) {
             p.insert(dist(rng));
-            CHECK(std::is_sorted(p->inlbegin(), p->inlend(), c.left));
+            CHECK(std::is_sorted(p->inlbegin(), p->inlend(), p.left));
         }
     }
 
@@ -60,6 +60,6 @@ TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
         for (uint32_t i = 0; i < 10000; ++i) {
             p.insert(dist(rng));
         }
-        CHECK(std::is_sorted(p->inlbegin(), p->inlend(), c.left));
+        CHECK(std::is_sorted(p->inlbegin(), p->inlend(), p.left));
     }
 }

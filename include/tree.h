@@ -6,6 +6,8 @@
 #include "tree/traverser.h"
 #include "tree/iterator.h"
 
-#include "predicated_tree/comparator.h"
-#include "predicated_tree/mutator.h"
 #include "predicated_tree/predicated_tree.h"
+// TODO(ghochee): mutator goes after predicated_tree because mutator has
+// dependencies on some things of predicated tree (since removal of
+// comparator). This needs to be fixed.
+#include "predicated_tree/mutator.h"

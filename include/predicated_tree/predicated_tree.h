@@ -4,7 +4,31 @@
 #include <functional>
 #include <optional>
 
+#include "util/predicates.h"
+
 namespace detangled {
+
+/// Class template which tests if `T` is defined for `operator<`.
+///
+/// We need to be able to perform this test to determine if `std::less` can be
+/// used as a default for `T`.
+template <typename T>
+class has_lt {
+  private:
+    /// Weakest template overload, only fires if all else fails.
+    template <typename>
+    static constexpr std::false_type check(...);
+
+    /// Template overload which is successfully chosen if `*ptr < *ptr` is a
+    /// valid expression.
+    template <typename U>
+    static constexpr auto check(U *ptr) ->
+        typename std::is_same<decltype(*ptr < *ptr), bool>::type;
+
+  public:
+    static const bool value =
+        decltype(check<T>(static_cast<T *>(nullptr)))::value;
+};
 
 /// Predicated trees are containers which make *ordering* guarantees under
 /// specified predicates.
@@ -34,12 +58,18 @@ namespace detangled {
 /// - inorder traversal of the tree gives values increasing in `L` predicate.
 /// - max-heap-like property is maintained over the `H` predicate.
 ///
-/// The *specification* of the properties which are to be upheld is done by a
-/// [comparator](@ref comparator) class of which we may take an object or
-/// default construct one. See [comparator](@ref comparator) notes for more
-/// details on the predicates and why it's more implementation and usage
-/// difficult to use the predicates directly than to wrap them in the
-/// comparator.
+/// The *specification* of the properties which are to be upheld is done by
+/// supplying `Height` and `Left` predicates.
+///
+/// Both predicates are:
+/// * Binary predicates meeting the strict-weak-ordering requirements.
+/// * Not necessarily related.
+///
+/// Both the predicates have to support:
+///
+/// ```
+/// bool operator()(const T &first, const T &second) const;
+/// ```
 ///
 /// # Simple Examples
 ///
@@ -142,22 +172,31 @@ namespace detangled {
 /// to meet all requirements simultaneously.
 ///
 /// @tparam T similar to the `T` param for `detangled::raw_tree<T>`.
-/// @tparam Comparator is a user supplied `detangled::comparator` class
-///     defining the height and left predicates.
-template <class T, class Comparator = comparator<T>>
+/// @tparam H predicate which governs `Height` comparison operations in the
+///     tree. `Height`, `H`, *tall*, *short* are nouns used in documentation to
+///     refer to this property and outcomes.
+///     Default: `indifferent`.
+/// @tparam L predicate which goversn `Left` comparison in the tree. `Left`,
+///     `L`, *left*, *right*, *side*, *wing* are nouns used in documentation and
+///     code to describe notes related to it. This defaulted to `std::less<T>`
+///     if `T` has `operator<` defined on it else it becomes `indifferent`.
+template <class T,
+          class H = indifferent<T>,
+          class L = typename ::std::conditional<
+              has_lt<T>::value, ::std::less<T>, indifferent<T>>::type>
 class predicated_tree {
   public:
     using value_type = T;
 
-    /// Create an empty tree which behaves under the influence of `Comparator`.
+    /// Create an empty tree which behaves under the influence of `H` and `L`.
     /// This tree can subsequently be modified with `insert` and `erase`
     /// operations.
-    explicit predicated_tree(const Comparator = Comparator());
+    predicated_tree(const H = H(), const L = L());
 
-    /// Takes ownership of `tree` which is assumed to be correct under
-    /// `comparator`. This is the standard way to construct a `predicated_tree`
-    /// from a well behaved (under the predicates) `raw_tree`.
-    predicated_tree(raw_tree<T> &&tree, const Comparator = Comparator());
+    /// Takes ownership of `tree` which is assumed to be correct under `H` and
+    /// `L`. This is the standard way to construct a `predicated_tree` from a
+    /// well behaved (under the predicates) `raw_tree`.
+    predicated_tree(raw_tree<T> &&tree, const H = H(), const L = L());
 
     // The following two methods are equivalent to the following:
     // - Disregard the height property of 'value'.
@@ -253,8 +292,21 @@ class predicated_tree {
     template <side wing>
     bool horizontal(const T &higher, const T &lower) const;
 
+    bool equal(const T &first, const T &second) const;
+
     ::std::optional<raw_tree<T>> tree_;
-    Comparator comparator_;
+
+  public:
+    const H tall;
+    const L left;
+};
+
+// A very tiny lightweight wrapper around a function reference.
+template <class T, bool (*F)(const T &, const T &)>
+struct wrapper {
+    inline bool operator()(const T &first, const T &second) const {
+        return F(first, second);
+    }
 };
 
 // Function template for easier creation of predicated_tree family objects.
@@ -265,39 +317,33 @@ auto make_predicated_tree() {
 
 template <class T, class H>
 auto make_predicated_tree(const H h = H()) {
-    auto c = comparator<T, H>(h);
-    return predicated_tree<T, decltype(c)>(c);
+    return predicated_tree<T, H>(h);
 }
 
 template <class T, bool (*F)(const T &, const T &)>
 auto make_predicated_tree() {
-    auto c = comparator<T, wrapper<T, F>>(wrapper<T, F>());
-    return predicated_tree<T, decltype(c)>(c);
+    return predicated_tree<T, wrapper<T, F>>();
 }
 
 template <class T, class H, class L>
 auto make_predicated_tree(const H h = H(), const L l = L()) {
-    auto c = comparator<T, H, L>(h, l);
-    return predicated_tree<T, decltype(c)>(c);
+    return predicated_tree<T, H, L>(h, l);
 }
 
 template <class T, class H, bool (*F)(const T &, const T &)>
 auto make_predicated_tree(const H h = H()) {
-    auto c = comparator<T, H, wrapper<T, F>>(h);
-    return predicated_tree<T, decltype(c)>(c);
+    return predicated_tree<T, H, wrapper<T, F>>(h);
 }
 
 template <class T, bool (*F)(const T &, const T &), class L>
 auto make_predicated_tree(const L l = L()) {
-    auto c = comparator<T, wrapper<T, F>, L>(wrapper<T, F>(), l);
-    return predicated_tree<T, decltype(c)>(c);
+    return predicated_tree<T, wrapper<T, F>, L>(wrapper<T, F>(), l);
 }
 
 template <class T, bool (*F1)(const T &, const T &),
           bool (*F2)(const T &, const T &)>
 auto make_predicated_tree() {
-    auto c = comparator<T, wrapper<T, F1>, wrapper<T, F2>>();
-    return predicated_tree<T, decltype(c)>(c);
+    return predicated_tree<T, wrapper<T, F1>, wrapper<T, F2>>();
 }
 
 }  // namespace detangled

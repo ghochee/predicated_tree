@@ -1,18 +1,20 @@
 namespace detangled {
 
-template <typename T, typename C>
-predicated_tree<T, C>::predicated_tree(const C c) : comparator_(c) {}
+template <typename T, typename H, typename L>
+predicated_tree<T, H, L>::predicated_tree(const H t, const L l)
+    : tall(t), left(l) {}
 
-template <typename T, typename C>
-predicated_tree<T, C>::predicated_tree(raw_tree<T> &&tree, const C c)
-    : tree_(std::move(tree)), comparator_(c) {}
+template <typename T, typename H, typename L>
+predicated_tree<T, H, L>::predicated_tree(raw_tree<T> &&tree, const H t,
+                                          const L l)
+    : tree_(std::move(tree)), tall(t), left(l) {}
 
-template <typename T, typename C>
-accessor<const raw_tree<T>> predicated_tree<T, C>::upper_bound(
+template <typename T, typename H, typename L>
+accessor<const raw_tree<T>> predicated_tree<T, H, L>::upper_bound(
     const T &value) const {
     accessor<const raw_tree<T>> pos(tree_.value());
-    for (; comparator_.tall(*pos, value);) {
-        if (!(comparator_.left(*pos, value)
+    for (; tall(*pos, value);) {
+        if (!(left(*pos, value)
                   ? pos.template down<side::right>()
                   : pos.template down<side::left>())) {
             return pos;
@@ -25,13 +27,13 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::upper_bound(
     // *left-ness* property. If we return without doing this then there is a
     // possibility of returning without finding an *equal* node which actually
     // exists in the tree at a lower level.
-    for (; !comparator_.tall(value, *pos);) {
-        if (comparator_.left(value, *pos)) {
+    for (; !tall(value, *pos);) {
+        if (left(value, *pos)) {
             if (!pos.template down<side::left>()) { return pos; }
             continue;
         }
 
-        if (comparator_.left(*pos, value)) {
+        if (left(*pos, value)) {
             if (!pos.template down<side::right>()) { return pos; }
             continue;
         }
@@ -50,16 +52,16 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::upper_bound(
     return pos;
 }
 
-template <typename T, typename C>
-accessor<const raw_tree<T>> predicated_tree<T, C>::lower_bound(
+template <typename T, typename H, typename L>
+accessor<const raw_tree<T>> predicated_tree<T, H, L>::lower_bound(
     const T &value) const {
     auto pos = upper_bound(value);
     if (!pos) { return pos; }
-    if (!comparator_.equal(*pos, value)) { return pos; }
+    if (!equal(*pos, value)) { return pos; }
 
     // Find the lowest node which is equal in value.
     if (!pos.template down<side::left>()) { return pos; }
-    for (; comparator_.equal(*pos, value);) {
+    for (; equal(*pos, value);) {
         if (!pos.template down<side::left>()) { return pos; }
     }
 
@@ -67,17 +69,17 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::lower_bound(
     return pos;
 }
 
-template <typename T, typename C>
-accessor<const raw_tree<T>> predicated_tree<T, C>::find(const T &value) const {
+template <typename T, typename H, typename L>
+accessor<const raw_tree<T>> predicated_tree<T, H, L>::find(const T &value) const {
     if (accessor<const raw_tree<T>> pos = lower_bound(value);
-        pos && comparator_.equal(*pos, value)) {
+        pos && equal(*pos, value)) {
         return pos;
     }
     return accessor<raw_tree<T>>();
 }
 
-template <typename T, typename C>
-accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
+template <typename T, typename H, typename L>
+accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
     T &&value, accessor<const raw_tree<T>> hint) {
     if (!tree_) {
         tree_.emplace(std::move(value));
@@ -92,7 +94,7 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
         *reinterpret_cast<accessor<raw_tree<T>> *>(&hint);
 
     if (!pos) { pos = accessor<raw_tree<T>>(tree_.value()); }
-    for (; pos->has_parent() && comparator_.tall(value, *pos); pos.up()) {}
+    for (; pos->has_parent() && tall(value, *pos); pos.up()) {}
 
     // FIXME(ghochee): Insert called with non-root node might mess up the tree
     // but maybe we are OK with that. This test can be deferred to if the node
@@ -102,14 +104,14 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
 
     if (auto vert_pos = upper_bound(value); vert_pos) {
         pos = *reinterpret_cast<accessor<raw_tree<T>> *>(&vert_pos);
-        if (comparator_.left(*pos, value)) {
+        if (left(*pos, value)) {
             if (!pos->template has_child<side::right>()) {
                 pos->template emplace<side::right>(std::move(value));
                 pos.template down<side::right>();
                 return pos;
             }
 
-            if (comparator_.left(
+            if (left(
                     value, *pos->template child<side::right>())) {
                 pos->template splice<side::right, side::right>(
                     std::move(value));
@@ -124,7 +126,7 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
                 return pos;
             }
 
-            if (comparator_.left(
+            if (left(
                     value, *pos->template child<side::left>())) {
                 pos->template splice<side::left, side::right>(std::move(value));
             } else {
@@ -135,7 +137,7 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
     } else {
         raw_tree<T> node(std::move(value));
         swap(node, pos.node());
-        if (comparator_.left(*pos, *node)) {
+        if (left(*pos, *node)) {
             pos->template replace<side::right>(std::move(node));
         } else {
             pos->template replace<side::left>(std::move(node));
@@ -149,14 +151,14 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
     if (pos->template has_child<side::left>()) {
         auto existing = pos;
         existing.template down<side::left>();
-        if (comparator_.equal(*pos, *existing)) {
+        if (equal(*pos, *existing)) {
             if (existing->template has_child<side::right>()) {
                 pos->template replace<side::right>(
                     existing->template detach<side::right>());
             }
 
             if (existing->template has_child<side::left>() &&
-                comparator_.equal(*pos,
+                equal(*pos,
                                   *existing->template child<side::left>())) {
                 auto left_child = pos->template detach<side::left>();
                 auto left_gchild = left_child.template detach<side::left>();
@@ -190,17 +192,17 @@ accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
     return pos;
 }
 
-template <typename T, typename C>
+template <typename T, typename H, typename L>
 template <typename It>
-accessor<const raw_tree<T>> predicated_tree<T, C>::insert(
+accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
     It begin, It end, accessor<const raw_tree<T>> hint) {
     auto pos = hint;
     for (; begin != end; ++begin) { pos = this->insert(*begin, hint); }
     return pos;
 }
 
-template <typename T, typename C>
-void predicated_tree<T, C>::erase(accessor<const raw_tree<T>> const_pos) {
+template <typename T, typename H, typename L>
+void predicated_tree<T, H, L>::erase(accessor<const raw_tree<T>> const_pos) {
     // TODO(ghochee): Faster processing of only-one test.
     if (tree_ && !tree_->template has_child<side::left>() &&
         !tree_->template has_child<side::right>()) {
@@ -223,7 +225,7 @@ void predicated_tree<T, C>::erase(accessor<const raw_tree<T>> const_pos) {
     // squash this node.
     for (; pos->template has_child<side::left>() &&
            pos->template has_child<side::right>();) {
-        if (comparator_.tall(*pos->template child<side::left>(),
+        if (tall(*pos->template child<side::left>(),
                              *pos->template child<side::right>())) {
             pos->template rotate<side::right>();
             pos.template down<side::right>();
@@ -249,60 +251,60 @@ void predicated_tree<T, C>::erase(accessor<const raw_tree<T>> const_pos) {
     }
 }
 
-template <typename T, typename C>
-void predicated_tree<T, C>::clear() {
+template <typename T, typename H, typename L>
+void predicated_tree<T, H, L>::clear() {
     tree_.reset();
 }
 
-template <typename T, typename C>
-predicated_tree<T, C>::operator bool() const {
+template <typename T, typename H, typename L>
+predicated_tree<T, H, L>::operator bool() const {
     return tree_.has_value();
 }
 
-template <typename T, typename C>
-const T &predicated_tree<T, C>::operator*() const {
+template <typename T, typename H, typename L>
+const T &predicated_tree<T, H, L>::operator*() const {
     return **tree_;
 }
 
-template <typename T, typename C>
-const raw_tree<T> *predicated_tree<T, C>::operator->() const {
+template <typename T, typename H, typename L>
+const raw_tree<T> *predicated_tree<T, H, L>::operator->() const {
     return &tree_.value();
 }
 
-template <typename T, typename C>
-const raw_tree<T> &predicated_tree<T, C>::node() const {
+template <typename T, typename H, typename L>
+const raw_tree<T> &predicated_tree<T, H, L>::node() const {
     return tree_.value();
 }
 
-template <typename T, typename C>
-raw_tree<T> predicated_tree<T, C>::release() {
+template <typename T, typename H, typename L>
+raw_tree<T> predicated_tree<T, H, L>::release() {
     auto detached = std::move(tree_.value());
     tree_.reset();
     return std::move(detached);
 }
 
-template <typename T, typename C>
-bool predicated_tree<T, C>::in_subtree(accessor<const raw_tree<T>> pos,
+template <typename T, typename H, typename L>
+bool predicated_tree<T, H, L>::in_subtree(accessor<const raw_tree<T>> pos,
                                        const T &value) const {
-    if (comparator_.tall(value, *pos)) { return false; }
+    if (tall(value, *pos)) { return false; }
 
     // Either an *outer*-bound ancestor does not exist or it bounds `value`
     // correctly. For example, right sided ancestor of a node is a value which
     // is inorder greater than the entire subtree. If value is not greater than
     // this node then it is in the correct subtree. The left right variation
     // because right is gt and left is le.
-    if (comparator_.left(*pos, value)) {
+    if (left(*pos, value)) {
         return !pos.template ancestor<side::right>() ||
-               !comparator_.left(*pos, value);
+               !left(*pos, value);
     } else {
         return !pos.template ancestor<side::left>() ||
-               comparator_.left(*pos, value);
+               left(*pos, value);
     }
 }
 
-template <typename T, typename C>
+template <typename T, typename H, typename L>
 template <side wing>
-std::optional<raw_tree<T>> predicated_tree<T, C>::clip(
+std::optional<raw_tree<T>> predicated_tree<T, H, L>::clip(
     accessor<raw_tree<T>> main, const T &value) const {
     for (; !this->template horizontal<!wing>(value, *main);) {
         if (!main.template down<wing>()) { return std::nullopt; }
@@ -329,14 +331,19 @@ std::optional<raw_tree<T>> predicated_tree<T, C>::clip(
     }
 }
 
-template <class T, class C>
+template <typename T, typename H, typename L>
 template <side wing>
-bool predicated_tree<T, C>::horizontal(const T &higher, const T &lower) const {
-    if constexpr (wing == side::left) {
-        return comparator_.left(higher, lower);
-    }
+bool predicated_tree<T, H, L>::horizontal(const T &higher,
+                                          const T &lower) const {
+    if constexpr (wing == side::left) { return left(higher, lower); }
 
-    return !comparator_.left(higher, lower);
+    return !left(higher, lower);
+}
+
+template <typename T, typename H, typename L>
+bool predicated_tree<T, H, L>::equal(const T &first, const T &second) const {
+    return !(left(first, second) || left(second, first) ||
+             tall(first, second) || tall(second, first));
 }
 
 }  // namespace detangled

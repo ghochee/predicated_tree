@@ -29,8 +29,7 @@ TEST_CASE("make_heap", "[make_heap]") {
         ptr->template replace<side::right>(raw_tree<uint32_t>(*it));
         ptr.template down<side::right>();
     }
-    auto c = make_comparator<uint32_t, more_even, std::less<uint32_t>>();
-    mutator<uint32_t, decltype(c)> m(c);
+    mutator<uint32_t, wrapper<uint32_t, more_even>, std::less<uint32_t>> m;
     m.stable_make_heap(t);
     CHECK(std::is_sorted(t.inlbegin(), t.inlend(), std::less<uint32_t>()));
 

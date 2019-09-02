@@ -4,12 +4,17 @@
 #include <functional>
 #include <optional>
 
+#include "util/predicates.h"
+
 namespace detangled {
 
-template <typename T, typename Comparator>
+template <typename T,
+          class H = indifferent<T>,
+          class L = typename ::std::conditional<
+              has_lt<T>::value, ::std::less<T>, indifferent<T>>::type>
 class mutator {
   public:
-    mutator(const Comparator = Comparator());
+    mutator(const H = H(), const L = L());
 
     /// Takes the element at `root` and heaps it down until it reaches it's
     /// appropriate position. Doesn't affect inorder sequencing of elements in
@@ -51,7 +56,9 @@ class mutator {
     template <side wing>
     std::optional<raw_tree<T>> clip(raw_tree<T> &node, const T &value) const;
 
-    const Comparator comparator_;
+    const H tall;
+    const L left;
+
 };
 
 }  // namespace detangled
