@@ -73,7 +73,7 @@ bool virtual_accessor<C>::down() {
 
 template <class C>
 bool virtual_accessor<C>::down(side wing) {
-    if (static_cast<base_type *>(this)->template down(wing)) {
+    if (static_cast<base_type *>(this)->down(wing)) {
         ++depth_;
         return true;
     }
