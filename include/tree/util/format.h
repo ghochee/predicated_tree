@@ -1,5 +1,5 @@
-#ifndef TREE_FORMAT_H
-#define TREE_FORMAT_H
+#ifndef TREE_UTIL_FORMAT_H
+#define TREE_UTIL_FORMAT_H
 
 namespace detangled {
 
@@ -24,4 +24,4 @@ std::ostream &operator<<(std::ostream &out, const ::detangled::raw_tree<T> &t);
 
 #include "impl/format.hh"
 
-#endif  // TREE_FORMAT_H
+#endif  // TREE_UTIL_FORMAT_H

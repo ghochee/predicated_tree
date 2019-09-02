@@ -1,5 +1,5 @@
-#ifndef TREE_PREDICATED_TREE_H
-#define TREE_PREDICATED_TREE_H
+#ifndef PREDICATED_TREE_PREDICATED_TREE_H
+#define PREDICATED_TREE_PREDICATED_TREE_H
 
 #include <functional>
 #include <optional>
@@ -350,4 +350,4 @@ auto make_predicated_tree() {
 
 #include "impl/predicated_tree.hh"
 
-#endif  // TREE_PREDICATED_TREE_H
+#endif  // PREDICATED_TREE_PREDICATED_TREE_H

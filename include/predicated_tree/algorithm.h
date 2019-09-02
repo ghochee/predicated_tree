@@ -1,5 +1,5 @@
-#ifndef TREE_ALGORITHM_H
-#define TREE_ALGORITHM_H
+#ifndef PREDICATED_TREE_ALGORITHM_H
+#define PREDICATED_TREE_ALGORITHM_H
 
 namespace detangled {
 
@@ -20,4 +20,4 @@ bool is_heap(AccessorType pos, const HeightPredicate& = HeightPredicate());
 
 #include "impl/algorithm.hh"
 
-#endif  // TREE_ALGORITHM_H
+#endif  // PREDICATED_TREE_ALGORITHM_H

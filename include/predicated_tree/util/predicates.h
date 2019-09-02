@@ -1,5 +1,5 @@
-#ifndef TREE_UTIL_PREDICATES_H
-#define TREE_UTIL_PREDICATES_H
+#ifndef PREDICATED_TREE_UTIL_PREDICATES_H
+#define PREDICATED_TREE_UTIL_PREDICATES_H
 
 namespace detangled {
 
@@ -28,4 +28,4 @@ bool more_even(const T &a, const T &b);
 
 #include "impl/predicates.hh"
 
-#endif  // TREE_UTIL_PREDICATES_H
+#endif  // PREDICATED_TREE_UTIL_PREDICATES_H

@@ -1,5 +1,5 @@
-#ifndef TREE_GARDENER_H
-#define TREE_GARDENER_H
+#ifndef PREDICATED_TREE_GARDENER_H
+#define PREDICATED_TREE_GARDENER_H
 
 #include "predicated_tree.h"
 
@@ -25,4 +25,4 @@ class gardener {
 
 #include "impl/gardener.hh"
 
-#endif  // TREE_GARDENER_H
+#endif  // PREDICATED_TREE_GARDENER_H
