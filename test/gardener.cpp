@@ -16,8 +16,7 @@ TEST_CASE("LEqual", "[lequal]") {
     std::uniform_int_distribution<std::mt19937::result_type> dist(100,
                                                                   10000000);
 
-    auto ptree = make_predicated_tree<uint32_t, indifferent<uint32_t>,
-                                      std::less<uint32_t>>();
+    predicated_tree<uint32_t, indifferent<uint32_t>, std::less<uint32_t>> ptree;
     for (uint32_t i = 0; i < 10000; ++i) { ptree.insert(dist(rng)); }
 
     auto converted = gardener<uint32_t, indifferent<uint32_t>,

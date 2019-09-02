@@ -17,13 +17,37 @@ class has_lt {
   private:
     /// Weakest template overload, only fires if all else fails.
     template <typename>
-    static constexpr std::false_type check(...);
+    static constexpr ::std::false_type check(...);
 
     /// Template overload which is successfully chosen if `*ptr < *ptr` is a
     /// valid expression.
     template <typename U>
     static constexpr auto check(U *ptr) ->
-        typename std::is_same<decltype(*ptr < *ptr), bool>::type;
+        typename ::std::is_same<decltype(*ptr < *ptr), bool>::type;
+
+  public:
+    static const bool value =
+        decltype(check<T>(static_cast<T *>(nullptr)))::value;
+};
+
+/// Class template which tests if `P` is a valid BinaryPredicate which can work
+/// with arguments of type `T`.
+///
+/// We need this test to getter better compile time failure outputs.
+template <typename T, typename P>
+class valid_predicate {
+  private:
+    /// Weakest template overload, only fires if all else fails.
+    template <typename>
+    static constexpr ::std::false_type check(...);
+
+    /// Template overload which is successfully chosen if `P(T, T)` is a valid
+    /// expression.
+    template <typename U>
+    static constexpr auto check(U *ptr) -> typename ::std::is_convertible<
+        decltype((::std::declval<P>())(::std::declval<U>(),
+                                       ::std::declval<U>())),
+        bool>::type;
 
   public:
     static const bool value =
@@ -185,6 +209,10 @@ template <class T,
           class L = typename ::std::conditional<
               has_lt<T>::value, ::std::less<T>, indifferent<T>>::type>
 class predicated_tree {
+    static_assert(valid_predicate<T, H>::value,
+                  "Specified height predicate cannot work with value type.");
+    static_assert(valid_predicate<T, L>::value,
+                  "Specified left predicate cannot work with value type.");
   public:
     using value_type = T;
 
