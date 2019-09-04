@@ -11,7 +11,7 @@ namespace detangled {
 /// We need to be able to perform this test to determine if `std::less` can be
 /// used as a default for `T`.
 template <typename T>
-class has_lt {
+class has_less {
   private:
     /// Weakest template overload, only fires if all else fails.
     template <typename>
@@ -26,6 +26,35 @@ class has_lt {
   public:
     static const bool value =
         decltype(check<T>(static_cast<T *>(nullptr)))::value;
+};
+
+/// Tests if method with `bool T::taller(const T &) const` signature exists.
+///
+/// We need to be able to perform this test to determine if `tall` can be
+/// used as a default for `T`.
+template <typename T>
+class has_taller {
+  private:
+    template <typename>
+    static constexpr ::std::false_type check(...);
+
+    /// Template overload which is successfully chosen if `ptr->taller(*pt)` is
+    /// a valid expression.
+    template <typename U>
+    static constexpr auto check(const U *ptr) ->
+        typename ::std::is_same<decltype(ptr->taller(*ptr)), bool>::type;
+
+  public:
+    static const bool value =
+        decltype(check<T>(static_cast<const T *>(nullptr)))::value;
+};
+
+/// Helper functor to enable using class method as a free function.
+template <typename T>
+struct taller {
+    bool operator()(const T &first, const T &second) {
+        return first.taller(second);
+    }
 };
 
 /// Class template which tests if `P` is a valid BinaryPredicate which can work

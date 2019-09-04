@@ -153,16 +153,17 @@ namespace detangled {
 /// @tparam T similar to the `T` param for `detangled::raw_tree<T>`.
 /// @tparam H predicate which governs `Height` comparison operations in the
 ///     tree. `Height`, `H`, *tall*, *short* are nouns used in documentation to
-///     refer to this property and outcomes.
-///     Default: `indifferent`.
-/// @tparam L predicate which goversn `Left` comparison in the tree. `Left`,
+///     refer to this property and outcomes. This is defaulted to `taller` if
+///     `has_taller<T>` else it becomes `indifferent`.
+/// @tparam L predicate which governs `Left` comparison in the tree. `Left`,
 ///     `L`, *left*, *right*, *side*, *wing* are nouns used in documentation and
-///     code to describe notes related to it. This defaulted to `std::less<T>`
-///     if `T` has `operator<` defined on it else it becomes `indifferent`.
+///     code to describe notes related to it. This is defaulted to
+///     `std::less<T>` if `has_less<T>` else it becomes `indifferent`.
 template <class T,
-          class H = indifferent<T>,
+          class H = typename ::std::conditional<
+              has_taller<T>::value, taller<T>, indifferent<T>>::type,
           class L = typename ::std::conditional<
-              has_lt<T>::value, ::std::less<T>, indifferent<T>>::type>
+              has_less<T>::value, ::std::less<T>, indifferent<T>>::type>
 class predicated_tree {
     static_assert(valid_predicate<T, H>::value,
                   "Specified height predicate cannot work with value type.");
