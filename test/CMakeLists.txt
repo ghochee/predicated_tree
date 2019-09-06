@@ -1,5 +1,3 @@
-enable_testing()
-
 add_executable(gardener_test gardener.cpp)
 target_link_libraries(gardener_test PRIVATE tree)
 add_test(NAME tree_gardener_test COMMAND gardener_test)

@@ -15,4 +15,8 @@ add_subdirectory(include)
 
 add_subdirectory(benchmark)
 add_subdirectory(src)
+
+# This enable_testing call should be in the root directory as per
+# https://cmake.org/cmake/help/v3.10/command/enable_testing.html
+enable_testing()
 add_subdirectory(test)
