@@ -86,6 +86,8 @@ void traverser<A, traversal_order::post, wing>::next(A &a) {
         return;
     }
 
+    // TODO: When calling next on `root` we have to `end` it? This doesn't work
+    // perfectly if we are using raw accessor.
     if (a.is_root()) { return a.up(); }
 
     if (a->template is_side<!wing>() ||

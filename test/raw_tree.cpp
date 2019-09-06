@@ -209,7 +209,7 @@ TEST_CASE("height1", "[integer_tree, raw_tree]") {
         }
 
         SECTION("move") {
-            int_tree child(std::move(t.child<side::left>()));
+            int_tree child(t.detach<side::left>());
             CHECK(!t.has_child<side::left>());
             CHECK(range_eq(t.inlbegin(), t.inlend(), {10, 20}));
             CHECK(*child == 5);
