@@ -7,12 +7,12 @@ virtual_accessor<C>::virtual_accessor(base_type &pos)
 template <class C>
 virtual_accessor<C>::virtual_accessor(node_type &node, int16_t depth)
     : base_type(node), depth_(depth) {
-    if (depth_ != -1 && depth_ != 0) { ::std::abort(); }
+    if (depth_ != (uint64_t)-1 && depth_ != 0) { ::std::abort(); }
 }
 
 template <class C>
 virtual_accessor<C>::operator bool() const {
-    return depth_ >= 0;
+    return depth_ != (uint64_t)-1;
 }
 
 template <class C>
@@ -39,7 +39,7 @@ uint32_t virtual_accessor<C>::depth() const {
 
 template <class C>
 void virtual_accessor<C>::up() {
-    if (depth_ == -1) { return; }
+    if (depth_ == (uint64_t)-1) { return; }
 
     if (depth_) { static_cast<base_type *>(this)->up(); }
     --depth_;
@@ -47,7 +47,7 @@ void virtual_accessor<C>::up() {
 
 template <class C>
 void virtual_accessor<C>::root() {
-    if (depth_ == -1) {
+    if (depth_ == (uint64_t)-1) {
         depth_ = 0;
         return;
     }
@@ -58,7 +58,7 @@ void virtual_accessor<C>::root() {
 template <class C>
 template <side wing>
 bool virtual_accessor<C>::down() {
-    if (depth_ == -1) {
+    if (depth_ == (uint64_t)-1) {
         depth_ = 0;
         return true;
     }

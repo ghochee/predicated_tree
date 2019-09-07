@@ -104,9 +104,11 @@ class virtual_accessor : public accessor<ContainerType> {
 
   private:
     /// Depth indicates the depth of the node in our tree. Root node has a depth
-    /// of 0 and all subsequent values are 1 more. The only valid negative value
-    /// is -1 which indicates that the node is at the end. In such a situation
-    /// the node_ is set to the root.
+    /// of 0 and all subsequent values are 1 more. The only invalid value is
+    /// ::std::numeric_limits<uint64_t>::max(). This value is set for `end`
+    /// iterators. When a `virtual_accessor` is set to `end` the `node_` is set
+    /// to the *virtual root*. This is different behaviour from raw `accessor`
+    /// where `node_` would be set to nullptr.
     ///
     /// Having this has a few benefits:
     /// - Without a second field we will have to set node_ to a tree-neutral
@@ -122,7 +124,11 @@ class virtual_accessor : public accessor<ContainerType> {
     ///   clients can set it as part of the contained value and the updates
     ///   etc. are expected to update them it would be convoluted to bake it
     ///   together.
-    int16_t depth_ = -1;
+    ///
+    /// NOTE: -1 is technically out-of-range but is well defined in the C++
+    /// standard for unsigned integer operations for equality, incrementing and
+    /// decrementing.
+    uint64_t depth_ = -1;
 };
 
 }  // namespace detangled
