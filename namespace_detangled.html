@@ -93,19 +93,23 @@
 <li class="toctree-l3"><a class="reference internal" href="enum_detangled_traversal_order.html">enum detangled::traversal_order</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_indifferent.html">template struct detangled::indifferent</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_stable_random.html">template struct detangled::stable_random</a></li>
+<li class="toctree-l3"><a class="reference internal" href="struct_detangled_taller.html">template struct detangled::taller</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_wrapper.html">template struct detangled::wrapper</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_accessor.html">template class detangled::accessor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_comparator.html">template class detangled::comparator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_lt.html">template class detangled::has_lt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener.html">template class detangled::gardener</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener-2.html">template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_less.html">template class detangled::has_less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_taller.html">template class detangled::has_taller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_heap_iterator.html">template class detangled::heap_iterator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_iterator.html">template class detangled::iterator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_mutator.html">template class detangled::mutator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_raw_tree.html">template class detangled::raw_tree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-3.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_valid_predicate.html">template class detangled::valid_predicate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a><ul>
@@ -205,6 +209,9 @@
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">struct</span> <a class="reference internal" href="struct_detangled_stable_random.html#doxid-structdetangled-1-1stable-random"><span class="std std-ref">stable_random</span></a><span></span><span class="p">;</span>
 
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">struct</span> <a class="reference internal" href="struct_detangled_taller.html#doxid-structdetangled-1-1taller"><span class="std std-ref">taller</span></a><span></span><span class="p">;</span>
+
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F</span><span class="o">&gt;</span>
 <span class="k">struct</span> <a class="reference internal" href="struct_detangled_wrapper.html#doxid-structdetangled-1-1wrapper"><span class="std std-ref">wrapper</span></a><span></span><span class="p">;</span>
 
@@ -213,37 +220,46 @@
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Container</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref">accessor</span></a><span></span><span class="p">;</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span> <span class="o">=</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span> <span class="o">=</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><span class="n">has_lt</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">less</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
-<span class="k">class</span> <a class="reference internal" href="class_detangled_comparator.html#doxid-classdetangled-1-1comparator"><span class="std std-ref">comparator</span></a><span></span><span class="p">;</span>
-
 <span class="k">class</span> <a class="reference internal" href="class_detangled_format.html#doxid-classdetangled-1-1format"><span class="std std-ref">format</span></a><span></span><span class="p">;</span>
 
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HIn</span><span class="p">,</span> <span class="k">typename</span> <span class="n">LIn</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HOut</span><span class="p">,</span> <span class="k">typename</span> <span class="n">LOut</span><span class="o">&gt;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_gardener.html#doxid-classdetangled-1-1gardener"><span class="std std-ref">gardener</span></a><span></span><span class="p">;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HIn</span><span class="p">,</span> <span class="k">typename</span> <span class="n">L</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HOut</span><span class="o">&gt;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_gardener-2.html#doxid-classdetangled-1-1gardener-3-01-t-00-01-h-in-00-01-l-00-01-h-out-00-01-l-01-4"><span class="std std-ref">gardener&lt;T, HIn, L, HOut, L&gt;</span></a><span></span><span class="p">;</span>
+
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-<span class="k">class</span> <a class="reference internal" href="class_detangled_has_lt.html#doxid-classdetangled-1-1has-lt"><span class="std std-ref">has_lt</span></a><span></span><span class="p">;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_has_less.html#doxid-classdetangled-1-1has-less"><span class="std std-ref">has_less</span></a><span></span><span class="p">;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_has_taller.html#doxid-classdetangled-1-1has-taller"><span class="std std-ref">has_taller</span></a><span></span><span class="p">;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">PTree</span><span class="o">&gt;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_heap_iterator.html#doxid-classdetangled-1-1heap-iterator"><span class="std std-ref">heap_iterator</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">C</span><span class="p">,</span> <span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_iterator.html#doxid-classdetangled-1-1iterator"><span class="std std-ref">iterator</span></a><span></span><span class="p">;</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Comparator</span><span class="o">&gt;</span>
-<span class="k">class</span> <a class="reference internal" href="class_detangled_mutator.html#doxid-classdetangled-1-1mutator"><span class="std std-ref">mutator</span></a><span></span><span class="p">;</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">Comparator</span> <span class="o">=</span> <span class="n">comparator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span> <span class="o">=</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><span class="n">has_taller</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="n">taller</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span> <span class="o">=</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><span class="n">has_less</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">less</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref">predicated_tree</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">raw_tree</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">A</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
-<span class="k">class</span> <a class="reference internal" href="class_detangled_traverser.html#doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4"><span class="std std-ref">traverser&lt;A, traversal_order::post, wing&gt;</span></a><span></span><span class="p">;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_traverser.html#doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1pre-00-01wing-01-4"><span class="std std-ref">traverser&lt;A, traversal_order::pre, wing&gt;</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">A</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
-<span class="k">class</span> <a class="reference internal" href="class_detangled_traverser-2.html#doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1pre-00-01wing-01-4"><span class="std std-ref">traverser&lt;A, traversal_order::pre, wing&gt;</span></a><span></span><span class="p">;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_traverser-2.html#doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4"><span class="std std-ref">traverser&lt;A, traversal_order::post, wing&gt;</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">A</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_traverser-3.html#doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1in-00-01wing-01-4"><span class="std std-ref">traverser&lt;A, traversal_order::in, wing&gt;</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">A</span><span class="p">,</span> <span class="n">traversal_order</span> <span class="n">order</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_traverser-4.html#doxid-classdetangled-1-1traverser"><span class="std std-ref">traverser</span></a><span></span><span class="p">;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">P</span><span class="o">&gt;</span>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_valid_predicate.html#doxid-classdetangled-1-1valid-predicate"><span class="std std-ref">valid_predicate</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">ContainerType</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_virtual_accessor.html#doxid-classdetangled-1-1virtual-accessor"><span class="std std-ref">virtual_accessor</span></a><span></span><span class="p">;</span>
@@ -255,21 +271,9 @@
 
 <span class="c1">// global functions</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span><span class="o">&gt;</span>
-<span class="k">auto</span>
-<span class="doxyrest-code-target target" id="doxid-namespacedetangled-1a2fd8ebe1dba9669c8289407d27b4bebd">make_comparator</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">H</span> <span class="n">h</span> <span class="o">=</span> <span class="n">H</span><span class="p">(),</span> <span class="k">const</span> <span class="n">L</span> <span class="n">l</span> <span class="o">=</span> <span class="n">L</span><span class="p">());</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F</span><span class="o">&gt;</span>
-<span class="k">auto</span>
-<span class="doxyrest-code-target target" id="doxid-namespacedetangled-1afa5f90a904fccb94dd96e9e7424bac90">make_comparator</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">H</span> <span class="n">h</span> <span class="o">=</span> <span class="n">H</span><span class="p">());</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span><span class="o">&gt;</span>
-<span class="k">auto</span>
-<span class="doxyrest-code-target target" id="doxid-namespacedetangled-1ae574c927b063dc99fed7f51301d4fc5c">make_comparator</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">L</span> <span class="n">l</span> <span class="o">=</span> <span class="n">L</span><span class="p">());</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F1</span><span class="p">,</span> <span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span> <span class="n">F2</span><span class="o">&gt;</span>
-<span class="k">auto</span>
-<span class="doxyrest-code-target target" id="doxid-namespacedetangled-1ae4f9e72beb4276e9aa8219b08e65a7bf">make_comparator</span><span></span><span class="p">();</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">AccessorType</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HeightPredicate</span><span class="o">&gt;</span>
+<span class="kt">bool</span>
+<a class="reference internal" href="#doxid-namespacedetangled-1a18f70fa6081764ad5b59a2f1cd9e3206"><span class="std std-ref">is_heap</span></a><span></span><span class="p">(</span><span class="n">AccessorType</span> <span class="n">pos</span><span class="p">,</span> <span class="k">const</span> <span class="n">HeightPredicate</span><span class="o">&amp;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">HeightPredicate</span><span class="p">());</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
 <span class="k">auto</span>
@@ -323,7 +327,27 @@
 <span id="details-namespacedetangled"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="global-functions">
 <h3>Global Functions<a class="headerlink" href="#global-functions" title="Permalink to this headline">¶</a></h3>
-<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-namespacedetangled-1a52df995b32b9f79f9ce5d6bec33fbac4"><span id="index-1"></span><span></span><span class="k">constexpr</span> <a class="reference internal" href="enum_detangled_traversal_order.html#doxid-namespacedetangled-1ad707dcf610a906a4b646aac110da16dc"><span class="std std-ref">traversal_order</span></a><span></span>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-namespacedetangled-1a18f70fa6081764ad5b59a2f1cd9e3206"><span id="index-1"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">AccessorType</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HeightPredicate</span><span class="o">&gt;</span>
+<span class="kt">bool</span>
+<span class="n">is_heap</span><span class="p">(</span><span class="n">AccessorType</span> <span class="n">pos</span><span class="p">,</span> <span class="k">const</span> <span class="n">HeightPredicate</span><span class="o">&amp;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">HeightPredicate</span><span class="p">())</span></pre>
+<p>Return true iff <code class="docutils literal notranslate"><span class="pre">pos</span></code> is pointing to a (sub)tree which has no violations of <code class="docutils literal notranslate"><span class="pre">HeightPredicate</span></code>.</p>
+<p>This is analogous to <code class="docutils literal notranslate"><span class="pre">std::is_heap</span></code> but <code class="docutils literal notranslate"><span class="pre">std::is_heap</span></code> works on random access iterators and makes assumptions about the distance of child nodes.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>AccessorType</p></td>
+<td><p>is an <code class="docutils literal notranslate"><span class="pre">accessor</span></code> type of type (:-/). It must have standard tree-accessor methods available on it.</p></td>
+</tr>
+<tr class="row-even"><td><p>HeightPredicate</p></td>
+<td><p>is a BinaryPredicate as described in <code class="docutils literal notranslate"><span class="pre">predictae_tree</span></code> <code class="docutils literal notranslate"><span class="pre">H</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-namespacedetangled-1a52df995b32b9f79f9ce5d6bec33fbac4"><span id="index-2"></span><span></span><span class="k">constexpr</span> <a class="reference internal" href="enum_detangled_traversal_order.html#doxid-namespacedetangled-1ad707dcf610a906a4b646aac110da16dc"><span class="std std-ref">traversal_order</span></a><span></span>
 <span class="k">operator</span><span class="o">~</span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="enum_detangled_traversal_order.html#doxid-namespacedetangled-1ad707dcf610a906a4b646aac110da16dc"><span class="std std-ref">traversal_order</span></a><span></span> <span class="n">order</span><span class="p">)</span></pre>
 <p>Returns a <code class="docutils literal notranslate"><span class="pre">traversal_order</span></code> that complements <code class="docutils literal notranslate"><span class="pre">order</span></code>. Complementarity is fully decided by <code class="docutils literal notranslate"><span class="pre">side</span></code> as well, but this function does the <code class="docutils literal notranslate"><span class="pre">traversal_order</span></code> part of things.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Complementary</span> <span class="pre">(order,</span> <span class="pre">wing)</span> <span class="pre">==</span> <span class="pre">(~order,</span> <span class="pre">!wing)</span></code></p>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>template class detangled::traverser&lt;A, traversal_order::post, wing&gt; &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  <title>template class detangled::valid_predicate &mdash; Predicated Tree 0.1.0-alpha documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="template class detangled::traverser&lt;A, traversal_order::in, wing&gt;" href="class_detangled_traverser-3.html" />
-    <link rel="prev" title="template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;" href="class_detangled_traverser.html" /> 
+    <link rel="next" title="template class detangled::virtual_accessor" href="class_detangled_virtual_accessor.html" />
+    <link rel="prev" title="template class detangled::traverser" href="class_detangled_traverser-4.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,12 +106,14 @@
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_raw_tree.html">template class detangled::raw_tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a><ul class="simple">
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-3.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_valid_predicate.html">template class detangled::valid_predicate</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::valid_predicate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#detailed-documentation">Detailed Documentation</a></li>
@@ -170,13 +172,13 @@
         
           <li><a href="namespace_detangled.html">namespace detangled</a> &raquo;</li>
         
-      <li>template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</li>
+      <li>template class detangled::valid_predicate</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/class_detangled_traverser-2.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/class_detangled_valid_predicate.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -189,26 +191,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="template-class-detangled-traverser-a-traversal-order-post-wing">
-<span id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4"></span><span id="index-0"></span><h1>template class detangled::traverser&lt;A, traversal_order::post, wing&gt;<a class="headerlink" href="#template-class-detangled-traverser-a-traversal-order-post-wing" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="template-class-detangled-valid-predicate">
+<span id="doxid-classdetangled-1-1valid-predicate"></span><span id="index-0"></span><h1>template class detangled::valid_predicate<a class="headerlink" href="#template-class-detangled-valid-predicate" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;traverser.hh&gt;</span><span class="cp"></span>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Class template which tests if <code class="docutils literal notranslate"><span class="pre">P</span></code> is a valid BinaryPredicate which can work with arguments of type <code class="docutils literal notranslate"><span class="pre">T</span></code>. <a class="reference internal" href="#details-classdetangled-1-1valid-predicate"><span class="std std-ref">More…</span></a></p>
+<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;type_traits.h&gt;</span><span class="cp"></span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">A</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
-<span class="k">class</span> <span class="nc">traverser</span><span class="o">&lt;</span><span class="n">A</span><span class="p">,</span> <span class="n">traversal_order</span><span class="o">::</span><span class="n">post</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">P</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">valid_predicate</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-    <span class="c1">// methods</span>
+    <span class="c1">// fields</span>
 
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Container</span><span class="o">&gt;</span>
-    <span class="k">static</span>
-    <span class="n">A</span>
-    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4-1ae7a71c04b1b291adef9b05de49f1e761">begin</span><span></span><span class="p">(</span><span class="n">Container</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">);</span>
-
-    <span class="k">static</span>
-    <span class="kt">void</span>
-    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4-1a170dd8fa06934916ddb5279655761069">next</span><span></span><span class="p">(</span><span class="n">A</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span>
+    <span class="k">static</span> <span class="k">const</span> <span class="kt">bool</span> <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1valid-predicate-1abeffcb060a74550abb68f35530e22472">value</span><span></span> <span class="o">=</span>         <span class="k">decltype</span><span class="p">(</span><span class="n">check</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)))</span><span class="o">::</span><span class="n">value</span><span class="p">;</span>
 <span class="p">};</span></pre>
+</div>
+<div class="section" id="detailed-documentation">
+<span id="details-classdetangled-1-1valid-predicate"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Class template which tests if <code class="docutils literal notranslate"><span class="pre">P</span></code> is a valid BinaryPredicate which can work with arguments of type <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
+<p>We need this test to getter better compile time failure outputs.</p>
+</div>
 </div>
 
 
@@ -219,10 +223,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_detangled_traverser-3.html" class="btn btn-neutral float-right" title="template class detangled::traverser&lt;A, traversal_order::in, wing&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="class_detangled_virtual_accessor.html" class="btn btn-neutral float-right" title="template class detangled::virtual_accessor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="class_detangled_traverser.html" class="btn btn-neutral float-left" title="template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="class_detangled_traverser-4.html" class="btn btn-neutral float-left" title="template class detangled::traverser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="template class detangled::traverser&lt;A, traversal_order::post, wing&gt;" href="class_detangled_traverser.html" />
+    <link rel="next" title="template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;" href="class_detangled_traverser.html" />
     <link rel="prev" title="template class detangled::predicated_tree" href="class_detangled_predicated_tree.html" /> 
 </head>
 
@@ -93,13 +93,16 @@
 <li class="toctree-l3"><a class="reference internal" href="enum_detangled_traversal_order.html">enum detangled::traversal_order</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_indifferent.html">template struct detangled::indifferent</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_stable_random.html">template struct detangled::stable_random</a></li>
+<li class="toctree-l3"><a class="reference internal" href="struct_detangled_taller.html">template struct detangled::taller</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_wrapper.html">template struct detangled::wrapper</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_accessor.html">template class detangled::accessor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_comparator.html">template class detangled::comparator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_lt.html">template class detangled::has_lt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener.html">template class detangled::gardener</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener-2.html">template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_less.html">template class detangled::has_less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_taller.html">template class detangled::has_taller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_heap_iterator.html">template class detangled::heap_iterator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_iterator.html">template class detangled::iterator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_mutator.html">template class detangled::mutator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::raw_tree</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
@@ -109,10 +112,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#operations">Operations</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-3.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_valid_predicate.html">template class detangled::valid_predicate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#detailed-documentation">Detailed Documentation</a></li>
@@ -441,7 +445,7 @@ and non-templated versions of many of the methods.
 <div class="section" id="construction">
 <h3>Construction<a class="headerlink" href="#construction" title="Permalink to this headline">¶</a></h3>
 <pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classdetangled-1-1raw-tree-1aa0acc71081462b6368eb7b88094f9876"><span id="index-1"></span><span></span><span class="n">raw_tree</span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&amp;&amp;</span> <span class="n">other</span><span class="p">)</span></pre>
-<p>Move operations would <em>deep</em> -move a node. Parent if any has it’s reference updated as well. <code class="docutils literal notranslate"><span class="pre">other</span></code> may be a <em>root</em> node.</p>
+<p>Move operations would <em>deep</em> -move a node. <code class="docutils literal notranslate"><span class="pre">other</span></code> may be a <em>root</em> node.</p>
 <p><strong>Complexity: O(1)</strong></p>
 <p class="rubric">Parameters:</p>
 <table class="colwidths-given docutils align-default">
@@ -731,7 +735,7 @@ command: R, R
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_detangled_traverser.html" class="btn btn-neutral float-right" title="template class detangled::traverser&lt;A, traversal_order::post, wing&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="class_detangled_traverser.html" class="btn btn-neutral float-right" title="template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="class_detangled_predicated_tree.html" class="btn btn-neutral float-left" title="template class detangled::predicated_tree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
