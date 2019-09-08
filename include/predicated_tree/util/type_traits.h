@@ -81,6 +81,23 @@ class valid_predicate {
         decltype(check<T>(static_cast<T *>(nullptr)))::value;
 };
 
+/// Class template which evalutes the type of the argument which is supplied to
+/// functors. This is used for client code to do class template argument
+/// deduction. The primary template does nothing, the partial specializations
+/// do all the work.
+template <typename T>
+struct predicate_value_type {};
+
+template <typename T>
+struct predicate_value_type<bool (*)(const T &, const T &)> {
+    using value_type = T;
+};
+
+template <typename F, typename T>
+struct predicate_value_type<bool (F::*)(const T &, const T &) const> {
+    using value_type = T;
+};
+
 }  // namespace detangled
 
 #endif  // PREDICATED_TREE_UTIL_TYPE_TRAITS_H

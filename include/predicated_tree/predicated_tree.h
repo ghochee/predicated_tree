@@ -285,6 +285,19 @@ class predicated_tree {
     const L left;
 };
 
+// Class template deduction guides to simplify initialization of trees with
+// relevant predicate information.
+template <typename H>
+predicated_tree(H h)
+    ->predicated_tree<
+        typename predicate_value_type<decltype(&H::operator())>::value_type, H>;
+
+template <typename H, typename L>
+predicated_tree(H h, L l)
+    ->predicated_tree<
+        typename predicate_value_type<decltype(&H::operator())>::value_type, H,
+        L>;
+
 // A very tiny lightweight wrapper around a function reference.
 template <class T, bool (*F)(const T &, const T &)>
 struct wrapper {
@@ -292,43 +305,6 @@ struct wrapper {
         return F(first, second);
     }
 };
-
-// Function template for easier creation of predicated_tree family objects.
-template <class T>
-auto make_predicated_tree() {
-    return predicated_tree<T>();
-}
-
-template <class T, class H>
-auto make_predicated_tree(const H h = H()) {
-    return predicated_tree<T, H>(h);
-}
-
-template <class T, bool (*F)(const T &, const T &)>
-auto make_predicated_tree() {
-    return predicated_tree<T, wrapper<T, F>>();
-}
-
-template <class T, class H, class L>
-auto make_predicated_tree(const H h = H(), const L l = L()) {
-    return predicated_tree<T, H, L>(h, l);
-}
-
-template <class T, class H, bool (*F)(const T &, const T &)>
-auto make_predicated_tree(const H h = H()) {
-    return predicated_tree<T, H, wrapper<T, F>>(h);
-}
-
-template <class T, bool (*F)(const T &, const T &), class L>
-auto make_predicated_tree(const L l = L()) {
-    return predicated_tree<T, wrapper<T, F>, L>(wrapper<T, F>(), l);
-}
-
-template <class T, bool (*F1)(const T &, const T &),
-          bool (*F2)(const T &, const T &)>
-auto make_predicated_tree() {
-    return predicated_tree<T, wrapper<T, F1>, wrapper<T, F2>>();
-}
 
 }  // namespace detangled
 
