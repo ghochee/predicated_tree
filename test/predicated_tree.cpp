@@ -1,5 +1,6 @@
 #include "tree.h"
 #include "predicated_tree/util/predicates.h"
+#include "predicated_tree/heap_iterator.h"
 
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
@@ -7,8 +8,10 @@
 #include <algorithm>
 #include <random>
 #include <utility>
+#include <vector>
 
 using namespace detangled;
+using namespace std;
 
 // clang-format: off
 #define LIST_PREDICATES                                                                          \
@@ -62,4 +65,9 @@ TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
         }
         CHECK(std::is_sorted(p->inlbegin(), p->inlend(), p.left));
     }
+
+    vector<uint32_t> values;
+    std::copy(heap_iterator<decltype(p)>(p), heap_iterator<decltype(p)>(),
+              std::back_inserter(values));
+    CHECK(std::is_sorted(values.begin(), values.end(), p.tall));
 }
