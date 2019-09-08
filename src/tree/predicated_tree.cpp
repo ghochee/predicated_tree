@@ -12,8 +12,7 @@ int main(int, char **) {
     mt19937 rng(0);
     uniform_int_distribution<std::mt19937::result_type> dist(1, 100'000'000);
 
-    predicated_tree p{wrapper<uint32_t, more_even<uint32_t>>(),
-                      std::less<uint32_t>()};
+    predicated_tree p{wrap(more_even<uint32_t>)};
 
     vector<uint32_t> inserted_values;
     for (uint32_t i = 0; i < 100; ++i) {

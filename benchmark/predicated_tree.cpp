@@ -13,7 +13,7 @@ static void Find(benchmark::State &state) {
     std::random_device dev;
     mt19937 rng(dev());
     uniform_int_distribution<std::mt19937::result_type> dist(100, 100'000'000);
-    predicated_tree p{wrapper<uint32_t, more_even<uint32_t>>()};
+    predicated_tree p{wrap(more_even<uint32_t>)};
     set<uint32_t> inserted;
     for (uint32_t i = 0; i < state.range(0); ++i) {
         uint32_t value = dist(rng);
@@ -39,7 +39,7 @@ static void Insert(benchmark::State &state) {
     uniform_int_distribution<std::mt19937::result_type> dist(100, 100'000);
 
     for (auto _ : state) {
-        predicated_tree p{wrapper<uint32_t, more_even<uint32_t>>()};
+        predicated_tree p{wrap(more_even<uint32_t>)};
         for (uint32_t i = 0; i < state.range(0); ++i) { p.insert(dist(rng)); }
     }
 }
@@ -49,7 +49,7 @@ static void Erase(benchmark::State &state) {
     std::random_device dev;
     mt19937 rng(dev());
     uniform_int_distribution<std::mt19937::result_type> dist(100, 100'000);
-    predicated_tree p{wrapper<uint32_t, more_even<uint32_t>>()};
+    predicated_tree p{wrap(more_even<uint32_t>)};
 
     for (auto _ : state) {
         state.PauseTiming();

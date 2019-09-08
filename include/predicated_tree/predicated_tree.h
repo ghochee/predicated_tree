@@ -306,6 +306,17 @@ struct wrapper {
     }
 };
 
+/// Macro to generate the wrapper type from a function reference. This macro is
+/// essential to allow deducing argument type information from the function
+/// reference and supplying it to the `wrapper` class template.
+#define wrap_t(FUNC) \
+    wrapper<predicate_value_type<decltype(&FUNC)>::value_type, FUNC>
+
+/// Macro to generate functor (object) from a function reference. Same as
+/// `wrap_t` except this generates an object instead of just the type.
+#define wrap(FUNC) \
+    wrap_t(FUNC)()
+
 }  // namespace detangled
 
 #include "impl/predicated_tree.hh"
