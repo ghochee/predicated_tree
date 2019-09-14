@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>template class detangled::heap_iterator &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  <title>template class detangled::heap_iterator &mdash; Predicated Tree 0.2.0-alpha documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="template class detangled::iterator" href="class_detangled_iterator.html" />
-    <link rel="prev" title="template class detangled::has_taller" href="class_detangled_has_taller.html" /> 
+    <link rel="next" title="template class detangled::predicated_tree" href="class_detangled_predicated_tree.html" />
+    <link rel="prev" title="template class detangled::gardener" href="class_detangled_gardener.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,46 +83,22 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
-</ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="namespace_detangled.html">namespace detangled</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="enum_detangled_side.html">enum detangled::side</a></li>
-<li class="toctree-l3"><a class="reference internal" href="enum_detangled_traversal_order.html">enum detangled::traversal_order</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_indifferent.html">template struct detangled::indifferent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_stable_random.html">template struct detangled::stable_random</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_taller.html">template struct detangled::taller</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_wrapper.html">template struct detangled::wrapper</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_accessor.html">template class detangled::accessor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener.html">template class detangled::gardener</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener-2.html">template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_less.html">template class detangled::has_less</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_taller.html">template class detangled::has_taller</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::heap_iterator</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="group_predicated.html">Predicated Trees</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="class_detangled_gardener.html">template class detangled::gardener</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">template class detangled::heap_iterator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_iterator.html">template class detangled::iterator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_raw_tree.html">template class detangled::raw_tree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-3.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_valid_predicate.html">template class detangled::valid_predicate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#overview">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#detailed-documentation">Detailed Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="global.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="global.html#detailed-documentation">Detailed Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="global.html">Global Namespace</a></li>
 </ul>
 
             
@@ -168,9 +144,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="global.html">Global Namespace</a> &raquo;</li>
-        
-          <li><a href="namespace_detangled.html">namespace detangled</a> &raquo;</li>
+          <li><a href="group_predicated.html">Predicated Trees</a> &raquo;</li>
         
       <li>template class detangled::heap_iterator</li>
     
@@ -197,7 +171,7 @@
 </div>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>A destructive iterator which pops <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> elements. <a class="reference internal" href="#details-classdetangled-1-1heap-iterator"><span class="std std-ref">More…</span></a></p>
+<p>A <em>destructive</em> iterator which pops <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> elements. <a class="reference internal" href="#details-classdetangled-1-1heap-iterator"><span class="std std-ref">More…</span></a></p>
 <pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;heap_iterator.h&gt;</span><span class="cp"></span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">PTree</span><span class="o">&gt;</span>
@@ -205,12 +179,11 @@
 <span class="k">public</span><span class="o">:</span>
     <span class="c1">// typedefs</span>
 
-    <span class="k">typedef</span> <span class="n">PTree</span> <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1heap-iterator-1a4568b6388a61d90ec51c1b9603133b52">ptree_type</span><span></span><span class="p">;</span>
     <span class="k">typedef</span> <span class="k">typename</span> <span class="n">PTree</span><span class="o">::</span><span class="n">value_type</span> <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1heap-iterator-1a578988cc204fd6fed20dd2d7c762f3e3">value_type</span><span></span><span class="p">;</span>
 
     <span class="c1">// construction</span>
 
-    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1heap-iterator-1a4466f6f1ee84f0876ba970899e1a368e">heap_iterator</span><span></span><span class="p">(</span><a class="reference internal" href="#doxid-classdetangled-1-1heap-iterator-1a4568b6388a61d90ec51c1b9603133b52"><span class="std std-ref">ptree_type</span></a><span></span><span class="o">&amp;</span> <span class="n">ptree</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1heap-iterator-1aff9b59dd4388ef1a307f73d935d4d28a">heap_iterator</span><span></span><span class="p">(</span><span class="n">PTree</span><span class="o">&amp;</span> <span class="n">ptree</span><span class="p">);</span>
     <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1heap-iterator-1a50769aea1de377cc392032b17b1a29cd">heap_iterator</span><span></span><span class="p">();</span>
 
     <span class="c1">// methods</span>
@@ -236,9 +209,28 @@
 </div>
 <div class="section" id="detailed-documentation">
 <span id="details-classdetangled-1-1heap-iterator"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
-<p>A destructive iterator which pops <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> elements.</p>
-<p>This iterator allows sequencing the elements of a <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> in a heap-like fashion. The iterations operation involves popping elements of the <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code>. If client code runs through this iterator till <code class="docutils literal notranslate"><span class="pre">end</span></code> then the tree would be empty.</p>
+<p>A <em>destructive</em> iterator which pops <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> elements.</p>
+<p>This iterator allows sequencing the elements of a <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> in a heap-like fashion. The iterations operation involves popping elements off the <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code>. If client code runs through this iterator till <code class="docutils literal notranslate"><span class="pre">end</span></code> then the tree would be empty.</p>
 <p>Due to it’s very nature, this is a single pass (<code class="docutils literal notranslate"><span class="pre">InputIterator</span></code>).</p>
+<p>Usage Example:</p>
+<pre class="highlight literal-block"><a class="reference internal" href="namespace_detangled.html#doxid-namespacedetangled-1aa8806285b5e7d0745b19f40e482bc1aa"><span class="std std-ref">predicated_tree</span></a><span></span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="p">,</span> <span class="p">...</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
+<span class="n">insert_values_in_tree</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><a class="reference internal" href="#doxid-classdetangled-1-1heap-iterator-1a50769aea1de377cc392032b17b1a29cd"><span class="std std-ref">heap_iterator</span></a><span></span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <a class="reference internal" href="#doxid-classdetangled-1-1heap-iterator-1a50769aea1de377cc392032b17b1a29cd"><span class="std std-ref">heap_iterator</span></a><span></span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(),</span>
+          <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">));</span></pre>
+<p>NOTE: Due to it’s nature it makes sense to only have one copy of the iterator incrementing. NOTE: Due to it’s nature, after incrementing, previously held value is destroyed and hence holding onto references of values from the iterator is not valid.</p>
+<p class="rubric">Parameters:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>PTree</p></td>
+<td><p>is a <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> which objects of this class will heap-iterate over.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -250,10 +242,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_detangled_iterator.html" class="btn btn-neutral float-right" title="template class detangled::iterator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="class_detangled_predicated_tree.html" class="btn btn-neutral float-right" title="template class detangled::predicated_tree" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="class_detangled_has_taller.html" class="btn btn-neutral float-left" title="template class detangled::has_taller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="class_detangled_gardener.html" class="btn btn-neutral float-left" title="template class detangled::gardener" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

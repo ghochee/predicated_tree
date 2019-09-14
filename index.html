@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  <title>Manual &mdash; Predicated Tree 0.2.0-alpha documentation</title>
   
 
   
@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview" href="page_autotoc_md30.html" /> 
+    <link rel="next" title="Basic Trees" href="group_basic.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,7 +83,9 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="global.html">Global Namespace</a></li>
@@ -132,7 +134,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Index</li>
+      <li>Manual</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -151,14 +153,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="index">
-<span id="doxid-indexpage"></span><span id="index-0"></span><h1>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="manual">
+<span id="doxid-indexpage"></span><span id="index-0"></span><h1>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h1>
+<p class="rubric" id="doxid-index-1autotoc-md33">Overview:</p>
+<p>Predicate tree is a library for constructing and navgating tree objects.</p>
+<p>It is a container library (similar to <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code>). It contains elements of a fixed type and guarantees <em>orderings</em> over contained elements to make it faster to perform certain operations over.</p>
+<p class="rubric" id="doxid-index-1autotoc-md34">Notation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code> denotes programmatic labels (class, function, variable name) <em>not</em> introduced in this library.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> denotes programmatic labels which are introduced in this library. These are clickable.</p></li>
+</ul>
+<p class="rubric" id="doxid-index-1autotoc-md35">Predicates:</p>
+<p>Predicates are binary predicates as described through C++ literature and documentation; for example at <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/BinaryPredicate">s</a>. When attached to a tree they can govern ordering of elements in them or the morphology of subtrees or both.</p>
+<p class="rubric" id="doxid-index-1autotoc-md36">Before Predicate Trees:</p>
+<p>Before attaching predicates to trees it’s useful to understand a family of classes used as foundations to build predicated trees. These are simple binary trees which can be used for any general purpose and are not linked to any predicates or resulting morphological behaviour.</p>
+<p>These are described in some detail at <a class="reference internal" href="group_basic.html#doxid-group-basic"><span class="std std-ref">Basic Trees</span></a>.</p>
+<p class="rubric" id="doxid-index-1autotoc-md37">With Predicates:</p>
+<p>Trees attached with predicates are described in more detail at <a class="reference internal" href="group_predicated.html#doxid-group-predicated"><span class="std std-ref">Predicated</span></a> Trees”. There is primarily one asset <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">detangled::predicated_tree</span></span></a></code> which is built on top of all the <em>basic trees</em> elements.</p>
+<div class="toctree-wrapper compound">
+</div>
+<p class="rubric">Further Reading:</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="group_basic.html#doxid-group-basic"><span class="std std-ref">Basic Trees</span></a></div>
+<div class="line"><a class="reference internal" href="group_predicated.html#doxid-group-predicated"><span class="std std-ref">Predicated Trees</span></a></div>
+<div class="line"><a class="reference internal" href="group_predicates.html#doxid-group-predicates"><span class="std std-ref">Predicates</span></a></div>
+</div>
 <div class="toctree-wrapper compound">
 </div>
 <p class="rubric">Related Pages:</p>
-<div class="line-block">
-<div class="line"><a class="reference internal" href="page_autotoc_md30.html"><span class="doc">Overview</span></a></div>
-</div>
 <p class="rubric">Reference and Index:</p>
 <div class="toctree-wrapper compound">
 </div>
@@ -176,7 +198,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="page_autotoc_md30.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="group_basic.html" class="btn btn-neutral float-right" title="Basic Trees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

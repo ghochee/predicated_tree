@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  <title>Index &mdash; Predicated Tree 0.2.0-alpha documentation</title>
   
 
   
@@ -83,7 +83,9 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="global.html">Global Namespace</a></li>
@@ -161,6 +163,7 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
@@ -168,10 +171,20 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    Basic Trees
+
+      <ul>
+        <li><a href="group_basic.html#index-0">group</a>
+</li>
+      </ul></li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     begin
@@ -241,6 +254,10 @@
 
       <ul>
         <li><a href="global.html#index-1">RAW_TREE_MAKE_ALIAS</a>
+</li>
+        <li><a href="global.html#index-2">wrap</a>
+</li>
+        <li><a href="global.html#index-3">wrap_t</a>
 </li>
       </ul></li>
       <li>
@@ -327,8 +344,29 @@
         <li><a href="class_detangled_iterator.html#index-0">class</a>
 </li>
       </ul></li>
+      <li>
+    detangled::predicate_value_type
+
+      <ul>
+        <li><a href="struct_detangled_predicate_value_type-3.html#index-0">struct</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt;
+
+      <ul>
+        <li><a href="struct_detangled_predicate_value_type.html#index-0">struct</a>
+</li>
+      </ul></li>
+      <li>
+    detangled::predicate_value_type&lt;bool(F::*)(const T&amp;, const T&amp;) const&gt;
+
+      <ul>
+        <li><a href="struct_detangled_predicate_value_type-2.html#index-0">struct</a>
+</li>
+      </ul></li>
       <li>
     detangled::predicated_tree
 
@@ -485,6 +523,8 @@
 </li>
         <li><a href="class_detangled_raw_tree.html#index-6">is_side</a>
 </li>
+        <li><a href="group_predicates.html#index-1">more_even</a>
+</li>
         <li><a href="class_detangled_traverser-4.html#index-2">next</a>
 </li>
         <li><a href="class_detangled_virtual_accessor.html#index-3">operator bool</a>
@@ -531,6 +571,17 @@
         <li><a href="global.html#index-0">namespace</a>
 </li>
       </ul></li>
+      <li>
+    group
+
+      <ul>
+        <li><a href="group_basic.html#index-0">Basic Trees</a>
+</li>
+        <li><a href="group_predicated.html#index-0">Predicated Trees</a>
+</li>
+        <li><a href="group_predicates.html#index-0">Predicates</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -560,13 +611,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    Index
-
-      <ul>
-        <li><a href="index.html#index-0">page</a>
-</li>
-      </ul></li>
-      <li>
     is_heap
 
       <ul>
@@ -580,6 +624,28 @@
 
       <ul>
         <li><a href="class_detangled_raw_tree.html#index-6">function</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    Manual
+
+      <ul>
+        <li><a href="index.html#index-0">page</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    more_even
+
+      <ul>
+        <li><a href="group_predicates.html#index-1">function</a>
 </li>
       </ul></li>
   </ul></td>
@@ -626,6 +692,8 @@
         <li><a href="class_detangled_raw_tree.html#index-3">function</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     operator==
 
@@ -633,20 +701,11 @@
         <li><a href="class_detangled_accessor.html#index-1">function</a>, <a href="class_detangled_virtual_accessor.html#index-4">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     operator~
 
       <ul>
         <li><a href="namespace_detangled.html#index-2">function</a>
-</li>
-      </ul></li>
-      <li>
-    Overview
-
-      <ul>
-        <li><a href="page_autotoc_md30.html#index-0">page</a>
 </li>
       </ul></li>
   </ul></td>
@@ -659,13 +718,9 @@
     page
 
       <ul>
-        <li><a href="index.html#index-0">Index</a>
-</li>
-        <li><a href="page_autotoc_md30.html#index-0">Overview</a>
+        <li><a href="index.html#index-0">Manual</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     parent
 
@@ -674,10 +729,26 @@
 </li>
       </ul></li>
       <li>
+    Predicated Trees
+
+      <ul>
+        <li><a href="group_predicated.html#index-0">group</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
     predicated_tree
 
       <ul>
         <li><a href="class_detangled_predicated_tree.html#index-1">function</a>, <a href="class_detangled_predicated_tree.html#index-2">[1]</a>
+</li>
+      </ul></li>
+      <li>
+    Predicates
+
+      <ul>
+        <li><a href="group_predicates.html#index-0">group</a>
 </li>
       </ul></li>
   </ul></td>
@@ -757,13 +828,17 @@
         <li><a href="class_detangled_raw_tree.html#index-15">function</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     struct
 
       <ul>
         <li><a href="struct_detangled_indifferent.html#index-0">detangled::indifferent</a>
+</li>
+        <li><a href="struct_detangled_predicate_value_type-3.html#index-0">detangled::predicate_value_type</a>
+</li>
+        <li><a href="struct_detangled_predicate_value_type.html#index-0">detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt;</a>
+</li>
+        <li><a href="struct_detangled_predicate_value_type-2.html#index-0">detangled::predicate_value_type&lt;bool(F::*)(const T&amp;, const T&amp;) const&gt;</a>
 </li>
         <li><a href="struct_detangled_stable_random.html#index-0">detangled::stable_random</a>
 </li>
@@ -772,6 +847,8 @@
         <li><a href="struct_detangled_wrapper.html#index-0">detangled::wrapper</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     swap
 
@@ -803,6 +880,28 @@
 
       <ul>
         <li><a href="class_detangled_virtual_accessor.html#index-1">function</a>, <a href="class_detangled_virtual_accessor.html#index-2">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    wrap
+
+      <ul>
+        <li><a href="global.html#index-2">define</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    wrap_t
+
+      <ul>
+        <li><a href="global.html#index-3">define</a>
 </li>
       </ul></li>
   </ul></td>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>class detangled::format &mdash; Predicated Tree 0.2.0-alpha documentation</title>
+  <title>template struct detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt; &mdash; Predicated Tree 0.2.0-alpha documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;" href="class_detangled_gardener-2.html" />
-    <link rel="prev" title="template struct detangled::wrapper" href="struct_detangled_wrapper.html" /> 
+    <link rel="next" title="template struct detangled::predicate_value_type&lt;bool(F::*)(const T&amp;, const T&amp;) const&gt;" href="struct_detangled_predicate_value_type-2.html" />
+    <link rel="prev" title="enum detangled::traversal_order" href="enum_detangled_traversal_order.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,14 +93,14 @@
 <li class="toctree-l2 current"><a class="reference internal" href="namespace_detangled.html">namespace detangled</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="enum_detangled_side.html">enum detangled::side</a></li>
 <li class="toctree-l3"><a class="reference internal" href="enum_detangled_traversal_order.html">enum detangled::traversal_order</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_predicate_value_type.html">template struct detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt;</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">template struct detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt;</a><ul class="simple">
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_predicate_value_type-2.html">template struct detangled::predicate_value_type&lt;bool(F::*)(const T&amp;, const T&amp;) const&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_predicate_value_type-3.html">template struct detangled::predicate_value_type</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_taller.html">template struct detangled::taller</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_wrapper.html">template struct detangled::wrapper</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">class detangled::format</a><ul class="simple">
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener-2.html">template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_has_less.html">template class detangled::has_less</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_has_taller.html">template class detangled::has_taller</a></li>
@@ -167,13 +167,13 @@
         
           <li><a href="namespace_detangled.html">namespace detangled</a> &raquo;</li>
         
-      <li>class detangled::format</li>
+      <li>template struct detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt;</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/class_detangled_format.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/struct_detangled_predicate_value_type.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -186,19 +186,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="class-detangled-format">
-<span id="doxid-classdetangled-1-1format"></span><span id="index-0"></span><h1>class detangled::format<a class="headerlink" href="#class-detangled-format" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="template-struct-detangled-predicate-value-type-bool-const-t-const-t">
+<span id="doxid-structdetangled-1-1predicate-value-type-3-01bool-07-5-08-07const-01-t-01-6-00-01const-01-t-01-6-08-4"></span><span id="index-0"></span><h1>template struct detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt;<a class="headerlink" href="#template-struct-detangled-predicate-value-type-bool-const-t-const-t" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;format.h&gt;</span><span class="cp"></span>
+<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;type_traits.h&gt;</span><span class="cp"></span>
 
-<span class="k">class</span> <span class="nc">format</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="c1">// methods</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">predicate_value_type</span><span class="o">&lt;</span><span class="kt">bool</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c1">// typedefs</span>
 
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Tree</span><span class="o">&gt;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span>
-    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1format-1a0ab6746c50b2c2983f2a5a116b17e24e">print</span><span></span><span class="p">(</span><span class="n">Tree</span><span class="o">&amp;</span> <span class="n">tree</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">T</span> <span class="doxyrest-code-target target" id="doxid-structdetangled-1-1predicate-value-type-3-01bool-07-5-08-07const-01-t-01-6-00-01const-01-t-01-6-08-4-1a5908f2e6d06449c78f64989ccd64b99c">value_type</span><span></span><span class="p">;</span>
 <span class="p">};</span></pre>
 </div>
 
@@ -210,10 +208,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_detangled_gardener-2.html" class="btn btn-neutral float-right" title="template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="struct_detangled_predicate_value_type-2.html" class="btn btn-neutral float-right" title="template struct detangled::predicate_value_type&lt;bool(F::*)(const T&amp;, const T&amp;) const&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="struct_detangled_wrapper.html" class="btn btn-neutral float-left" title="template struct detangled::wrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="enum_detangled_traversal_order.html" class="btn btn-neutral float-left" title="enum detangled::traversal_order" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

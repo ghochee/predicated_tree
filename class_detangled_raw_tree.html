@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>template class detangled::raw_tree &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  <title>template class detangled::raw_tree &mdash; Predicated Tree 0.2.0-alpha documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;" href="class_detangled_traverser.html" />
-    <link rel="prev" title="template class detangled::predicated_tree" href="class_detangled_predicated_tree.html" /> 
+    <link rel="next" title="template class detangled::virtual_accessor" href="class_detangled_virtual_accessor.html" />
+    <link rel="prev" title="template class detangled::accessor" href="class_detangled_accessor.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,49 +83,26 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
-</ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="namespace_detangled.html">namespace detangled</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="enum_detangled_side.html">enum detangled::side</a></li>
-<li class="toctree-l3"><a class="reference internal" href="enum_detangled_traversal_order.html">enum detangled::traversal_order</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_indifferent.html">template struct detangled::indifferent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_stable_random.html">template struct detangled::stable_random</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_taller.html">template struct detangled::taller</a></li>
-<li class="toctree-l3"><a class="reference internal" href="struct_detangled_wrapper.html">template struct detangled::wrapper</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_accessor.html">template class detangled::accessor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener.html">template class detangled::gardener</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener-2.html">template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_less.html">template class detangled::has_less</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_has_taller.html">template class detangled::has_taller</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_heap_iterator.html">template class detangled::heap_iterator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_iterator.html">template class detangled::iterator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::raw_tree</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1autotoc-md14">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#relations">Relations</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#operations">Operations</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="group_basic.html">Basic Trees</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="class_detangled_accessor.html">template class detangled::accessor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">template class detangled::raw_tree</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#construction">Construction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-3.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_valid_predicate.html">template class detangled::valid_predicate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#overview">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#detailed-documentation">Detailed Documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="global.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="global.html#detailed-documentation">Detailed Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="global.html">Global Namespace</a></li>
 </ul>
 
             
@@ -171,9 +148,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="global.html">Global Namespace</a> &raquo;</li>
-        
-          <li><a href="namespace_detangled.html">namespace detangled</a> &raquo;</li>
+          <li><a href="group_basic.html">Basic Trees</a> &raquo;</li>
         
       <li>template class detangled::raw_tree</li>
     
@@ -357,24 +332,16 @@
 <div class="section" id="detailed-documentation">
 <span id="details-classdetangled-1-1raw-tree"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">raw_tree</span></a> is a <em>container</em> which behaves like a <em>tree</em>.</p>
-</div>
-<div class="section" id="doxid-classdetangled-1-1raw-tree-1autotoc-md14">
-<span id="id1"></span><h2>Overview<a class="headerlink" href="#doxid-classdetangled-1-1raw-tree-1autotoc-md14" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="typical-usage">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md15"></span><h3>Typical usage<a class="headerlink" href="#typical-usage" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md17">Overview:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md18">Typical usage:</p>
 <pre class="highlight literal-block"><span></span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">messages</span><span class="p">(</span><span class="s">&quot;world &quot;</span><span class="p">);</span>
 <span class="n">messages</span><span class="p">.</span><span class="n">replace</span><span class="o">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">side::left</span></a><span></span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Hello &quot;</span><span class="p">);</span>
 <span class="n">messages</span><span class="p">.</span><span class="n">replace</span><span class="o">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">side::right</span></a><span></span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;!&quot;</span><span class="p">);</span></pre>
-</div>
-<div class="section" id="recursive-container">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md16"></span><h3>Recursive Container<a class="headerlink" href="#recursive-container" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md19">Recursive Container:</p>
 <p>It is a <em>container</em> because it allows storing elements of a fixed type and allows client-code meaningful ways to access the elements. It is foundationally unlike other containers in that it’s internal storage is recursive. This allows usage patterns which allow treating a <em>subtree</em> like a tree.</p>
-</div>
-<div class="section" id="accessing-values">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md17"></span><h3>Accessing values<a class="headerlink" href="#accessing-values" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md20">Accessing values:</p>
 <p>Clients may create <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_iterator.html#doxid-classdetangled-1-1iterator"><span class="std std-ref"><span class="pre">detangled::iterator</span></span></a></code> s to <em>iterate</em> over the contained values. See <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a1775af0e6d6563ac4b58ef2fe6e20ea7"><span class="std std-ref"><span class="pre">raw_tree::begin()</span></span></a></code> for more. Other than this <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a74d6084b4e2e36521f43adfc7d723d5f"><span class="std std-ref"><span class="pre">raw_tree::parent()</span></span></a></code>, <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a902d7bc88d2ca6c9d5f8e21b7c53bfe6"><span class="std std-ref"><span class="pre">raw_tree::child</span></span></a></code> etc. are methods which can be used for accessing other nodes from a tree node.</p>
-<div class="section" id="similarity-with-std-containers">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md18"></span><h4>Similarity with std containers<a class="headerlink" href="#similarity-with-std-containers" title="Permalink to this headline">¶</a></h4>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md21">Similarity with std containers:</p>
 <p>It is most closely related to <code class="docutils literal notranslate"><span class="pre">std::list</span></code> for the following reasons:</p>
 <ul class="simple">
 <li><p><em>Nodes</em> are stored on the heap.</p></li>
@@ -382,33 +349,20 @@
 <li><p>It has <em>splice</em> like operations which allow stitching pieces from one container object to another container object.</p></li>
 <li><p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> s pointing to nodes in a tree are valid across <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1abf7c40eef41eabc516aeaf8dd099d7e8"><span class="std std-ref"><span class="pre">raw_tree::detach</span></span></a></code> and <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a223ce6bfb9cd303d8016da90a6382564"><span class="std std-ref"><span class="pre">raw_tree::replace</span></span></a></code> operations (but read <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> documentation for exceptions).</p></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="section" id="relations">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md19"></span><h2>Relations<a class="headerlink" href="#relations" title="Permalink to this headline">¶</a></h2>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md22">Relations:</p>
 <p>Other than the data stored at a <em>node</em> the other elements that a <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">raw_tree</span></span></a></code> object contains are references to a <em>parent</em> and upto two children (<em>left</em> and <em>right</em>).</p>
-<div class="section" id="children">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md20"></span><h3>Children<a class="headerlink" href="#children" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md23">Children:</p>
 <p>Each node has two children which it owns (a.k.a. deletes when going out of scope). The first child is referred to as <em>left</em> and the second is <em>right</em>.</p>
 <p>Methods which are used for performing operations on any one of the two children are non-type-templated with the side enum (<code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a345501f02e11f0e45eccb8c173f14b42"><span class="std std-ref"><span class="pre">raw_tree::has_child</span></span></a><span class="pre">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code> for example). Each child is guaranteed to refer to <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
-</div>
-<div class="section" id="parent">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md21"></span><h3>Parent<a class="headerlink" href="#parent" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md24">Parent:</p>
 <p>Parent relations are non-owning (i.e. we may die without affecting the parent). We are guaranteed to be found at either the <code class="docutils literal notranslate"><span class="pre">right</span></code> or <code class="docutils literal notranslate"><span class="pre">left</span></code> child position of the parent node.</p>
 <p>Root nodes are exceptions. See the <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a74d6084b4e2e36521f43adfc7d723d5f"><span class="std std-ref"><span class="pre">parent()</span></span></a></code> methods for details on the result for these.</p>
-</div>
-</div>
-<div class="section" id="operations">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md22"></span><h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md25">Operations:</p>
 <p>Operations (methods) of the tree objects are categorizable and the following notes help in remembering the classification and specific gotchas.</p>
-<div class="section" id="safety-of-methods">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md23"></span><h3>Safety of methods<a class="headerlink" href="#safety-of-methods" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md26">Safety of methods:</p>
 <p>Almost all <em>referential</em> operations are unsafe and client code should be satisfied before attempting to access or modify a relation. For example <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1abf7c40eef41eabc516aeaf8dd099d7e8"><span class="std std-ref"><span class="pre">raw_tree::detach</span></span></a><span class="pre">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref"><span class="pre">side::right</span></span></a><span class="pre">&gt;()</span></code> when there no <code class="docutils literal notranslate"><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref"><span class="pre">side::right</span></span></a></code> child present is undefined access.</p>
 <p>The above is done for efficiency. Many algorithmic situations would result in preconditions being true without any effective way to determine it beforehand (meaning we wouldn’t know them at compile time). Clients can be efficient by bypassing safety checks in those situations.</p>
-</div>
-<div class="section" id="non-mutating-and-mutating-methods">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md24"></span><h3>Non-mutating and Mutating methods<a class="headerlink" href="#non-mutating-and-mutating-methods" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md27">Non-mutating and Mutating methods:</p>
 <p><em>Non-mutating</em> operations allow client code to access data on the tree including through a chain of relation nodes without modifying the tree in any way. Values stored at nodes are also accessible and classified as <em>non-mutating</em> operations.</p>
 <p>Additionally non-mutating operations have two forms. non-const and <code class="docutils literal notranslate"><span class="pre">...</span> <span class="pre">const;</span></code> ones. For example:</p>
 <pre class="highlight literal-block"><span></span><span class="k">const</span> <span class="n">raw_tree</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -420,9 +374,7 @@ which documentation is listed typically). The actual class has non-const
 and non-templated versions of many of the methods.
 </pre></div>
 </div>
-</div>
-<div class="section" id="side-as-template-argument-vs-function-argument">
-<span id="doxid-classdetangled-1-1raw-tree-1autotoc-md25"></span><h3>Side as template argument vs function argument<a class="headerlink" href="#side-as-template-argument-vs-function-argument" title="Permalink to this headline">¶</a></h3>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md28">Side as template argument vs function argument:</p>
 <p>Methods which deal with child (and grandchild) nodes require specifying the specific child. Two methods are provided for this category of methods, ones in which this specification is given through:</p>
 <ul class="simple">
 <li><p>A <em>template</em> argument (<code class="docutils literal notranslate"><span class="pre">has_child&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code>)</p></li>
@@ -441,7 +393,6 @@ and non-templated versions of many of the methods.
 </tr>
 </tbody>
 </table>
-</div>
 <div class="section" id="construction">
 <h3>Construction<a class="headerlink" href="#construction" title="Permalink to this headline">¶</a></h3>
 <pre class="highlight doxyrest-title-code-block literal-block" id="doxid-classdetangled-1-1raw-tree-1aa0acc71081462b6368eb7b88094f9876"><span id="index-1"></span><span></span><span class="n">raw_tree</span><span class="p">(</span><span class="n">raw_tree</span><span class="o">&amp;&amp;</span> <span class="n">other</span><span class="p">)</span></pre>
@@ -735,10 +686,10 @@ command: R, R
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_detangled_traverser.html" class="btn btn-neutral float-right" title="template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="class_detangled_virtual_accessor.html" class="btn btn-neutral float-right" title="template class detangled::virtual_accessor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="class_detangled_predicated_tree.html" class="btn btn-neutral float-left" title="template class detangled::predicated_tree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="class_detangled_accessor.html" class="btn btn-neutral float-left" title="template class detangled::accessor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

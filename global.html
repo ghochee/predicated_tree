@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Global Namespace &mdash; Predicated Tree 0.1.0-alpha documentation</title>
+  <title>Global Namespace &mdash; Predicated Tree 0.2.0-alpha documentation</title>
   
 
   
@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="namespace detangled" href="namespace_detangled.html" />
-    <link rel="prev" title="Overview" href="page_autotoc_md30.html" /> 
+    <link rel="prev" title="template struct detangled::stable_random" href="struct_detangled_stable_random.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -84,7 +84,9 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="page_autotoc_md30.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Global Namespace</a><ul>
@@ -183,7 +185,9 @@
 <span class="c1">// macros</span>
 
 <span class="cp">#define </span><a class="reference internal" href="#doxid-raw-tree-8h-1a85c173f8bdf6589cf9b9d30d3e37236c"><span class="std std-ref">RAW_TREE_MAKE_ALIAS</span></a><span></span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="p">)</span>
-<span class="cp">#define </span><span class="doxyrest-code-target target" id="doxid-raw-tree-8hh-1a91ddab2f825a86612307a4e5419b2cd6">SWITCH_ON_SIDE</span><span></span><span class="p">(</span><span class="n">function_name</span><span class="p">,</span> <span class="p">...)</span></pre>
+<span class="cp">#define </span><span class="doxyrest-code-target target" id="doxid-raw-tree-8hh-1a91ddab2f825a86612307a4e5419b2cd6">SWITCH_ON_SIDE</span><span></span><span class="p">(</span><span class="n">function_name</span><span class="p">,</span> <span class="p">...)</span>
+<span class="cp">#define </span><a class="reference internal" href="#doxid-predicated-tree-8h-1a1f930f69fefd342911c744ebd055e8f0"><span class="std std-ref">wrap</span></a><span></span><span class="p">(</span><span class="n">FUNC</span><span class="p">)</span>
+<span class="cp">#define </span><a class="reference internal" href="#doxid-predicated-tree-8h-1aef2edc03442c83c471e9951aff3688d3"><span class="std std-ref">wrap_t</span></a><span></span><span class="p">(</span><span class="n">FUNC</span><span class="p">)</span></pre>
 </div>
 <div class="section" id="detailed-documentation">
 <span id="details-global"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
@@ -214,6 +218,17 @@ inrend    (order = in,  wing = right (r), end)
 </tr>
 </tbody>
 </table>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-predicated-tree-8h-1a1f930f69fefd342911c744ebd055e8f0"><span id="index-2"></span><span></span><span class="cp">#define wrap(FUNC)</span></pre>
+<p>Macro to generate functor (object) from a function reference. Same as <code class="docutils literal notranslate"><span class="pre">wrap_t</span></code> except this generates an object instead of just the type.</p>
+<p>Typical usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bool taller_elements(const string &amp;, const string &amp;);
+...
+predicated_tree p{wrap(taller_elements)};
+</pre></div>
+</div>
+<p>will create <code class="docutils literal notranslate"><span class="pre">p</span></code> as a <code class="docutils literal notranslate"><span class="pre">predicated_tree</span></code> of <code class="docutils literal notranslate"><span class="pre">string</span></code> elements with <code class="docutils literal notranslate"><span class="pre">H</span></code> set to <code class="docutils literal notranslate"><span class="pre">taller_elements</span></code>.</p>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-predicated-tree-8h-1aef2edc03442c83c471e9951aff3688d3"><span id="index-3"></span><span></span><span class="cp">#define wrap_t(FUNC)</span></pre>
+<p>Macro to generate the wrapper type from a function reference. This macro is essential to allow deducing argument type information from the function reference and supplying it to the <code class="docutils literal notranslate"><span class="pre">wrapper</span></code> class template.</p>
 </div>
 </div>
 </div>
@@ -229,7 +244,7 @@ inrend    (order = in,  wing = right (r), end)
         <a href="namespace_detangled.html" class="btn btn-neutral float-right" title="namespace detangled" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="page_autotoc_md30.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="struct_detangled_stable_random.html" class="btn btn-neutral float-left" title="template struct detangled::stable_random" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
