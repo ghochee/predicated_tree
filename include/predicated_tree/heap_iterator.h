@@ -3,6 +3,9 @@
 
 namespace detangled {
 
+/// @addtogroup predicated
+/// @{
+
 /// A *destructive* iterator which pops `predicated_tree` elements.
 ///
 /// This iterator allows sequencing the elements of a `predicated_tree` in a
@@ -51,6 +54,8 @@ class heap_iterator : public std::iterator<std::input_iterator_tag,
   private:
     PTree *ptree_ = nullptr;
 };
+
+/// @}
 
 }  // namespace detangled
 

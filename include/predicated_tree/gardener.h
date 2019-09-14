@@ -5,14 +5,19 @@
 
 namespace detangled {
 
-/// Transforms trees. This normally involves converting trees with one
-/// predicate system to another predicate system. Base case is simply to strip
-/// out the tree from the predicates and insert into another tree which has the
-/// destination predicates, but partial specializations exist for when LOut ==
-/// LIn, HIn == indifferent etc.
+/// @addtogroup predicated
+/// @{
+
+/// Transforms trees from one predicate pair to another.
 ///
-/// When `LOut == LIn` heaps `tree` using `HOut` predicate while keeping
-/// relative `L` order unchanged.
+/// This normally involves converting trees with one predicate system to
+/// another predicate system. Base case is simply to strip out the tree from
+/// the predicates and insert into another tree which has the destination
+/// predicates, but partial specializations exist for when `LOut == LIn`, `HIn
+/// == indifferent` etc.
+///
+/// For example when `LOut == LIn`, heaps `tree` using `HOut` predicate while
+/// keeping relative `L` order unchanged.
 template <typename T, typename HIn, typename LIn, typename HOut, typename LOut>
 class gardener {
   public:
@@ -20,6 +25,8 @@ class gardener {
         predicated_tree<T, HIn, LIn> &ptree, const HOut = HOut(),
         const LOut = LOut());
 };
+
+/// @}
 
 }  // namespace detangled
 

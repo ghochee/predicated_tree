@@ -35,6 +35,37 @@ constexpr side operator!(const side wing);
 template <class ContainerType, traversal_order, side>
 class iterator;
 
+/// @addtogroup basic Basic Trees
+///
+/// A family of class templaes which can be used for making tree objects and
+/// manipulating them. There are lot of related assets but the primary entities
+/// in this group are as follows.
+///
+/// # Raw Tree
+///
+/// `detangled::raw_tree`s allow users to create and manipulate tree objects.
+///
+/// # Accessor
+///
+/// `detangled::accessor`s are *pointers* to nodes in a tree. These can be used
+/// to navigate through tree elements. These should be thought of as equivalent
+/// to `iterator`s from STL *especially* when used for specifying `pos` style
+/// arguments. A related class family is `virtual_accessor`s which are pointers
+/// to nodes limited to a subtree.
+///
+/// # Iterator
+///
+/// `detangled::iterator` classes are configured to perform *iteration*s on a
+/// virtual tree of nodes in a specific order. This allows client code to
+/// efficiently navigate through the container of nodes that they create.
+/// Iterators are additionally configurable on the type of iterator (e.g.
+/// `left` sided `preorder`) and also on the subtree on which to run the
+/// iteration.
+///
+/// This group contains resources which can be used for creating and
+/// manipulating basic tree objects.
+/// @{
+
 /// raw_tree is a *container* which behaves like a *tree*.
 ///
 /// # Overview
@@ -439,6 +470,8 @@ class raw_tree {
     std::array<std::unique_ptr<raw_tree>, 2 /* num sides */> children_ = {
         {nullptr, nullptr}};
 };
+
+/// @}
 
 template <typename T>
 void swap(raw_tree<T> &left, raw_tree<T> &right);

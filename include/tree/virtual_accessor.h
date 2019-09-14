@@ -5,6 +5,9 @@
 
 namespace detangled {
 
+/// @addtogroup basic
+/// @{
+
 /// A virtual_accessor is an accessor on a *virtual* tree.
 ///
 /// # Overview
@@ -130,6 +133,8 @@ class virtual_accessor : public accessor<ContainerType> {
     /// decrementing.
     uint64_t depth_ = -1;
 };
+
+/// @}
 
 }  // namespace detangled
 

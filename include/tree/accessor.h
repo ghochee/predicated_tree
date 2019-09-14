@@ -6,6 +6,9 @@
 
 namespace detangled {
 
+/// @addtogroup basic
+/// @{
+
 /// accessors are used for creating *pointers* to nodes in a `raw_tree`.
 ///
 /// # Overview
@@ -55,8 +58,8 @@ namespace detangled {
 /// and hence will not port across swaps.
 ///
 /// @tparam Container is the tree container type that this accessor works over.
-/// Methods like `parent()`, `child<side::left>()` etc. are expected to be
-/// defined over this type.
+///     Methods like `parent()`, `child<side::left>()` etc. are expected to be
+///     defined over this type.
 template <class Container>
 class accessor {
   public:
@@ -159,6 +162,8 @@ class accessor {
     // 'end'.
     node_type *node_ = nullptr;
 };
+
+/// @}
 
 }  // namespace detangled
 

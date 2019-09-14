@@ -9,6 +9,30 @@
 
 namespace detangled {
 
+/// @addtogroup predicated Predicated Trees
+///
+/// On top of standard trees we add the notion of *predicates*. This container
+/// makes ordering guarantees under these predicates. This would be analogous
+/// to giving a predicate to a `std::vector` to make it a `std::multiset` where
+/// the `std::multiset` makes ordering guarantees under the predicate.
+///
+/// `detangled::predicated_tree`s effect this notion by allowing clients to
+/// build containers which would maintain upto two predicates. The first
+/// predicate is linked to the tree in a *heap tree*-like fashion and the
+/// second predicate is linked to the tree in a *binary search tree*-like
+/// arrangement.
+///
+/// `detangled::gardener` is used to transform from one *type* of tree to
+/// another *type* of tree. For example a tree built with predicates `H0` and
+/// `L0` is transformed to a tree with predicates `H1` and `L0` using a simpler
+/// operation than necessary when constructing a completely different tree.
+/// This template class allows transformations by exploiting relations between
+/// *predicates*.
+///
+/// This group contains assets which are used for building and using such trees
+/// compounded with predicates.
+/// @{
+
 /// Predicated trees are containers which make *ordering* guarantees under
 /// specified predicates.
 ///
@@ -285,6 +309,8 @@ class predicated_tree {
     const L left;
 };
 
+/// @}
+
 // Class template deduction guides to simplify initialization of trees with
 // relevant predicate information.
 template <typename H>
@@ -314,6 +340,15 @@ struct wrapper {
 
 /// Macro to generate functor (object) from a function reference. Same as
 /// `wrap_t` except this generates an object instead of just the type.
+/// 
+/// Typical usage:
+///
+///     bool taller_elements(const string &, const string &);
+///     ...
+///     predicated_tree p{wrap(taller_elements)};
+/// 
+/// will create `p` as a `predicated_tree` of `string` elements with `H` set to
+/// `taller_elements`.
 #define wrap(FUNC) \
     wrap_t(FUNC)()
 

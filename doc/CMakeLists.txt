@@ -40,7 +40,6 @@ set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
 
 doxygen_add_docs(doxygen_docs
     ${CMAKE_SOURCE_DIR}/include
-    ${DOCUMENTATION_INDEX_PAGE}
     ${DOCUMENTATION_OVERVIEW_PAGE}
     COMMENT "Generating API documentation with doxygen")
 
