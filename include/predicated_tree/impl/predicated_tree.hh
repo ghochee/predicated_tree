@@ -79,10 +79,11 @@ accessor<const raw_tree<T>> predicated_tree<T, H, L>::find(
 }
 
 template <typename T, typename H, typename L>
+template <typename U>
 accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
-    T &&value, accessor<const raw_tree<T>> hint) {
+    U &&value, accessor<const raw_tree<T>> hint) {
     if (!tree_) {
-        tree_.emplace(std::move(value));
+        tree_.emplace(std::forward<U>(value));
         return accessor<const raw_tree<T>>(tree_.value());
     }
 
@@ -106,34 +107,37 @@ accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
         pos = *reinterpret_cast<accessor<raw_tree<T>> *>(&vert_pos);
         if (left(*pos, value)) {
             if (!pos->template has_child<side::right>()) {
-                pos->template emplace<side::right>(std::move(value));
+                pos->template emplace<side::right>(std::forward<U>(value));
                 pos.template down<side::right>();
                 return pos;
             }
 
             if (left(value, *pos->template child<side::right>())) {
                 pos->template splice<side::right, side::right>(
-                    std::move(value));
+                    std::forward<U>(value));
             } else {
-                pos->template splice<side::right, side::left>(std::move(value));
+                pos->template splice<side::right, side::left>(
+                    std::forward<U>(value));
             }
             pos.template down<side::right>();
         } else {
             if (!pos->template has_child<side::left>()) {
-                pos->template emplace<side::left>(std::move(value));
+                pos->template emplace<side::left>(std::forward<U>(value));
                 pos.template down<side::left>();
                 return pos;
             }
 
             if (left(value, *pos->template child<side::left>())) {
-                pos->template splice<side::left, side::right>(std::move(value));
+                pos->template splice<side::left, side::right>(
+                    std::forward<U>(value));
             } else {
-                pos->template splice<side::left, side::left>(std::move(value));
+                pos->template splice<side::left, side::left>(
+                    std::forward<U>(value));
             }
             pos.template down<side::left>();
         }
     } else {
-        raw_tree<T> node(std::move(value));
+        raw_tree<T> node(std::forward<U>(value));
         swap(node, pos.node());
         if (left(*pos, *node)) {
             pos->template replace<side::right>(std::move(node));

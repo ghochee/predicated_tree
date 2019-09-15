@@ -4,6 +4,7 @@
 #include <array>
 #include <memory>
 #include <type_traits>
+#include <utility>
 
 namespace detangled {
 
@@ -187,9 +188,7 @@ class iterator;
 /// optimize across these boundaries. The function-argument version uses the
 /// template version.
 ///
-/// @tparam T (``MoveConstructible`` and ``MoveAssignable``) is the value type
-/// of the stored element. raw_tree itself is ``MoveConstructible`` and
-/// ``MoveAssignable``.
+/// @tparam T is the value type of the stored element.
 template <typename T>
 class raw_tree {
   public:
@@ -208,8 +207,15 @@ class raw_tree {
     // @note sphinx doesn't handle this correctly, so we don't allow it to
     // integrate into generated documentation.
     raw_tree() = delete;
-    explicit raw_tree(T &&value) : value_(std::move(value)) {}
-    explicit raw_tree(const T &value) : value_(value) {}
+
+    /// Construct a tree with a single value.
+    /// TODO(ghochee): Class template for creating *empty* trees so that client
+    /// side code like for loops can run more naturally.
+    ///
+    /// @param value is of a type and category which can be used for
+    ///     constructing value_ correctly.
+    template <typename U>
+    explicit raw_tree(U &&value) : value_(std::forward<U>(value)) {}
 
     /// Move operations would *deep*-move a node. `other` may be a *root* node.
     ///
@@ -366,7 +372,7 @@ class raw_tree {
     /// @tparam wing is the side where we wish to emplace.
     /// @tparam gc_wing is the side where we wish to move the existing node.
     /// @param args are the constructor arguments for construction of
-    /// `raw_tree::value_type`.
+    ///     `raw_tree::value_type`.
     template <side wing, side gc_wing, typename... Args>
     void splice(Args &&... args);
 
@@ -457,12 +463,14 @@ class raw_tree {
         return this->end<traversal_order::order, side::wing>();   \
     }
 
+    // clang-format off
     RAW_TREE_MAKE_ALIAS(inl,   in,   left);
     RAW_TREE_MAKE_ALIAS(inr,   in,   right);
     RAW_TREE_MAKE_ALIAS(prel,  pre,  left);
     RAW_TREE_MAKE_ALIAS(prer,  pre,  right);
     RAW_TREE_MAKE_ALIAS(postl, post, left);
     RAW_TREE_MAKE_ALIAS(postr, post, right);
+    // clang-format on
 
   private:
     T value_;

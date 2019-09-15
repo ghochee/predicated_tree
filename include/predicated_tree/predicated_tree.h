@@ -247,8 +247,12 @@ class predicated_tree {
     // at the right location but with an extra cost.
     // Complexity:
     //   O(lg(N)).
+    // @tparam U is a type compatible with T for construction.
+    // @param value is type and category which can be used for construction of
+    //   T type objects.
+    template <typename U>
     accessor<const raw_tree<T>> insert(
-        T &&value,
+        U &&value,
         accessor<const raw_tree<T>> hint = accessor<const raw_tree<T>>());
     // Insert 'start' and 'end' range of iterators at 'pos' or subtree of 'pos'.
     // Complexity:
