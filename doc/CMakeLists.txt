@@ -10,10 +10,12 @@ endif()
 get_filename_component(DOXYREST_BINDIR ${DOXYREST_EXECUTABLE} DIRECTORY)
 set(DOXYREST_ROOT ${DOXYREST_BINDIR}/../../../../doxyrest)
 
-set(DOCUMENTATION_INDEX_PAGE
-    ${CMAKE_CURRENT_SOURCE_DIR}/index.md)
 set(DOCUMENTATION_OVERVIEW_PAGE
     ${CMAKE_CURRENT_SOURCE_DIR}/../README.md)
+set(DOCUMENTATION_INSTALLATION_PAGE
+    ${CMAKE_CURRENT_SOURCE_DIR}/installation.md)
+set(DOCUMENTATION_TUTORIAL_PAGE
+    ${CMAKE_CURRENT_SOURCE_DIR}/tutorial.md)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/conf.py
@@ -41,6 +43,8 @@ set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
 doxygen_add_docs(doxygen_docs
     ${CMAKE_SOURCE_DIR}/include
     ${DOCUMENTATION_OVERVIEW_PAGE}
+    ${DOCUMENTATION_INSTALLATION_PAGE}
+    ${DOCUMENTATION_TUTORIAL_PAGE}
     COMMENT "Generating API documentation with doxygen")
 
 add_custom_target(doxyrest_docs
