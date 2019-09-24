@@ -1,6 +1,8 @@
 #ifndef PREDICATED_TREE_HEAP_ITERATOR_H
 #define PREDICATED_TREE_HEAP_ITERATOR_H
 
+#include <iterator>
+
 namespace detangled {
 
 /// @addtogroup predicated
@@ -34,8 +36,8 @@ namespace detangled {
 /// @tparam PTree is a `predicated_tree` which objects of this class will
 ///     heap-iterate over.
 template <class PTree>
-class heap_iterator : public std::iterator<std::input_iterator_tag,
-                                           typename PTree::value_type> {
+class heap_iterator : public ::std::iterator<std::input_iterator_tag,
+                                             typename PTree::value_type> {
   public:
     using value_type = typename PTree::value_type;
 

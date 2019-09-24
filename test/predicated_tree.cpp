@@ -1,7 +1,7 @@
 #include "tree.h"
 #include "predicated_tree/algorithm.h"
-#include "predicated_tree/util/predicates.h"
 #include "predicated_tree/heap_iterator.h"
+#include "predicated_tree/util/predicates.h"
 
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
@@ -14,34 +14,36 @@
 using namespace detangled;
 using namespace std;
 
-// clang-format: off
-#define LIST_PREDICATES                                                                          \
-    (std::pair<wrapper<uint32_t, more_even<uint32_t>>, wrapper<uint32_t, more_even<uint32_t>>>), \
-    (std::pair<wrapper<uint32_t, more_even<uint32_t>>, std::less<uint32_t>>),                    \
-    (std::pair<wrapper<uint32_t, more_even<uint32_t>>, indifferent<uint32_t>>),                  \
-    (std::pair<wrapper<uint32_t, more_even<uint32_t>>, stable_random<uint32_t>>),                \
-                                                                                                 \
-    (std::pair<std::less<uint32_t>, wrapper<uint32_t, more_even<uint32_t>>>),                    \
-    (std::pair<std::less<uint32_t>, std::less<uint32_t>>),                                       \
-    (std::pair<std::less<uint32_t>, indifferent<uint32_t>>),                                     \
-    (std::pair<std::less<uint32_t>, stable_random<uint32_t>>),                                   \
-                                                                                                 \
-    (std::pair<indifferent<uint32_t>, wrapper<uint32_t, more_even<uint32_t>>>),                  \
-    (std::pair<indifferent<uint32_t>, std::less<uint32_t>>),                                     \
-    (std::pair<indifferent<uint32_t>, indifferent<uint32_t>>),                                   \
-    (std::pair<indifferent<uint32_t>, stable_random<uint32_t>>),                                 \
-                                                                                                 \
-    (std::pair<stable_random<uint32_t>, wrapper<uint32_t, more_even<uint32_t>>>),                \
-    (std::pair<stable_random<uint32_t>, std::less<uint32_t>>),                                   \
-    (std::pair<stable_random<uint32_t>, indifferent<uint32_t>>),                                 \
-    (std::pair<stable_random<uint32_t>, stable_random<uint32_t>>)
-// clang-format: on
+// clang-format off
+#define LIST_PREDICATES                                                    \
+    (wrapper<uint32_t, more_even<uint32_t>>,                               \
+     wrapper<uint32_t, more_even<uint32_t>>),                              \
+    (wrapper<uint32_t, more_even<uint32_t>>, std::less<uint32_t>),         \
+    (wrapper<uint32_t, more_even<uint32_t>>, indifferent<uint32_t>),       \
+    (wrapper<uint32_t, more_even<uint32_t>>, stable_random<uint32_t>),     \
+                                                                           \
+    (std::less<uint32_t>, wrapper<uint32_t, more_even<uint32_t>>),         \
+    (std::less<uint32_t>, std::less<uint32_t>),                            \
+    (std::less<uint32_t>, indifferent<uint32_t>),                          \
+    (std::less<uint32_t>, stable_random<uint32_t>),                        \
+                                                                           \
+    (indifferent<uint32_t>, wrapper<uint32_t, more_even<uint32_t>>),       \
+    (indifferent<uint32_t>, std::less<uint32_t>),                          \
+    (indifferent<uint32_t>, indifferent<uint32_t>),                        \
+    (indifferent<uint32_t>, stable_random<uint32_t>),                      \
+                                                                           \
+    (stable_random<uint32_t>, wrapper<uint32_t, more_even<uint32_t>>),     \
+    (stable_random<uint32_t>, std::less<uint32_t>),                        \
+    (stable_random<uint32_t>, indifferent<uint32_t>),                      \
+    (stable_random<uint32_t>, stable_random<uint32_t>)
+// clang-format on
 
-TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
+TEMPLATE_PRODUCT_TEST_CASE("insert", "[insert]", (::std::pair),
+                           (LIST_PREDICATES)) {
     raw_tree<uint32_t> t(10);
 
     predicated_tree<uint32_t, typename TestType::first_type,
-                    typename TestType::first_type>
+                    typename TestType::second_type>
         p;
 
     SECTION("single") {
@@ -61,9 +63,7 @@ TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
     }
 
     SECTION("medium") {
-        for (uint32_t i = 0; i < 10000; ++i) {
-            p.insert(dist(rng));
-        }
+        for (uint32_t i = 0; i < 10000; ++i) { p.insert(dist(rng)); }
         CHECK(std::is_sorted(p->inlbegin(), p->inlend(), p.left));
     }
 
@@ -73,18 +73,23 @@ TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
     CHECK(std::is_sorted(values.begin(), values.end(), p.tall));
 }
 
-TEST_CASE("convert", "[convert]") {
+TEMPLATE_PRODUCT_TEST_CASE("convert", "[convert]", (::std::pair),
+                           (LIST_PREDICATES)) {
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist(100, 1000000);
 
-    predicated_tree ptree{stable_random<uint32_t>()};
+    predicated_tree ptree{typename TestType::first_type(),
+                          typename TestType::second_type()};
     for (uint32_t i = 0; i < 10000; ++i) { ptree.insert(dist(rng)); }
-    CHECK(std::is_sorted(ptree->inlbegin(), ptree->inlend()));
+    CHECK(std::is_sorted(ptree->inlbegin(), ptree->inlend(),
+                         typename TestType::second_type()));
 
     predicated_tree converted{std::move(ptree),
-                              wrapper<uint32_t, more_even<uint32_t>>()};
-    CHECK(std::is_sorted(converted->inlbegin(), converted->inlend()));
+                              typename TestType::second_type(),
+                              typename TestType::first_type()};
+    CHECK(std::is_sorted(converted->inlbegin(), converted->inlend(),
+                         typename TestType::first_type()));
     auto tree = converted.release();
     CHECK(is_heap(accessor<raw_tree<uint32_t>>(tree), converted.tall));
 }
