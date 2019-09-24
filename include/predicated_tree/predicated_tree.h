@@ -22,12 +22,11 @@ namespace detangled {
 /// second predicate is linked to the tree in a *binary search tree*-like
 /// arrangement.
 ///
-/// `detangled::gardener` is used to transform from one *type* of tree to
-/// another *type* of tree. For example a tree built with predicates `H0` and
-/// `L0` is transformed to a tree with predicates `H1` and `L0` using a simpler
-/// operation than necessary when constructing a completely different tree.
-/// This template class allows transformations by exploiting relations between
-/// *predicates*.
+/// Conversion constructors are used for converting from one type to another.
+/// For example a tree built with predicates `H0` and `L0` is transformed to a
+/// tree with predicates `H1` and `L0` using a simpler operation than necessary
+/// when constructing a completely different tree.  This templated constructor
+/// allows transformations by exploiting relations between *predicates*.
 ///
 /// This group contains assets which are used for building and using such trees
 /// compounded with predicates.
@@ -205,6 +204,15 @@ class predicated_tree {
     /// `L`. This is the standard way to construct a `predicated_tree` from a
     /// well behaved (under the predicates) `raw_tree`.
     predicated_tree(raw_tree<T> &&tree, const H = H(), const L = L());
+
+    /// Overload which accepts `predicated_tree`s differing only in the
+    /// `Height` predicate. This constructor modifies the incoming tree by
+    /// *re-heaping* the nodes according the `H`.
+    ///
+    /// @tparam HIn which is the height predicate of the incoming tree.
+    template <class HIn>
+    predicated_tree(predicated_tree<T, HIn, L> &&ptree, const H = H(),
+                    const L = L());
 
     // The following two methods are equivalent to the following:
     // - Disregard the height property of 'value'.

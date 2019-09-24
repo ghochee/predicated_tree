@@ -10,6 +10,44 @@ predicated_tree<T, H, L>::predicated_tree(raw_tree<T> &&tree, const H t,
     : tree_(std::move(tree)), tall(t), left(l) {}
 
 template <typename T, typename H, typename L>
+template <typename HIn>
+predicated_tree<T, H, L>::predicated_tree(predicated_tree<T, HIn, L> &&ptree,
+                                          const H t, const L l)
+    : tree_(ptree.release()), tall(t), left(l) {
+    // TODO(ghochee): If `H` is indifferent, then we don't need to do anything
+    // since everything is height equal anyway but we need to handle equal
+    // nodes even in that case so we should sort out the strategy for that.
+    //
+    // Do a postorder traversal and re-heap the top element of the subtree.
+    // Reheap involves using rotate which doesn't affect the inorder sequence
+    // (preserves left-ness).
+    for (auto it = tree_->template begin<traversal_order::post, side::left>();
+         it != tree_->template end<traversal_order::post, side::left>(); ++it) {
+        for (auto pos = it;;) {
+            // Determine a side of rotation (left or right), dependending on
+            // presence and height-relation with children and then rotate.
+            std::optional<side> rotation_side;
+            if (pos->template has_child<side::left>() &&
+                tall(*pos->template child<side::left>(), *pos)) {
+                rotation_side.emplace(side::right);
+            }
+
+            if (pos->template has_child<side::right>() &&
+                tall(*pos->template child<side::right>(),
+                  rotation_side.has_value() ? *pos->template child<side::left>()
+                                            : *pos)) {
+                rotation_side.emplace(side::left);
+            }
+
+            if (!rotation_side.has_value()) { break; }
+
+            pos->rotate(*rotation_side);
+            pos.down(*rotation_side);
+        }
+    }
+}
+
+template <typename T, typename H, typename L>
 accessor<const raw_tree<T>> predicated_tree<T, H, L>::upper_bound(
     const T &value) const {
     accessor<const raw_tree<T>> pos(tree_.value());

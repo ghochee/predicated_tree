@@ -1,4 +1,5 @@
 #include "tree.h"
+#include "predicated_tree/algorithm.h"
 #include "predicated_tree/util/predicates.h"
 #include "predicated_tree/heap_iterator.h"
 
@@ -70,4 +71,20 @@ TEMPLATE_TEST_CASE("insert", "[insert]", LIST_PREDICATES) {
     std::copy(heap_iterator<decltype(p)>(p), heap_iterator<decltype(p)>(),
               std::back_inserter(values));
     CHECK(std::is_sorted(values.begin(), values.end(), p.tall));
+}
+
+TEST_CASE("convert", "[convert]") {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(100, 1000000);
+
+    predicated_tree ptree{stable_random<uint32_t>()};
+    for (uint32_t i = 0; i < 10000; ++i) { ptree.insert(dist(rng)); }
+    CHECK(std::is_sorted(ptree->inlbegin(), ptree->inlend()));
+
+    predicated_tree converted{std::move(ptree),
+                              wrapper<uint32_t, more_even<uint32_t>>()};
+    CHECK(std::is_sorted(converted->inlbegin(), converted->inlend()));
+    auto tree = converted.release();
+    CHECK(is_heap(accessor<raw_tree<uint32_t>>(tree), converted.tall));
 }
