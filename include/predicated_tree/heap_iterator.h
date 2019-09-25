@@ -22,7 +22,7 @@ namespace detangled {
 /// ```cpp
 /// predicated_tree<uint32_t, ...> p;
 /// insert_values_in_tree(p);
-/// 
+///
 /// std::copy(heap_iterator<decltype(p)>(p), heap_iterator<decltype(p)>(),
 ///           ::std::ostream_iterator<uint32_t>(::std::cout, ", "));
 /// ```

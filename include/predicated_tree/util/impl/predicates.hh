@@ -1,5 +1,5 @@
-#include <type_traits>
 #include <random>
+#include <type_traits>
 
 namespace detangled {
 

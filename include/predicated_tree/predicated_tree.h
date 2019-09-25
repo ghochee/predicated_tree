@@ -192,6 +192,7 @@ class predicated_tree {
                   "Specified height predicate cannot work with value type.");
     static_assert(valid_predicate<T, L>::value,
                   "Specified left predicate cannot work with value type.");
+
   public:
     using value_type = T;
 
@@ -382,17 +383,16 @@ struct wrapper {
 
 /// Macro to generate functor (object) from a function reference. Same as
 /// `wrap_t` except this generates an object instead of just the type.
-/// 
+///
 /// Typical usage:
 ///
 ///     bool taller_elements(const string &, const string &);
 ///     ...
 ///     predicated_tree p{wrap(taller_elements)};
-/// 
+///
 /// will create `p` as a `predicated_tree` of `string` elements with `H` set to
 /// `taller_elements`.
-#define wrap(FUNC) \
-    wrap_t(FUNC)()
+#define wrap(FUNC) wrap_t(FUNC)()
 
 }  // namespace detangled
 
