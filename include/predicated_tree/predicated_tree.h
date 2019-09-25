@@ -326,6 +326,10 @@ class predicated_tree {
     //   O(N * lg(N)) otherwise.
     void stable_heap();
 
+    // Helper method for insertions.
+    accessor<const raw_tree<T>> insert(raw_tree<T> &&node,
+                                       accessor<const raw_tree<T>> hint);
+
     /// Returns true iff `value` is supposed to lie in the subtree rooted at
     /// `pos`. This is always true if `pos` points to a root node. In other
     /// cases we check the ancestral values of `pos` to see the range of values

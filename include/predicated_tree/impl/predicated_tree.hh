@@ -105,115 +105,7 @@ template <typename T, typename H, typename L>
 template <typename U>
 accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
     U &&value, accessor<const raw_tree<T>> hint) {
-    if (!tree_) {
-        tree_.emplace(std::forward<U>(value));
-        return accessor<const raw_tree<T>>(tree_.value());
-    }
-
-    // NOTE: We can cast away the const from 'hint' because we have been given
-    // a reference to 'node'; 'hint' points to a node in the tree accessible
-    // from 'node'. This argument correctly applies to all places where
-    // reinterpret_cast is being used in this codebase.
-    accessor<raw_tree<T>> &pos =
-        *reinterpret_cast<accessor<raw_tree<T>> *>(&hint);
-
-    if (!pos) { pos = accessor<raw_tree<T>>(tree_.value()); }
-    for (; pos->has_parent() && tall(value, *pos); pos.up()) {}
-
-    // FIXME(ghochee): Insert called with non-root node might mess up the tree
-    // but maybe we are OK with that. This test can be deferred to if the node
-    // is getting inserted at a *periphery* i.e. at root or root-equal node. Or
-    // if the result of clipping is an empty tree.
-    if (!in_subtree(pos, value)) { pos = accessor<raw_tree<T>>(tree_.value()); }
-
-    if (auto vert_pos = upper_bound(value); vert_pos) {
-        pos = *reinterpret_cast<accessor<raw_tree<T>> *>(&vert_pos);
-        if (left(*pos, value)) {
-            if (!pos->template has_child<side::right>()) {
-                pos->template emplace<side::right>(std::forward<U>(value));
-                pos.template down<side::right>();
-                return pos;
-            }
-
-            if (left(value, *pos->template child<side::right>())) {
-                pos->template splice<side::right, side::right>(
-                    std::forward<U>(value));
-            } else {
-                pos->template splice<side::right, side::left>(
-                    std::forward<U>(value));
-            }
-            pos.template down<side::right>();
-        } else {
-            if (!pos->template has_child<side::left>()) {
-                pos->template emplace<side::left>(std::forward<U>(value));
-                pos.template down<side::left>();
-                return pos;
-            }
-
-            if (left(value, *pos->template child<side::left>())) {
-                pos->template splice<side::left, side::right>(
-                    std::forward<U>(value));
-            } else {
-                pos->template splice<side::left, side::left>(
-                    std::forward<U>(value));
-            }
-            pos.template down<side::left>();
-        }
-    } else {
-        raw_tree<T> node(std::forward<U>(value));
-        swap(node, pos.node());
-        if (left(*pos, *node)) {
-            pos->template replace<side::right>(std::move(node));
-        } else {
-            pos->template replace<side::left>(std::move(node));
-        }
-    }
-
-    // If the value we are inserting is equal to an existing value then we
-    // don't need to run `clip` to readjust nodes. This is because the
-    // left-right arrangement has already been settled for the existing `equal`
-    // node.
-    if (pos->template has_child<side::left>()) {
-        auto existing = pos;
-        existing.template down<side::left>();
-        if (equal(*pos, *existing)) {
-            if (existing->template has_child<side::right>()) {
-                pos->template replace<side::right>(
-                    existing->template detach<side::right>());
-            }
-
-            if (existing->template has_child<side::left>() &&
-                equal(*pos, *existing->template child<side::left>())) {
-                auto left_child = pos->template detach<side::left>();
-                auto left_gchild = left_child.template detach<side::left>();
-                if (left_gchild.template has_child<side::right>()) {
-                    left_child.template replace<side::right>(
-                        left_gchild.template detach<side::right>());
-                }
-                left_gchild.template replace<side::right>(
-                    std::move(left_child));
-                pos->template replace<side::left>(std::move(left_gchild));
-            }
-
-            return pos;
-        }
-    }
-
-    if (pos->template has_child<side::right>()) {
-        if (auto clipped =
-                clip<side::left>(pos->template child<side::right>(), *pos);
-            clipped) {
-            pos->template replace<side::left>(std::move(*clipped));
-        }
-    } else {
-        if (auto clipped =
-                clip<side::right>(pos->template child<side::left>(), *pos);
-            clipped) {
-            pos->template replace<side::right>(std::move(*clipped));
-        }
-    }
-
-    return pos;
+    return insert(raw_tree<T>(std::forward<U>(value)), hint);
 }
 
 template <typename T, typename H, typename L>
@@ -350,6 +242,121 @@ void predicated_tree<T, H, L>::stable_heap() {
             pos.down(*rotation_side);
         }
     }
+}
+
+template <typename T, typename H, typename L>
+accessor<const raw_tree<T>> predicated_tree<T, H, L>::insert(
+    raw_tree<T> &&node, accessor<const raw_tree<T>> hint) {
+    if (!tree_) {
+        tree_ = ::std::move(node);
+        return accessor<const raw_tree<T>>(tree_.value());
+    }
+
+    // NOTE: We can cast away the const from 'hint' because we have been given
+    // a reference to 'node'; 'hint' points to a node in the tree accessible
+    // from 'node'. This argument correctly applies to all places where
+    // reinterpret_cast is being used in this codebase.
+    accessor<raw_tree<T>> &pos =
+        *reinterpret_cast<accessor<raw_tree<T>> *>(&hint);
+
+    if (!pos) { pos = accessor<raw_tree<T>>(tree_.value()); }
+    for (; pos->has_parent() && tall(*node, *pos); pos.up()) {}
+
+    // FIXME(ghochee): Insert called with non-root node might mess up the tree
+    // but maybe we are OK with that. This test can be deferred to if the node
+    // is getting inserted at a *periphery* i.e. at root or root-equal node. Or
+    // if the result of clipping is an empty tree.
+    if (!in_subtree(pos, *node)) { pos = accessor<raw_tree<T>>(tree_.value()); }
+
+    if (auto vert_pos = upper_bound(*node); vert_pos) {
+        pos = *reinterpret_cast<accessor<raw_tree<T>> *>(&vert_pos);
+        if (left(*pos, *node)) {
+            if (!pos->template has_child<side::right>()) {
+                pos->template replace<side::right>(::std::move(node));
+                pos.template down<side::right>();
+                return pos;
+            }
+
+            if (left(*node, *pos->template child<side::right>())) {
+                node.template replace<side::right>(
+                    pos->template detach<side::right>());
+            } else {
+                node.template replace<side::left>(
+                    pos->template detach<side::right>());
+            }
+            pos->template replace<side::right>(::std::move(node));
+            pos.template down<side::right>();
+        } else {
+            if (!pos->template has_child<side::left>()) {
+                pos->template replace<side::left>(::std::move(node));
+                pos.template down<side::left>();
+                return pos;
+            }
+
+            if (left(*node, *pos->template child<side::left>())) {
+                node.template replace<side::right>(
+                    pos->template detach<side::left>());
+            } else {
+                node.template replace<side::left>(
+                    pos->template detach<side::left>());
+            }
+            pos->template replace<side::left>(::std::move(node));
+            pos.template down<side::left>();
+        }
+    } else {
+        swap(node, pos.node());
+        if (left(*pos, *node)) {
+            pos->template replace<side::right>(::std::move(node));
+        } else {
+            pos->template replace<side::left>(::std::move(node));
+        }
+    }
+
+    // If the value we are inserting is equal to an existing value then we
+    // don't need to run `clip` to readjust nodes. This is because the
+    // left-right arrangement has already been settled for the existing `equal`
+    // node.
+    if (pos->template has_child<side::left>()) {
+        auto existing = pos;
+        existing.template down<side::left>();
+        if (equal(*pos, *existing)) {
+            if (existing->template has_child<side::right>()) {
+                pos->template replace<side::right>(
+                    existing->template detach<side::right>());
+            }
+
+            if (existing->template has_child<side::left>() &&
+                equal(*pos, *existing->template child<side::left>())) {
+                auto left_child = pos->template detach<side::left>();
+                auto left_gchild = left_child.template detach<side::left>();
+                if (left_gchild.template has_child<side::right>()) {
+                    left_child.template replace<side::right>(
+                        left_gchild.template detach<side::right>());
+                }
+                left_gchild.template replace<side::right>(
+                    std::move(left_child));
+                pos->template replace<side::left>(std::move(left_gchild));
+            }
+
+            return pos;
+        }
+    }
+
+    if (pos->template has_child<side::right>()) {
+        if (auto clipped =
+                clip<side::left>(pos->template child<side::right>(), *pos);
+            clipped) {
+            pos->template replace<side::left>(std::move(*clipped));
+        }
+    } else {
+        if (auto clipped =
+                clip<side::right>(pos->template child<side::left>(), *pos);
+            clipped) {
+            pos->template replace<side::right>(std::move(*clipped));
+        }
+    }
+
+    return pos;
 }
 
 template <typename T, typename H, typename L>
