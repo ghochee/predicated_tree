@@ -217,8 +217,8 @@ class predicated_tree {
     /// @tparam HIn which is the height predicate of the incoming tree.
     /// @tparam LIn which is the left predicate of the incoming tree.
     template <class HIn, class LIn>
-    predicated_tree(predicated_tree<T, HIn, LIn> &&ptree, const H = H(),
-                    const L = L());
+    explicit predicated_tree(predicated_tree<T, HIn, LIn> &&ptree,
+                             const H = H(), const L = L());
 
     // The following two methods are equivalent to the following:
     // - Disregard the height property of 'value'.
