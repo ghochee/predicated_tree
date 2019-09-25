@@ -14,10 +14,12 @@ template <typename HIn>
 predicated_tree<T, H, L>::predicated_tree(predicated_tree<T, HIn, L> &&ptree,
                                           const H t, const L l)
     : tree_(ptree.release()), tall(t), left(l) {
-    // TODO(ghochee): If `H` is indifferent, then we don't need to do anything
-    // since everything is height equal anyway but we need to handle equal
-    // nodes even in that case so we should sort out the strategy for that.
-    //
+    // TODO(ghochee): If `H` is indifferent, we need to handle equal nodes even
+    // in that case so we should sort out the strategy for that.
+    if constexpr (::std::is_same<H, indifferent<T>>::value) {
+        return;
+    }
+
     // Do a postorder traversal and re-heap the top element of the subtree.
     // Reheap involves using rotate which doesn't affect the inorder sequence
     // (preserves left-ness).
