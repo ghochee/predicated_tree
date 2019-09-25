@@ -205,13 +205,19 @@ class predicated_tree {
     /// well behaved (under the predicates) `raw_tree`.
     predicated_tree(raw_tree<T> &&tree, const H = H(), const L = L());
 
-    /// Overload which accepts `predicated_tree`s differing only in the
-    /// `Height` predicate. This constructor modifies the incoming tree by
+    /// Overload which accepts `predicated_tree`s.
+    ///
+    /// This conversion constructor would restructure the underlying tree of the
+    /// incoming predicated_tree to match the new predicates.
+    ///
+    /// For example if the incoming and this predicated_tree differ only in the
+    /// `Height` predicates, then this constructor modifies the incoming tree by
     /// *re-heaping* the nodes according the `H`.
     ///
     /// @tparam HIn which is the height predicate of the incoming tree.
-    template <class HIn>
-    predicated_tree(predicated_tree<T, HIn, L> &&ptree, const H = H(),
+    /// @tparam LIn which is the left predicate of the incoming tree.
+    template <class HIn, class LIn>
+    predicated_tree(predicated_tree<T, HIn, LIn> &&ptree, const H = H(),
                     const L = L());
 
     // The following two methods are equivalent to the following:
@@ -295,6 +301,30 @@ class predicated_tree {
     raw_tree<T> release();
 
   private:
+    // Re-sort all the elements in the tree.
+    //
+    // This method is normally used in constructors to do a re-heap of an
+    // incoming tree.
+    //
+    // NOTE: Unlike stable_heap which doesn't destroy heap order, this method
+    // *may* destroy heap order.
+    //
+    // Complexity:
+    //   O(N) if tree is already heaped correctly.
+    //   O(N * lg(N)) otherwise.
+    void sort();
+
+    // Re-heap all the elements in the tree while maintaining sort order
+    // (stable for L predicate).
+    //
+    // This method is normally used in constructors to do a re-heap of an
+    // incoming tree.
+    //
+    // Complexity:
+    //   O(N) if tree is already heaped correctly.
+    //   O(N * lg(N)) otherwise.
+    void stable_heap();
+
     /// Returns true iff `value` is supposed to lie in the subtree rooted at
     /// `pos`. This is always true if `pos` points to a root node. In other
     /// cases we check the ancestral values of `pos` to see the range of values

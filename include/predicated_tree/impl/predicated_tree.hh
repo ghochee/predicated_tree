@@ -10,42 +10,25 @@ predicated_tree<T, H, L>::predicated_tree(raw_tree<T> &&tree, const H t,
     : tree_(std::move(tree)), tall(t), left(l) {}
 
 template <typename T, typename H, typename L>
-template <typename HIn>
-predicated_tree<T, H, L>::predicated_tree(predicated_tree<T, HIn, L> &&ptree,
+template <typename HIn, typename LIn>
+predicated_tree<T, H, L>::predicated_tree(predicated_tree<T, HIn, LIn> &&ptree,
                                           const H t, const L l)
     : tree_(ptree.release()), tall(t), left(l) {
-    // TODO(ghochee): If `H` is indifferent, we need to handle equal nodes even
-    // in that case so we should sort out the strategy for that.
-    if constexpr (::std::is_same<H, indifferent<T>>::value) {
-        return;
+    // TODO(ghochee): If `H` (or `L`) is indifferent, we need to handle (i.e.
+    // squash) equal nodes so that we can use the `lower_bound` and
+    // `upper_bound` methods correctly.
+
+    // When the incoming predicates are not equal we must sort *and* it has to
+    // be done first because the partial heap-order can't be maintained while
+    // the sort order is being corrected.
+    if constexpr (!::std::is_same<L, LIn>::value &&
+                  !::std::is_same<L, indifferent<T>>::value) {
+        sort();
     }
 
-    // Do a postorder traversal and re-heap the top element of the subtree.
-    // Reheap involves using rotate which doesn't affect the inorder sequence
-    // (preserves left-ness).
-    for (auto it = tree_->template begin<traversal_order::post, side::left>();
-         it != tree_->template end<traversal_order::post, side::left>(); ++it) {
-        for (auto pos = it;;) {
-            // Determine a side of rotation (left or right), dependending on
-            // presence and height-relation with children and then rotate.
-            std::optional<side> rotation_side;
-            if (pos->template has_child<side::left>() &&
-                tall(*pos->template child<side::left>(), *pos)) {
-                rotation_side.emplace(side::right);
-            }
-
-            if (pos->template has_child<side::right>() &&
-                tall(*pos->template child<side::right>(),
-                  rotation_side.has_value() ? *pos->template child<side::left>()
-                                            : *pos)) {
-                rotation_side.emplace(side::left);
-            }
-
-            if (!rotation_side.has_value()) { break; }
-
-            pos->rotate(*rotation_side);
-            pos.down(*rotation_side);
-        }
+    if constexpr (!::std::is_same<H, HIn>::value &&
+                  !::std::is_same<H, indifferent<T>>::value) {
+        stable_heap();
     }
 }
 
@@ -318,6 +301,55 @@ raw_tree<T> predicated_tree<T, H, L>::release() {
     auto detached = std::move(tree_.value());
     tree_.reset();
     return std::move(detached);
+}
+
+template <typename T, typename H, typename L>
+void predicated_tree<T, H, L>::sort() {
+    // TODO(ghochee): A better sort algorithm would have the following
+    // properties:
+    // - If `tree_` is already sorted should be O(N)
+    // - *Minimum* distortion of current heap-order to ensure that we only
+    //   incur re-heap costs where essential.
+    if (!tree_) { return; }
+    auto tree = release();
+
+    for (auto it = tree.postlbegin(), jt = ::std::next(tree.postlbegin());
+         jt != tree.postlend(); it = jt, ++jt) {
+        insert(it->parent().detach(it->get_side()), accessor<raw_tree<T>>());
+    }
+    insert(::std::move(tree), accessor<raw_tree<T>>());
+}
+
+template <typename T, typename H, typename L>
+void predicated_tree<T, H, L>::stable_heap() {
+    // Do a postorder traversal and re-heap the top element of the subtree.
+    // Reheap involves using rotate which doesn't affect the inorder sequence
+    // (preserves left-ness).
+    for (auto it = tree_->template begin<traversal_order::post, side::left>();
+         it != tree_->template end<traversal_order::post, side::left>(); ++it) {
+        for (auto pos = it;;) {
+            // Determine a side of rotation (left or right), dependending on
+            // presence and height-relation with children and then rotate.
+            std::optional<side> rotation_side;
+            if (pos->template has_child<side::left>() &&
+                tall(*pos->template child<side::left>(), *pos)) {
+                rotation_side.emplace(side::right);
+            }
+
+            if (pos->template has_child<side::right>() &&
+                tall(*pos->template child<side::right>(),
+                     rotation_side.has_value()
+                         ? *pos->template child<side::left>()
+                         : *pos)) {
+                rotation_side.emplace(side::left);
+            }
+
+            if (!rotation_side.has_value()) { break; }
+
+            pos->rotate(*rotation_side);
+            pos.down(*rotation_side);
+        }
+    }
 }
 
 template <typename T, typename H, typename L>
