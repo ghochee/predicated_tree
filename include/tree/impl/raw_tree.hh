@@ -121,8 +121,8 @@ bool raw_tree<T>::is_side() const {
 }
 
 template <typename T>
-bool raw_tree<T>::is_side(side wing) const {
-    SWITCH_ON_SIDE(is_side);
+side raw_tree<T>::get_side() const {
+    return this->template is_side<side::left>() ? side::left : side::right;
 }
 
 template <typename T>

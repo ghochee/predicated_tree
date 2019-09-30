@@ -256,7 +256,9 @@ class raw_tree {
     /// `false` for *root* node.
     template <side wing>
     bool is_side() const;
-    bool is_side(side wing) const;
+
+    /// @returns the side that this node is on, undefined if we are *root*.
+    side get_side() const;
 
     /// @returns true iff *wing*-sided child is present.
     template <side wing>

@@ -245,11 +245,7 @@ void predicated_tree<T, H, L>::erase(accessor<const raw_tree<T>> const_pos) {
         return;
     }
 
-    if (pos->template is_side<side::left>()) {
-        pos->parent().template detach<side::left>();
-    } else {
-        pos->parent().template detach<side::right>();
-    }
+    pos->parent().detach(pos->get_side());
 }
 
 template <typename T, typename H, typename L>
