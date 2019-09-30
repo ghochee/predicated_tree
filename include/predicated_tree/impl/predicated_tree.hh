@@ -169,6 +169,19 @@ void predicated_tree<T, H, L>::clear() {
 }
 
 template <typename T, typename H, typename L>
+template <side wing, typename>
+void predicated_tree<T, H, L>::rotate(accessor<const raw_tree<T>> pos) {
+    (*reinterpret_cast<accessor<raw_tree<T>> *>(&pos))->template rotate<wing>();
+}
+
+template <typename T, typename H, typename L>
+template <typename>
+void predicated_tree<T, H, L>::rotate(accessor<const raw_tree<T>> pos,
+                                      side wing) {
+    (*reinterpret_cast<accessor<raw_tree<T>> *>(&pos))->rotate(wing);
+}
+
+template <typename T, typename H, typename L>
 predicated_tree<T, H, L>::operator bool() const {
     return tree_.has_value();
 }

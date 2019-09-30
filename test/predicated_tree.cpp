@@ -93,3 +93,20 @@ TEMPLATE_PRODUCT_TEST_CASE("convert", "[convert]", (::std::pair),
     auto tree = converted.release();
     CHECK(is_heap(accessor<raw_tree<uint32_t>>(tree), converted.tall));
 }
+
+TEST_CASE("indifferent_heap_rotate", "[indifferent_heap, rotate]") {
+    predicated_tree ptree{indifferent<uint32_t>()};
+
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(100, 1000000);
+    for (uint32_t i = 0; i < 100000; ++i) { ptree.insert(dist(rng)); }
+
+    CHECK(std::is_sorted(ptree->inlbegin(), ptree->inlend(), ptree.left));
+    auto it = ptree->prelbegin();
+    for (uint32_t num_rotations = 0;
+         it != ptree->prelend() && num_rotations < 5; ++it, ++num_rotations) {
+        ptree.rotate(it, (num_rotations % 3) ? side::left : side::right);
+    }
+    CHECK(std::is_sorted(ptree->inlbegin(), ptree->inlend(), ptree.left));
+}

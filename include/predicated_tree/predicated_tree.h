@@ -285,6 +285,28 @@ class predicated_tree {
     // Removes all values from the tree.
     void clear();
 
+    // clang-format off
+
+    /// Performs *wing*-side rotation by forwarding the call to
+    /// `raw_tree::rotate`. This method is only available on the interface if
+    /// `H` is `indifferent`.
+    ///
+    /// TODO(ghochee): This should perhaps be done via enabling / disabling
+    /// through the `raw_tree` interface. It's a bit tricky since the interface
+    /// would then need to work through typecasting but also because the
+    /// underlying storage has multiple composable units.
+    ///
+    /// @param pos is the position at which rotateion is done.
+    template <side wing,
+              typename = ::std::enable_if<
+                  ::std::is_same<H, indifferent<T>>::value>>
+    void rotate(accessor<const raw_tree<T>> pos);
+    template <typename = ::std::enable_if<
+                  ::std::is_same<H, indifferent<T>>::value>>
+    void rotate(accessor<const raw_tree<T>> pos, side wing);
+
+    // clang-format on
+
     // Returns true iff tree has nodes.
     explicit operator bool() const;
 
