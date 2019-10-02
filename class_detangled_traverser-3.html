@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>template class detangled::traverser&lt;A, traversal_order::in, wing&gt; &mdash; Predicated Tree 0.2.0-alpha documentation</title>
+  <title>template class detangled::traverser&lt;A, traversal_order::post, wing&gt; &mdash; Predicated Tree 0.2.1-alpha documentation</title>
   
 
   
@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="template class detangled::traverser" href="class_detangled_traverser-4.html" />
-    <link rel="prev" title="template class detangled::traverser&lt;A, traversal_order::post, wing&gt;" href="class_detangled_traverser-2.html" /> 
+    <link rel="prev" title="template class detangled::traverser&lt;A, traversal_order::in, wing&gt;" href="class_detangled_traverser-2.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,6 +88,10 @@
 <li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
+</ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="namespace_detangled.html">namespace detangled</a><ul class="current">
@@ -99,13 +103,12 @@
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_taller.html">template struct detangled::taller</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_wrapper.html">template struct detangled::wrapper</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_gardener-2.html">template class detangled::gardener&lt;T, HIn, L, HOut, L&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_has_less.html">template class detangled::has_less</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_has_taller.html">template class detangled::has_taller</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_iterator.html">template class detangled::iterator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a><ul class="simple">
+<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
@@ -167,7 +170,7 @@
         
           <li><a href="namespace_detangled.html">namespace detangled</a> &raquo;</li>
         
-      <li>template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</li>
+      <li>template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -186,25 +189,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="template-class-detangled-traverser-a-traversal-order-in-wing">
-<span id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1in-00-01wing-01-4"></span><span id="index-0"></span><h1>template class detangled::traverser&lt;A, traversal_order::in, wing&gt;<a class="headerlink" href="#template-class-detangled-traverser-a-traversal-order-in-wing" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="template-class-detangled-traverser-a-traversal-order-post-wing">
+<span id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4"></span><span id="index-0"></span><h1>template class detangled::traverser&lt;A, traversal_order::post, wing&gt;<a class="headerlink" href="#template-class-detangled-traverser-a-traversal-order-post-wing" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 <pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;traverser.hh&gt;</span><span class="cp"></span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">A</span><span class="p">,</span> <span class="n">side</span> <span class="n">wing</span><span class="o">&gt;</span>
-<span class="k">class</span> <span class="nc">traverser</span><span class="o">&lt;</span><span class="n">A</span><span class="p">,</span> <span class="n">traversal_order</span><span class="o">::</span><span class="n">in</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">class</span> <span class="nc">traverser</span><span class="o">&lt;</span><span class="n">A</span><span class="p">,</span> <span class="n">traversal_order</span><span class="o">::</span><span class="n">post</span><span class="p">,</span> <span class="n">wing</span><span class="o">&gt;</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="c1">// methods</span>
 
     <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Container</span><span class="o">&gt;</span>
     <span class="k">static</span>
     <span class="n">A</span>
-    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1in-00-01wing-01-4-1affd87538f0c6810ffb18ee86f85b03b6">begin</span><span></span><span class="p">(</span><span class="n">Container</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4-1ae7a71c04b1b291adef9b05de49f1e761">begin</span><span></span><span class="p">(</span><span class="n">Container</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">);</span>
 
     <span class="k">static</span>
     <span class="kt">void</span>
-    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1in-00-01wing-01-4-1a0a63e8f130e0325a44287156b917a8af">next</span><span></span><span class="p">(</span><span class="n">A</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span>
+    <span class="doxyrest-code-target target" id="doxid-classdetangled-1-1traverser-3-01-a-00-01traversal-order-1-1post-00-01wing-01-4-1a170dd8fa06934916ddb5279655761069">next</span><span></span><span class="p">(</span><span class="n">A</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">);</span>
 <span class="p">};</span></pre>
 </div>
 
@@ -219,7 +222,7 @@
         <a href="class_detangled_traverser-4.html" class="btn btn-neutral float-right" title="template class detangled::traverser" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="class_detangled_traverser-2.html" class="btn btn-neutral float-left" title="template class detangled::traverser&lt;A, traversal_order::post, wing&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="class_detangled_traverser-2.html" class="btn btn-neutral float-left" title="template class detangled::traverser&lt;A, traversal_order::in, wing&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

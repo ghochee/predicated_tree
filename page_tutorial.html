@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>template struct detangled::stable_random &mdash; Predicated Tree 0.2.1-alpha documentation</title>
+  <title>Tutorial &mdash; Predicated Tree 0.2.1-alpha documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="page_installation.html" />
-    <link rel="prev" title="template struct detangled::indifferent" href="struct_detangled_indifferent.html" /> 
+    <link rel="next" title="Global Namespace" href="global.html" />
+    <link rel="prev" title="Installation" href="page_installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,22 +83,14 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="group_predicates.html">Predicates</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="struct_detangled_indifferent.html">template struct detangled::indifferent</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">template struct detangled::stable_random</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="group_predicates.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="group_predicates.html#detailed-documentation">Detailed Documentation</a></li>
-</ul>
-</li>
-</ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="global.html">Global Namespace</a></li>
@@ -147,15 +139,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="group_predicates.html">Predicates</a> &raquo;</li>
-        
-      <li>template struct detangled::stable_random</li>
+      <li>Tutorial</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/struct_detangled_stable_random.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/page_tutorial.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -168,20 +158,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="template-struct-detangled-stable-random">
-<span id="doxid-structdetangled-1-1stable-random"></span><span id="index-0"></span><h1>template struct detangled::stable_random<a class="headerlink" href="#template-struct-detangled-stable-random" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-<p>Returns a random ordering but one which follows SWO principles.</p>
-<pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="cp">#include</span> <span class="cpf">&lt;predicates.h&gt;</span><span class="cp"></span>
+  <div class="section" id="tutorial">
+<span id="doxid-tutorial"></span><span id="index-0"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>After correct <a class="reference internal" href="page_installation.html#doxid-installation"><span class="std std-ref">Installation</span></a> you can use the headers in the source file. Client code has to be compiled with <code class="docutils literal notranslate"><span class="pre">--std=c++17</span></code></p>
+<pre class="highlight literal-block"><span></span><span class="cp">#incluee &quot;tree.h&quot;</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="n">stable_random</span> <span class="p">{</span>
-    <span class="c1">// methods</span>
+<span class="n">raw_tree</span> <span class="nf">tree</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">30</span><span class="p">);</span>
+<span class="n">accessor</span><span class="o">&lt;</span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;&gt;</span> <span class="n">pos</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
 
-    <span class="kt">bool</span>
-    <span class="doxyrest-code-target target" id="doxid-structdetangled-1-1stable-random-1a01888d8b77d0137b6679f45c593e2aa4">operator()</span><span></span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">right</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<span class="p">};</span></pre>
+<span class="k">for</span> <span class="p">(...)</span> <span class="p">{</span>
+  <span class="kt">uint32_t</span> <span class="n">value</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">();</span>
+  <a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span> <span class="o">=</span> <span class="n">determineSideToInsert</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+  <span class="p">...</span>
+  <span class="n">pos</span><span class="o">-&gt;</span><span class="n">emplace</span><span class="p">(</span><span class="n">wing</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+  <span class="n">pos</span><span class="o">-&gt;</span><span class="n">rotate</span><span class="p">(</span><span class="o">!</span><span class="n">wing</span><span class="p">);</span>
+  <span class="n">pos</span><span class="p">.</span><span class="n">down</span><span class="p">(</span><span class="o">!</span><span class="n">wing</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">inlbegin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">tree</span><span class="p">.</span><span class="n">inlend</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">...</span></pre>
+<p>See <code class="docutils literal notranslate"><span class="pre">test/predicated_tree.cpp</span></code> for example on how to build and use <code class="docutils literal notranslate"><span class="pre">predicated_tree</span></code>.</p>
 </div>
 
 
@@ -192,10 +194,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="page_installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="global.html" class="btn btn-neutral float-right" title="Global Namespace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="struct_detangled_indifferent.html" class="btn btn-neutral float-left" title="template struct detangled::indifferent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="page_installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

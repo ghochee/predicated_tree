@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Predicated Trees &mdash; Predicated Tree 0.2.0-alpha documentation</title>
+  <title>Predicated Trees &mdash; Predicated Tree 0.2.1-alpha documentation</title>
   
 
   
@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="template class detangled::gardener" href="class_detangled_gardener.html" />
+    <link rel="next" title="template class detangled::heap_iterator" href="class_detangled_heap_iterator.html" />
     <link rel="prev" title="template class detangled::virtual_accessor" href="class_detangled_virtual_accessor.html" /> 
 </head>
 
@@ -86,12 +86,15 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Predicated Trees</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="class_detangled_gardener.html">template class detangled::gardener</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_heap_iterator.html">template class detangled::heap_iterator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="global.html">Global Namespace</a></li>
@@ -165,12 +168,9 @@
 </div>
 <p>On top of standard trees we add the notion of <em>predicates</em>. This container makes ordering guarantees under these predicates. This would be analogous to giving a predicate to a <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> to make it a <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> where the <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> makes ordering guarantees under the predicate.</p>
 <p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">detangled::predicated_tree</span></span></a></code> s effect this notion by allowing clients to build containers which would maintain upto two predicates. The first predicate is linked to the tree in a <em>heap tree</em> -like fashion and the second predicate is linked to the tree in a <em>binary search tree</em> -like arrangement.</p>
-<p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_gardener.html#doxid-classdetangled-1-1gardener"><span class="std std-ref"><span class="pre">detangled::gardener</span></span></a></code> is used to transform from one <em>type</em> of tree to another <em>type</em> of tree. For example a tree built with predicates <code class="docutils literal notranslate"><span class="pre">H0</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> is transformed to a tree with predicates <code class="docutils literal notranslate"><span class="pre">H1</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> using a simpler operation than necessary when constructing a completely different tree. This template class allows transformations by exploiting relations between <em>predicates</em>.</p>
+<p>Conversion constructors are used for converting from one type to another. For example a tree built with predicates <code class="docutils literal notranslate"><span class="pre">H0</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> is transformed to a tree with predicates <code class="docutils literal notranslate"><span class="pre">H1</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> using a simpler operation than necessary when constructing a completely different tree. This templated constructor allows transformations by exploiting relations between <em>predicates</em>.</p>
 <p>This group contains assets which are used for building and using such trees compounded with predicates.</p>
 <pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="c1">// classes</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HIn</span><span class="p">,</span> <span class="k">typename</span> <span class="n">LIn</span><span class="p">,</span> <span class="k">typename</span> <span class="n">HOut</span><span class="p">,</span> <span class="k">typename</span> <span class="n">LOut</span><span class="o">&gt;</span>
-<span class="k">class</span> <a class="reference internal" href="class_detangled_gardener.html#doxid-classdetangled-1-1gardener"><span class="std std-ref">detangled::gardener</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">PTree</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_heap_iterator.html#doxid-classdetangled-1-1heap-iterator"><span class="std std-ref">detangled::heap_iterator</span></a><span></span><span class="p">;</span>
@@ -187,7 +187,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_detangled_gardener.html" class="btn btn-neutral float-right" title="template class detangled::gardener" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="class_detangled_heap_iterator.html" class="btn btn-neutral float-right" title="template class detangled::heap_iterator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="class_detangled_virtual_accessor.html" class="btn btn-neutral float-left" title="template class detangled::virtual_accessor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
