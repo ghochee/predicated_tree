@@ -68,7 +68,7 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[insert]", (::std::pair),
     }
 
     vector<uint32_t> values;
-    std::copy(heap_iterator<decltype(p)>(p), heap_iterator<decltype(p)>(),
+    std::copy(heap_iterator(p), heap_iterator_end(p),
               std::back_inserter(values));
     CHECK(std::is_sorted(values.begin(), values.end(), p.tall));
 }

@@ -23,7 +23,7 @@ namespace detangled {
 /// predicated_tree<uint32_t, ...> p;
 /// insert_values_in_tree(p);
 ///
-/// std::copy(heap_iterator<decltype(p)>(p), heap_iterator<decltype(p)>(),
+/// std::copy(heap_iterator(p), heap_iterator_end(p),
 ///           ::std::ostream_iterator<uint32_t>(::std::cout, ", "));
 /// ```
 ///
@@ -56,6 +56,15 @@ class heap_iterator : public ::std::iterator<std::input_iterator_tag,
   private:
     PTree *ptree_ = nullptr;
 };
+
+/// A helper function to create the heap end iterator.
+///
+/// NOTE: We don't really need or use the function argument except for type
+/// deduction.
+template <class PTree>
+heap_iterator<PTree> heap_iterator_end(PTree &) {
+    return heap_iterator<PTree>();
+}
 
 /// @}
 
