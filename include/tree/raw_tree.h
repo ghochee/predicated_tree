@@ -6,35 +6,10 @@
 #include <type_traits>
 #include <utility>
 
+#include "enums.h"
+#include "iterator.h"
+
 namespace detangled {
-
-/// traversal_order is an enum listing supported traversal orders.
-///
-/// For example we have `traversal_order::pre` (which is preorder traversal).
-enum class traversal_order : uint8_t { pre, in, post };
-
-/// Returns a `traversal_order` that complements `order`. Complementarity is
-/// fully decided by `side` as well, but this function does the
-/// `traversal_order` part of things.
-///
-/// `Complementary (order, wing) == (~order, !wing)`
-///
-/// - ~in == in
-/// - ~pre == post
-/// - ~post == pre
-///
-/// @see `operator!(const side wing)`
-constexpr traversal_order operator~(const traversal_order order);
-
-/// side enum lists the side (left or right) we refer to at code sites.
-///
-/// @note The values are specified here because they may be used in array
-/// listing and indexing.
-enum class side : uint8_t { left = 0, right = 1 };
-constexpr side operator!(const side wing);
-
-template <class ContainerType, traversal_order, side>
-class iterator;
 
 /// @addtogroup basic Basic Trees
 ///

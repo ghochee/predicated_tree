@@ -1,44 +1,6 @@
+#include "tree/accessor.h"
+
 namespace detangled {
-
-constexpr side operator!(const side wing) {
-    if (wing == side::left) {
-        return side::right;
-    } else {
-        return side::left;
-    }
-}
-
-constexpr traversal_order operator~(const traversal_order order) {
-    if (order == traversal_order::pre) {
-        return traversal_order::post;
-    } else if (order == traversal_order::in) {
-        return traversal_order::in;
-    } else {
-        return traversal_order::pre;
-    }
-}
-
-// There are a large number of wrapper functions of the following type
-//     returnType functionName(side wing, args...);
-//
-// which have analogous
-//     template <side wing>
-//     returnType function(args...);
-//
-// templated functions. The definition of such wrapper functions is as seen for
-// the SWITCH_ON_SIDE macro. Basically it involves looking at the wing argument
-// and choosing to call a specific template version (side == left or right).
-// This macro does this and makes is more reliable to define the wrapper
-// functions with much lower probability of errors creeping in.
-//
-// TODO(ghochee): Try to template instantiate the entire definition or MACRO
-// define the whole function instead of just the body.
-#define SWITCH_ON_SIDE(function_name, ...)              \
-    if (wing == side::left) {                           \
-        return function_name<side::left>(__VA_ARGS__);  \
-    } else {                                            \
-        return function_name<side::right>(__VA_ARGS__); \
-    }
 
 // The following code for compaction when accessing array indices (children_).
 // NOTE: https://stackoverflow.com/questions/8357240

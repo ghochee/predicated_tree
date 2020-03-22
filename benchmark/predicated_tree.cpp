@@ -1,7 +1,7 @@
 #include <benchmark/benchmark.h>
 #include <iostream>
 
-#include "tree.h"
+#include "predicated_tree/predicated_tree.h"
 #include "predicated_tree/util/predicates.h"
 
 #include <random>

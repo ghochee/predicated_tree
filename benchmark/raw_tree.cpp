@@ -1,6 +1,6 @@
 #include <benchmark/benchmark.h>
 
-#include "tree.h"
+#include "tree/raw_tree.h"
 
 using namespace detangled;
 

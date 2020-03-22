@@ -1,4 +1,4 @@
-#include "tree.h"
+#include "tree/raw_tree.h"
 
 // NOTE: This is fine because this header is used only in a test file and only
 // because the various template instantiations had to be DRYed.

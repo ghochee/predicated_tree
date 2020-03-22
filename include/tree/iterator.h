@@ -2,6 +2,8 @@
 #define TREE_ITERATOR_H
 
 #include "accessor.h"
+#include "enums.h"
+#include "virtual_accessor.h"
 
 namespace detangled {
 

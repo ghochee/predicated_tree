@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <type_traits>
 
+#include "enums.h"
+
 namespace detangled {
 
 /// @addtogroup basic

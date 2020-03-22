@@ -1,6 +1,8 @@
 #ifndef TREE_TRAVERSER_H
 #define TREE_TRAVERSER_H
 
+#include "enums.h"
+
 namespace detangled {
 
 /// traverser implements a single static method 'next'.

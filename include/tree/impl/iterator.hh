@@ -1,3 +1,5 @@
+#include "tree/traverser.h"
+
 namespace detangled {
 
 template <class C, traversal_order order, side wing>

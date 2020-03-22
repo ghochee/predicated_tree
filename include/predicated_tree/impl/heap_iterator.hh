@@ -1,3 +1,6 @@
+#include "tree/accessor.h"
+#include "tree/raw_tree.h"
+
 namespace detangled {
 
 template <class PTree>

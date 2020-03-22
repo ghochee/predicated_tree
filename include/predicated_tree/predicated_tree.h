@@ -4,6 +4,9 @@
 #include <functional>
 #include <optional>
 
+#include "tree/enums.h"
+#include "tree/raw_tree.h"
+
 #include "util/predicates.h"
 #include "util/type_traits.h"
 

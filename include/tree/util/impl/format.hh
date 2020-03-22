@@ -2,6 +2,8 @@
 #include <sstream>
 #include <vector>
 
+#include "tree/enums.h"
+
 namespace detangled {
 
 template <typename Tree>

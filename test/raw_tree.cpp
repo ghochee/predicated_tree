@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include "tree.h"
-
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
 
@@ -9,6 +7,8 @@
 #include <functional>
 #include <iterator>
 #include <vector>
+
+#include "tree/raw_tree.h"
 
 #include "raw_tree.h"
 

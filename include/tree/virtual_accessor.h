@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+#include "enums.h"
+
 namespace detangled {
 
 /// @addtogroup basic

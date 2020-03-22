@@ -1,7 +1,8 @@
-#include "tree.h"
 #include "predicated_tree/algorithm.h"
 #include "predicated_tree/heap_iterator.h"
+#include "predicated_tree/predicated_tree.h"
 #include "predicated_tree/util/predicates.h"
+#include "tree/accessor.h"
 
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
