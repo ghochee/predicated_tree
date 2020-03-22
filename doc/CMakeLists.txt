@@ -14,6 +14,8 @@ set(DOCUMENTATION_OVERVIEW_PAGE
     ${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md)
 set(DOCUMENTATION_INSTALLATION_PAGE
     ${CMAKE_CURRENT_SOURCE_DIR}/installation.md)
+set(DOCUMENTATION_SPECIAL_PAGE
+    ${CMAKE_CURRENT_SOURCE_DIR}/special.md)
 set(DOCUMENTATION_TUTORIAL_PAGE
     ${CMAKE_CURRENT_SOURCE_DIR}/tutorial.md)
 
@@ -44,6 +46,7 @@ doxygen_add_docs(doxygen_docs
     ${CMAKE_SOURCE_DIR}/include
     ${DOCUMENTATION_OVERVIEW_PAGE}
     ${DOCUMENTATION_INSTALLATION_PAGE}
+    ${DOCUMENTATION_SPECIAL_PAGE}
     ${DOCUMENTATION_TUTORIAL_PAGE}
     COMMENT "Generating API documentation with doxygen")
 
@@ -58,7 +61,7 @@ add_custom_target(doxyrest_docs
 # environment variable. Setting environment variable directly here (via
 # set(ENV{...} ...)) does not work because cmake environment is not passed to
 # subshell. More information in wrapper.sh.
-add_custom_target(docs
+add_custom_target(docs ALL
     ${CMAKE_CURRENT_BINARY_DIR}/wrapper.sh 
     ${DOXYREST_ROOT}/sphinx 
     ${SPHINX_EXECUTABLE}

@@ -9,7 +9,7 @@
 
 namespace detangled {
 
-/// @addtogroup predicated Predicated Trees
+/// @addtogroup predicated Predicated Trees (Cartesian Trees)
 ///
 /// On top of standard trees we add the notion of *predicates*. This container
 /// makes ordering guarantees under these predicates. This would be analogous
@@ -28,6 +28,15 @@ namespace detangled {
 /// when constructing a completely different tree.  This templated constructor
 /// allows transformations by exploiting relations between *predicates*.
 ///
+/// The conventional name for this data structure is [Cartesian
+/// Trees](https://en.wikipedia.org/wiki/Cartesian_tree). While functionally
+/// equivalent there is a very slightly different approach in this container.
+/// Cartesian trees are binary trees over a sequence of values where the values
+/// are used in heap-ordering. Predicated trees put the predicates of ordering
+/// and heaping at primacy. Another reason for the new name is that Predicated
+/// Trees is the name under which this was developed when the author did not
+/// know about Cartesian Trees :-/.
+///
 /// This group contains assets which are used for building and using such trees
 /// compounded with predicates.
 /// @{
@@ -36,27 +45,18 @@ namespace detangled {
 /// specified predicates.
 ///
 /// They are containers built on top of standard trees (e.g.
-/// `detangled::raw_tree`). They support all operations that a raw_tree would.
+/// `detangled::raw_tree`). They support all non-mutating operations that a
+/// raw_tree would.
 ///
-/// # Essence of Predicated Tree
+/// # Essence of Predicated Tree Container
 ///
 /// The *relation* between a raw_tree and a predicated_tree is analogous to the
-/// *relation* between a `std::vector` and an `std::multiset`. This the easiest
-/// way to *grok* the essence of predicated_tree. This can be repeated to
-/// emphasize.
-///
-/// @verbatim
-/// The relation between a raw_tree and a predicated_tree is analogous to the
-/// relation between a std::vector and a std::multiset.
-/// @endverbatim
-///
-/// A `std::multiset` would take a predicate (SWO) and maintain inserted
-/// elements under the ordering of the predicate.
-///
-/// A `predicated_tree` would take (upto) two (possibly orthogonal) predicates.
-/// One predicate (`H`) is maintained as a *heap*-like partial ordering. The
-/// second property (`L`) is maintained as a left-right (in-order traversal)
-/// property. More specifically:
+/// *relation* between a `std::vector` and an `std::multiset`. A
+/// `std::multiset` would take a predicate (SWO) and maintain inserted elements
+/// under the ordering of the predicate. A `predicated_tree` would take (upto)
+/// two (possibly orthogonal) predicates. One predicate (`H`) is maintained as
+/// a *heap*-like partial ordering. The second predicate (`L`) is maintained as
+/// a left-right (in-order traversal) property. More specifically:
 /// - inorder traversal of the tree gives values increasing in `L` predicate.
 /// - max-heap-like property is maintained over the `H` predicate.
 ///
@@ -77,39 +77,6 @@ namespace detangled {
 ///
 /// TODO(ghochee): Simple working code example.
 ///
-/// # Special cases
-///
-/// The following special cases exist for the behaviour of the trees depending
-/// on the specified predicates. These special cases are *special* only in the
-/// sense of understanding. Available operations and behaviour of the tree
-/// container objects remains the same.
-///
-/// ## Indifferent Predicates
-///
-/// [indifferent](@ref indifferent) predicates would return false for all
-/// comparisons (i.e. not affect ordering in any way). Depending on where
-/// client code specifies indifferent predicate we have different behaviours of
-/// the predicated_tree.
-///
-/// | Height Indifferent | Left Indifferent | Result             |
-/// |--------------------|------------------|--------------------|
-/// |  No                |  No              | Predicated Tree    |
-/// |  No                |  Yes             | Max heap           |
-/// |  Yes               |  No              | Binary search tree |
-/// |  Yes               |  Yes             | Simple tree        |
-///
-/// If viewed in the above sense, the dual predicate tree seems like a
-/// subsumation of the properties of heaps and binary search trees. It is
-/// however a little more powerful in that heap modifications are effected
-/// keeping in mind the binary search tree property and vice a versa. Put
-/// another way, all insertions and deletions of elements in a predicated tree
-/// would be done keeping *both* predicates intact.
-///
-/// ## Identical predicates
-///
-/// If the same predicates are specified for `height` and `left` then we get
-/// the equivalent of the linked list.
-///
 /// # Handling Equality
 ///
 /// Values are 'equal' on a predicate if `P(a, b)` and `P(b, a)` are both
@@ -120,58 +87,6 @@ namespace detangled {
 /// subsequent equal nodes are inserted in the right subtree of the lower node.
 /// This ensures unambiguous navigation through a constructed tree when
 /// searching for values or ranges of values etc.
-///
-/// # Shape Uniqueness (aside)
-///
-/// If both H and L are total orderings (viz. exactly one of P(a, b) or P(b, a)
-/// is true) then given a set of unique values the tree shape generated by this
-/// data structure is unique. Intuitively the proof of this is as follows:
-///
-/// Given v0, v1, v2 unique values in order of height (v0 taller than v1 taller
-/// than v2). This does not lose us generality because we haven't said anything
-/// about their left-ordering and given any three values there will always be a
-/// tallest and a second tallest value. There are `3! = 6` sequences possible
-/// on left-right ordering of v0, v1, v2. The generated shapes for each are as
-/// follows (a>b means a is left of b):
-///
-/// @verbatim
-///
-/// v0>v1>v2         v0                  v0>v2>v1         v0
-///                   |                                    |
-///                   -----v1                              -----v1
-///                         |                                    |
-///                         -----v2                        v2-----
-///
-///
-/// v1>v0>v2         v0                  v1>v2>v0         v0
-///                  |                                    |
-///            v1---------v2                        v1-----
-///                                                  |
-///                                                  -----v2
-///
-///
-/// v2>v0>v1         v0                  v2>v1>v0         v0
-///                   |                                    |
-///             v2---------v1                        v2-----
-///                                                   |
-///                                                   -----v1
-///
-/// @endverbatim
-///
-/// Other than the listed arrangements no other arrangement is possible which
-/// maintains the properties. Note also that when the tallest value is in the
-/// middle in the left-ordering (`v1>v0>v2` and `v2>v0>v1`) the height ordering
-/// information between `v1` and `v2` is lost. This is fine because height
-/// property correctness is only tested from a node through it's ancestors till
-/// the root.
-///
-/// Given the above and a list of values v0, v1, ..., vN for all three
-/// consecutive values, exactly one of the above arrangements can be done. Note
-/// that when a node has to be on the right (or left) child of another node as
-/// described above, this really means that the node must be in the right (or
-/// left) *sub-tree*. Each node is part of three consecutive-triples and since
-/// the child can be anywhere in a subtree, each nodes position can be 'fixed'
-/// to meet all requirements simultaneously.
 ///
 /// @tparam T similar to the `T` param for `detangled::raw_tree<T>`.
 /// @tparam H predicate which governs `Height` comparison operations in the
@@ -296,7 +211,7 @@ class predicated_tree {
     /// would then need to work through typecasting but also because the
     /// underlying storage has multiple composable units.
     ///
-    /// @param pos is the position at which rotateion is done.
+    /// @param pos is the position at which rotation is done.
     template <side wing,
               typename = ::std::enable_if<
                   ::std::is_same<H, indifferent<T>>::value>>
