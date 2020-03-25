@@ -16,8 +16,6 @@ set(DOCUMENTATION_INSTALLATION_PAGE
     ${CMAKE_CURRENT_SOURCE_DIR}/installation.md)
 set(DOCUMENTATION_SPECIAL_PAGE
     ${CMAKE_CURRENT_SOURCE_DIR}/special.md)
-set(DOCUMENTATION_TUTORIAL_PAGE
-    ${CMAKE_CURRENT_SOURCE_DIR}/tutorial.md)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/conf.py
@@ -47,7 +45,6 @@ doxygen_add_docs(doxygen_docs
     ${DOCUMENTATION_OVERVIEW_PAGE}
     ${DOCUMENTATION_INSTALLATION_PAGE}
     ${DOCUMENTATION_SPECIAL_PAGE}
-    ${DOCUMENTATION_TUTORIAL_PAGE}
     COMMENT "Generating API documentation with doxygen")
 
 add_custom_target(doxyrest_docs

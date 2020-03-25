@@ -14,15 +14,6 @@ faster to perform certain operations over.
 * `detangled::accessor` denotes programmatic labels which are introduced in
   this library. These are clickable.
 
-# Before Predicate Trees
-
-Before attaching predicates to trees it's useful to understand a family of
-classes used as foundations to build predicated trees. These are simple binary
-trees which can be used for any general purpose and are not linked to any
-predicates or resulting morphological behaviour.
-
-These are described in some detail at [Basic Trees](@ref basic).
-
 # Predicates
 
 Predicates are binary predicates as described through C++ literature and
@@ -31,7 +22,7 @@ documentation; for example at
 When attached to a tree they can govern ordering of elements in them or the
 morphology of subtrees or both.
 
-# With Predicates
+# Trees With Predicates
 
 Trees attached with predicates are described in more detail at
 [Predicated Trees](@ref predicated). There is primarily one asset

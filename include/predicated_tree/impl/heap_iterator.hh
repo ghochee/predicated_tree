@@ -1,5 +1,5 @@
-#include "tree/accessor.h"
-#include "tree/raw_tree.h"
+#include "detangled/tree/accessor.h"
+#include "detangled/tree/raw_tree.h"
 
 namespace detangled {
 

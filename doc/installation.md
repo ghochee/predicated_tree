@@ -17,5 +17,3 @@ compilation.
 target_include_directories(<target>
     PRIVATE <project-clone-path>/include)
 ```
-
-See [Tutorial](@ref tutorial) for usage after correct installation.

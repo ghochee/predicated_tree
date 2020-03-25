@@ -1,9 +1,9 @@
-#include "predicated_tree/predicated_tree.h"
-#include "predicated_tree/util/predicates.h"
-#include "tree/util/format.h"
-
 #include <iostream>
 #include <random>
+#include "detangled/tree/util/format.h"
+
+#include "predicated_tree/predicated_tree.h"
+#include "predicated_tree/util/predicates.h"
 
 using namespace detangled;
 using namespace std;

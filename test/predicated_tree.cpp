@@ -2,15 +2,16 @@
 #include "predicated_tree/heap_iterator.h"
 #include "predicated_tree/predicated_tree.h"
 #include "predicated_tree/util/predicates.h"
-#include "tree/accessor.h"
-
-#define CATCH_CONFIG_MAIN
-#include "catch2/catch.hpp"
 
 #include <algorithm>
 #include <random>
 #include <utility>
 #include <vector>
+
+#include "detangled/tree/accessor.h"
+
+#define CATCH_CONFIG_MAIN
+#include "catch2/catch.hpp"
 
 using namespace detangled;
 using namespace std;
