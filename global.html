@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Global Namespace &mdash; Predicated Tree 0.2.1-alpha documentation</title>
+  <title>Global Namespace &mdash; Predicated Tree 0.3.0-alpha documentation</title>
   
 
   
@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/target-highlight.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/target-highlight.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="namespace detangled" href="namespace_detangled.html" />
-    <link rel="prev" title="Tutorial" href="page_tutorial.html" /> 
+    <link rel="prev" title="Special Cases" href="page_special.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -84,14 +84,12 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Global Namespace</a><ul>
@@ -177,20 +175,8 @@
 
 <span class="k">namespace</span> <a class="reference internal" href="namespace_detangled.html#doxid-namespacedetangled"><span class="std std-ref">detangled</span></a><span></span><span class="p">;</span>
 
-<span class="c1">// global functions</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span>
-<span class="doxyrest-code-target target" id="doxid-format-8h-1abccc0c831facd187d3f372241dc90058">operator&lt;&lt;</span><span></span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="o">::</span><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">detangled::raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">t</span><span class="p">);</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span>
-<span class="doxyrest-code-target target" id="doxid-format-8hh-1abccc0c831facd187d3f372241dc90058">operator&lt;&lt;</span><span></span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="o">::</span><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">detangled::raw_tree</span></a><span></span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">t</span><span class="p">);</span>
-
 <span class="c1">// macros</span>
 
-<span class="cp">#define </span><a class="reference internal" href="#doxid-raw-tree-8h-1a85c173f8bdf6589cf9b9d30d3e37236c"><span class="std std-ref">RAW_TREE_MAKE_ALIAS</span></a><span></span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">wing</span><span class="p">)</span>
-<span class="cp">#define </span><span class="doxyrest-code-target target" id="doxid-enums-8h-1a91ddab2f825a86612307a4e5419b2cd6">SWITCH_ON_SIDE</span><span></span><span class="p">(</span><span class="n">function_name</span><span class="p">,</span> <span class="p">...)</span>
 <span class="cp">#define </span><a class="reference internal" href="#doxid-predicated-tree-8h-1a1f930f69fefd342911c744ebd055e8f0"><span class="std std-ref">wrap</span></a><span></span><span class="p">(</span><span class="n">FUNC</span><span class="p">)</span>
 <span class="cp">#define </span><a class="reference internal" href="#doxid-predicated-tree-8h-1aef2edc03442c83c471e9951aff3688d3"><span class="std std-ref">wrap_t</span></a><span></span><span class="p">(</span><span class="n">FUNC</span><span class="p">)</span></pre>
 </div>
@@ -198,32 +184,7 @@
 <span id="details-global"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="macros">
 <h3>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h3>
-<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-raw-tree-8h-1a85c173f8bdf6589cf9b9d30d3e37236c"><span id="index-1"></span><span></span><span class="cp">#define RAW_TREE_MAKE_ALIAS(prefix, order, wing)</span></pre>
-<p>Compact method names for various iterator types. The generic construction of the name is in the form of <code class="docutils literal notranslate"><span class="pre">order</span> <span class="pre">+</span> <span class="pre">wing_short</span> <span class="pre">+</span> <span class="pre">(&quot;begin&quot;</span> <span class="pre">|</span> <span class="pre">&quot;end&quot;)</span></code>.</p>
-<p>e.g.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>prelbegin (order = pre, wing = left  (l), begin)
-inrend    (order = in,  wing = right (r), end)
-</pre></div>
-</div>
-<p class="rubric">Parameters:</p>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>prefix</p></td>
-<td><p>is the prefix we are making an alias with e.g. <em>postl</em></p></td>
-</tr>
-<tr class="row-even"><td><p>order</p></td>
-<td><p>is the <code class="docutils literal notranslate"><span class="pre">traversal_order</span></code> to map with e.g. <code class="docutils literal notranslate"><span class="pre">traversal_order::post</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p>wing</p></td>
-<td><p>is the <code class="docutils literal notranslate"><span class="pre">side</span></code> we are using in the alias e.g. <code class="docutils literal notranslate"><span class="pre">side::left</span></code></p></td>
-</tr>
-</tbody>
-</table>
-<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-predicated-tree-8h-1a1f930f69fefd342911c744ebd055e8f0"><span id="index-2"></span><span></span><span class="cp">#define wrap(FUNC)</span></pre>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-predicated-tree-8h-1a1f930f69fefd342911c744ebd055e8f0"><span id="index-1"></span><span></span><span class="cp">#define wrap(FUNC)</span></pre>
 <p>Macro to generate functor (object) from a function reference. Same as <code class="docutils literal notranslate"><span class="pre">wrap_t</span></code> except this generates an object instead of just the type.</p>
 <p>Typical usage:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bool taller_elements(const string &amp;, const string &amp;);
@@ -232,7 +193,7 @@ predicated_tree p{wrap(taller_elements)};
 </pre></div>
 </div>
 <p>will create <code class="docutils literal notranslate"><span class="pre">p</span></code> as a <code class="docutils literal notranslate"><span class="pre">predicated_tree</span></code> of <code class="docutils literal notranslate"><span class="pre">string</span></code> elements with <code class="docutils literal notranslate"><span class="pre">H</span></code> set to <code class="docutils literal notranslate"><span class="pre">taller_elements</span></code>.</p>
-<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-predicated-tree-8h-1aef2edc03442c83c471e9951aff3688d3"><span id="index-3"></span><span></span><span class="cp">#define wrap_t(FUNC)</span></pre>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-predicated-tree-8h-1aef2edc03442c83c471e9951aff3688d3"><span id="index-2"></span><span></span><span class="cp">#define wrap_t(FUNC)</span></pre>
 <p>Macro to generate the wrapper type from a function reference. This macro is essential to allow deducing argument type information from the function reference and supplying it to the <code class="docutils literal notranslate"><span class="pre">wrapper</span></code> class template.</p>
 </div>
 </div>
@@ -249,7 +210,7 @@ predicated_tree p{wrap(taller_elements)};
         <a href="namespace_detangled.html" class="btn btn-neutral float-right" title="namespace detangled" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="page_tutorial.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="page_special.html" class="btn btn-neutral float-left" title="Special Cases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

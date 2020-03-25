@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>template struct detangled::wrapper &mdash; Predicated Tree 0.2.1-alpha documentation</title>
+  <title>template struct detangled::wrapper &mdash; Predicated Tree 0.3.0-alpha documentation</title>
   
 
   
@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/target-highlight.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/target-highlight.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="class detangled::format" href="class_detangled_format.html" />
+    <link rel="next" title="template class detangled::has_less" href="class_detangled_has_less.html" />
     <link rel="prev" title="template struct detangled::taller" href="struct_detangled_taller.html" /> 
 </head>
 
@@ -84,20 +84,16 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="global.html">Global Namespace</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="namespace_detangled.html">namespace detangled</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="enum_detangled_side.html">enum detangled::side</a></li>
-<li class="toctree-l3"><a class="reference internal" href="enum_detangled_traversal_order.html">enum detangled::traversal_order</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_predicate_value_type.html">template struct detangled::predicate_value_type&lt;bool(*)(const T&amp;, const T&amp;)&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_predicate_value_type-2.html">template struct detangled::predicate_value_type&lt;bool(F::*)(const T&amp;, const T&amp;) const&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="struct_detangled_predicate_value_type-3.html">template struct detangled::predicate_value_type</a></li>
@@ -105,14 +101,8 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">template struct detangled::wrapper</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_format.html">class detangled::format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_has_less.html">template class detangled::has_less</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_has_taller.html">template class detangled::has_taller</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_iterator.html">template class detangled::iterator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser.html">template class detangled::traverser&lt;A, traversal_order::pre, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-2.html">template class detangled::traverser&lt;A, traversal_order::in, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-3.html">template class detangled::traverser&lt;A, traversal_order::post, wing&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="class_detangled_traverser-4.html">template class detangled::traverser</a></li>
 <li class="toctree-l3"><a class="reference internal" href="class_detangled_valid_predicate.html">template class detangled::valid_predicate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="namespace_detangled.html#detailed-documentation">Detailed Documentation</a></li>
@@ -213,7 +203,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="class_detangled_format.html" class="btn btn-neutral float-right" title="class detangled::format" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="class_detangled_has_less.html" class="btn btn-neutral float-right" title="template class detangled::has_less" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="struct_detangled_taller.html" class="btn btn-neutral float-left" title="template struct detangled::taller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

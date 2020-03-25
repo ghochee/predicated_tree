@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; Predicated Tree 0.2.1-alpha documentation</title>
+  <title>Installation &mdash; Predicated Tree 0.3.0-alpha documentation</title>
   
 
   
@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/target-highlight.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/target-highlight.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -84,14 +84,12 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="global.html">Global Namespace</a></li>
@@ -162,14 +160,13 @@
   <div class="section" id="installation">
 <span id="doxid-installation"></span><span id="index-0"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>This is a header only library. It is used by doing direct <code class="docutils literal notranslate"><span class="pre">include</span></code> in the source / header files.</p>
-<p class="rubric" id="doxid-installation-1autotoc-md33">Git Clone:</p>
+<p class="rubric" id="doxid-installation-1autotoc-md6">Git Clone:</p>
 <pre class="highlight literal-block"><span></span>$ git clone https://github.com/ghochee/predicated_tree</pre>
 <p>Then add <code class="docutils literal notranslate"><span class="pre">&lt;project-clone-path&gt;/include</span></code> to the include paths during compilation.</p>
-<p class="rubric" id="doxid-installation-1autotoc-md34">CMake example:</p>
+<p class="rubric" id="doxid-installation-1autotoc-md7">CMake example:</p>
 <p><a class="reference external" href="https://cmake.org/cmake/help/latest/command/target_include_directories.html">Reference</a></p>
 <pre class="highlight literal-block"><span></span><span class="n">target_include_directories</span><span class="p">(</span><span class="o">&lt;</span><span class="n">target</span><span class="o">&gt;</span>
     <span class="n">PRIVATE</span> <span class="o">&lt;</span><span class="n">project</span><span class="o">-</span><span class="n">clone</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;/</span><span class="n">include</span><span class="p">)</span></pre>
-<p>See <a class="reference internal" href="page_tutorial.html#doxid-tutorial"><span class="std std-ref">Tutorial</span></a> for usage after correct installation.</p>
 </div>
 
 
