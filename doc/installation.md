@@ -5,8 +5,8 @@ source / header files.
 
 # Git Clone
 
-```sh
-git clone https://github.com/ghochee/predicated_tree
+```console
+$ git clone https://github.com/ghochee/predicated_tree
 ```
 Then add `<project-clone-path>/include` to the include paths during
 compilation.

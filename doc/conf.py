@@ -17,7 +17,6 @@ extensions = [
 source_suffix = ".rst"
 exclude_patterns = ['page_index.rst']
 
-# import better
 html_theme = 'sphinx_rtd_theme'
 html_theme_path = ['_themes']
 
