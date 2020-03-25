@@ -97,11 +97,12 @@
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -263,18 +264,18 @@
 <div class="section" id="detailed-documentation">
 <span id="details-classdetangled-1-1accessor"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
 <p>accessors are used for creating <em>pointers</em> to nodes in a <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">raw_tree</span></span></a></code>.</p>
-<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md7">Overview:</p>
+<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md3">Overview:</p>
 <p>Accessor objects are used for referencing a node in a tree and for navigating through the various nodes in the tree. It is a single object that can be used to visit all the nodes in the tree.</p>
 <p>Clients should see these classes as more fundamental than <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_iterator.html#doxid-classdetangled-1-1iterator"><span class="std std-ref"><span class="pre">detangled::iterator</span></span></a></code> s are because objects of these classes don’t know <em>next</em> and can navigate freely through the container. Freely doesn’t imply cheaply; complexity costs are indicated on the various methods.</p>
-<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md8">End accessor:</p>
+<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md4">End accessor:</p>
 <p>Other than nodes in a tree, accessor objects may be put in a state we call <em>end</em> (because typically this state is useful when done as an iterator). In this state the accessor refers to an invalid object. This accessor may be seen like a virtual node which is the parent of the <em>root</em> node of this tree with the difference that it is impossible to navigate down after reaching there.</p>
-<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md9">Properties:</p>
-<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md10">Validity in the face of Mutating methods:</p>
+<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md5">Properties:</p>
+<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md6">Validity in the face of Mutating methods:</p>
 <p>Accessor objects are generally stable. They remain valid if the tree that the node they point to is modified in any way including detaching enveloping subtrees. So long as the node pointed to is not deleted (detach with dropped reference or replace) any accessors pointing to it are valid.</p>
 <p>Their behaviour may be seen analogous to that of <code class="docutils literal notranslate"><span class="pre">std::list::iterator</span></code> s which remain valid across inward and outward splice operations done on the lists.</p>
-<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md11">Operations on end accessors:</p>
+<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md7">Operations on end accessors:</p>
 <p>Once in <em>end</em> state doing any operations on the accessor or dereferenced tree nodes is undefined unless specified otherwise as being end_safe.</p>
-<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md12">Swap operations:</p>
+<p class="rubric" id="doxid-classdetangled-1-1accessor-1autotoc-md8">Swap operations:</p>
 <p>Accessors would lose some semantic relevance across <code class="docutils literal notranslate"><span class="pre">swap</span></code> operations. In swaps, the memory allocation of two nodes remains the same and the contents are switched. This would cause the first memory location to <em>become</em> the tree rooted at the second location. Accessors are tied to memory locations and hence will not port across swaps.</p>
 <p class="rubric">Parameters:</p>
 <table class="colwidths-given docutils align-default">

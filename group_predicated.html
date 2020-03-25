@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Predicated Trees &mdash; Predicated Tree 0.2.1-alpha documentation</title>
+  <title>Predicated Trees (Cartesian Trees) &mdash; Predicated Tree 0.2.1-alpha documentation</title>
   
 
   
@@ -85,15 +85,21 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Predicated Trees</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Predicated Trees (Cartesian Trees)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_heap_iterator.html">template class detangled::heap_iterator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#global-functions">Global Functions</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -143,7 +149,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Predicated Trees</li>
+      <li>Predicated Trees (Cartesian Trees)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -162,21 +168,43 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="predicated-trees">
-<span id="doxid-group-predicated"></span><span id="index-0"></span><h1>Predicated Trees<a class="headerlink" href="#predicated-trees" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="predicated-trees-cartesian-trees">
+<span id="doxid-group-predicated"></span><span id="index-0"></span><h1>Predicated Trees (Cartesian Trees)<a class="headerlink" href="#predicated-trees-cartesian-trees" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<p>On top of standard trees we add the notion of <em>predicates</em>. This container makes ordering guarantees under these predicates. This would be analogous to giving a predicate to a <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> to make it a <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> where the <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> makes ordering guarantees under the predicate.</p>
-<p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">detangled::predicated_tree</span></span></a></code> s effect this notion by allowing clients to build containers which would maintain upto two predicates. The first predicate is linked to the tree in a <em>heap tree</em> -like fashion and the second predicate is linked to the tree in a <em>binary search tree</em> -like arrangement.</p>
-<p>Conversion constructors are used for converting from one type to another. For example a tree built with predicates <code class="docutils literal notranslate"><span class="pre">H0</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> is transformed to a tree with predicates <code class="docutils literal notranslate"><span class="pre">H1</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> using a simpler operation than necessary when constructing a completely different tree. This templated constructor allows transformations by exploiting relations between <em>predicates</em>.</p>
-<p>This group contains assets which are used for building and using such trees compounded with predicates.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>On top of standard trees we add the notion of <em>predicates</em>. <a class="reference internal" href="#details-group-predicated"><span class="std std-ref">More…</span></a></p>
 <pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="c1">// classes</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">PTree</span><span class="o">&gt;</span>
 <span class="k">class</span> <a class="reference internal" href="class_detangled_heap_iterator.html#doxid-classdetangled-1-1heap-iterator"><span class="std std-ref">detangled::heap_iterator</span></a><span></span><span class="p">;</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">H</span> <span class="o">=</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><span class="n">has_taller</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="n">taller</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="k">class</span> <span class="nc">L</span> <span class="o">=</span> <span class="k">typename</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">conditional</span><span class="o">&lt;</span><span class="n">has_less</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">less</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">indifferent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
-<span class="k">class</span> <a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref">detangled::predicated_tree</span></a><span></span><span class="p">;</span></pre>
+<span class="k">class</span> <a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref">detangled::predicated_tree</span></a><span></span><span class="p">;</span>
+
+<span class="c1">// global functions</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">PTree</span><span class="o">&gt;</span>
+<a class="reference internal" href="class_detangled_heap_iterator.html#doxid-classdetangled-1-1heap-iterator"><span class="std std-ref">heap_iterator</span></a><span></span><span class="o">&lt;</span><span class="n">PTree</span><span class="o">&gt;</span>
+<a class="reference internal" href="#doxid-group-predicated-1ga147247e793d0fbee6f064d8c066e18f7"><span class="std std-ref">detangled::heap_iterator_end</span></a><span></span><span class="p">(</span><span class="n">PTree</span><span class="o">&amp;</span><span class="p">);</span></pre>
+</div>
+<div class="section" id="detailed-documentation">
+<span id="details-group-predicated"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
+<p>On top of standard trees we add the notion of <em>predicates</em>. This container makes ordering guarantees under these predicates. This would be analogous to giving a predicate to a <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> to make it a <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> where the <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> makes ordering guarantees under the predicate.</p>
+<p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_predicated_tree.html#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">detangled::predicated_tree</span></span></a></code> s effect this notion by allowing clients to build containers which would maintain upto two predicates. The first predicate is linked to the tree in a <em>heap tree</em> -like fashion and the second predicate is linked to the tree in a <em>binary search tree</em> -like arrangement.</p>
+<p>Conversion constructors are used for converting from one type to another. For example a tree built with predicates <code class="docutils literal notranslate"><span class="pre">H0</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> is transformed to a tree with predicates <code class="docutils literal notranslate"><span class="pre">H1</span></code> and <code class="docutils literal notranslate"><span class="pre">L0</span></code> using a simpler operation than necessary when constructing a completely different tree. This templated constructor allows transformations by exploiting relations between <em>predicates</em>.</p>
+<p>The conventional name for this data structure is <a class="reference external" href="https://en.wikipedia.org/wiki/Cartesian_tree">Cartesian Trees</a>. While functionally equivalent there is a very slightly different approach in this container. Cartesian trees are binary trees over a sequence of values where the values are used in heap-ordering. Predicated trees put the predicates of ordering and heaping at primacy. Another reason for the new name is that Predicated Trees is the name under which this was developed when the author did not know about Cartesian Trees :-/.</p>
+<p>This group contains assets which are used for building and using such trees compounded with predicates.</p>
+<div class="section" id="global-functions">
+<h3>Global Functions<a class="headerlink" href="#global-functions" title="Permalink to this headline">¶</a></h3>
+<pre class="highlight doxyrest-title-code-block literal-block" id="doxid-group-predicated-1ga147247e793d0fbee6f064d8c066e18f7"><span id="index-1"></span><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">PTree</span><span class="o">&gt;</span>
+<a class="reference internal" href="class_detangled_heap_iterator.html#doxid-classdetangled-1-1heap-iterator"><span class="std std-ref">heap_iterator</span></a><span></span><span class="o">&lt;</span><span class="n">PTree</span><span class="o">&gt;</span>
+<span class="n">detangled</span><span class="o">::</span><span class="n">heap_iterator_end</span><span class="p">(</span><span class="n">PTree</span><span class="o">&amp;</span><span class="p">)</span></pre>
+<p>A helper function to create the heap end iterator.</p>
+<p>NOTE: We don’t really need or use the function argument except for type deduction.</p>
+</div>
+</div>
 </div>
 
 

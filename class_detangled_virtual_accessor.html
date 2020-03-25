@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Predicated Trees" href="group_predicated.html" />
+    <link rel="next" title="Predicated Trees (Cartesian Trees)" href="group_predicated.html" />
     <link rel="prev" title="template class detangled::raw_tree" href="class_detangled_raw_tree.html" /> 
 </head>
 
@@ -101,11 +101,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -311,13 +312,13 @@
 <div class="section" id="detailed-documentation">
 <span id="details-classdetangled-1-1virtual-accessor"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
 <p>A <a class="reference internal" href="#doxid-classdetangled-1-1virtual-accessor"><span class="std std-ref">virtual_accessor</span></a> is an accessor on a <em>virtual</em> tree.</p>
-<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md29">Overview:</p>
+<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md25">Overview:</p>
 <p>It’s domain of operation may be limited to a subtree of a <em>physical</em> tree. All objects created from copying moving this object will retain this behaviour. All virtual_accessors created with the same logical subtree are semantically compatible. See constructor for notes.</p>
 <p>Minor modifications are done on methods defined on the parent <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> class. These are not done through virtual methods for efficiency but also because clients are reasonably expected to not need to erase type information when dealing with <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> and <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1virtual-accessor"><span class="std std-ref"><span class="pre">virtual_accessor</span></span></a></code> class family objects.</p>
-<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md30">Properties:</p>
-<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md31">Operations on end accessors:</p>
+<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md26">Properties:</p>
+<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md27">Operations on end accessors:</p>
 <p>All operations are well-defined on <em>end</em> accessor except the derefernce operations. Specifically movement operations on <em>end</em> accessor are well defined. Even more specifically in <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> an *end*ed accessor can in no way be navigated back to the tree (except through reassignment which is really not navigating it). In the <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1virtual-accessor"><span class="std std-ref"><span class="pre">virtual_accessor</span></span></a></code> objects navigatiion using <code class="docutils literal notranslate"><span class="pre">down</span></code> / <code class="docutils literal notranslate"><span class="pre">root</span></code> etc. for navigating back to the tree is well defined.</p>
-<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md32">Validity in the face of Mutating methods:</p>
+<p class="rubric" id="doxid-classdetangled-1-1virtual-accessor-1autotoc-md28">Validity in the face of Mutating methods:</p>
 <p>virtual_accessors are not <em>stable</em> (see accessor <em>Validity in the face of …</em>). Specifically modifying the underlying tree may make the iterator invalid. More specifically modifying the ‘virtual tree’ in such a way as to change the ‘depth’ of a node that any <a class="reference internal" href="#doxid-classdetangled-1-1virtual-accessor"><span class="std std-ref">virtual_accessor</span></a> is pointing to would invalidate this accessor. This also means that modifications <em>including</em> height changes done to any physical ancestor of the virtual root of the tree would <em>not</em> invalidate an accessor. A clean way to read it is ‘any modification which changes the ‘depth’ of the pointed-to node <em>in</em> the virtual tree that an accessor is referring to would invalidate it.</p>
 <p class="rubric">Parameters:</p>
 <table class="colwidths-given docutils align-default">
@@ -396,7 +397,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="group_predicated.html" class="btn btn-neutral float-right" title="Predicated Trees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="group_predicated.html" class="btn btn-neutral float-right" title="Predicated Trees (Cartesian Trees)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="class_detangled_raw_tree.html" class="btn btn-neutral float-left" title="template class detangled::raw_tree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

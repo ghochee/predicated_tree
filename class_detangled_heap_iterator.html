@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="template class detangled::predicated_tree" href="class_detangled_predicated_tree.html" />
-    <link rel="prev" title="Predicated Trees" href="group_predicated.html" /> 
+    <link rel="prev" title="Predicated Trees (Cartesian Trees)" href="group_predicated.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,19 +85,22 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="group_predicated.html">Predicated Trees</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">template class detangled::heap_iterator</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#detailed-documentation">Detailed Documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_predicated_tree.html">template class detangled::predicated_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group_predicated.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group_predicated.html#detailed-documentation">Detailed Documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -147,7 +150,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="group_predicated.html">Predicated Trees</a> &raquo;</li>
+          <li><a href="group_predicated.html">Predicated Trees (Cartesian Trees)</a> &raquo;</li>
         
       <li>template class detangled::heap_iterator</li>
     
@@ -219,7 +222,7 @@
 <pre class="highlight literal-block"><a class="reference internal" href="namespace_detangled.html#doxid-namespacedetangled-1aa8806285b5e7d0745b19f40e482bc1aa"><span class="std std-ref">predicated_tree</span></a><span></span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="p">,</span> <span class="p">...</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
 <span class="n">insert_values_in_tree</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><a class="reference internal" href="#doxid-classdetangled-1-1heap-iterator-1a50769aea1de377cc392032b17b1a29cd"><span class="std std-ref">heap_iterator</span></a><span></span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <a class="reference internal" href="#doxid-classdetangled-1-1heap-iterator-1a50769aea1de377cc392032b17b1a29cd"><span class="std std-ref">heap_iterator</span></a><span></span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(),</span>
+<span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><a class="reference internal" href="#doxid-classdetangled-1-1heap-iterator-1a50769aea1de377cc392032b17b1a29cd"><span class="std std-ref">heap_iterator</span></a><span></span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <a class="reference internal" href="group_predicated.html#doxid-group-predicated-1ga147247e793d0fbee6f064d8c066e18f7"><span class="std std-ref">heap_iterator_end</span></a><span></span><span class="p">(</span><span class="n">p</span><span class="p">),</span>
           <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">));</span></pre>
 <p>NOTE: Due to it’s nature it makes sense to only have one copy of the iterator incrementing. NOTE: Due to it’s nature, after incrementing, previously held value is destroyed and hence holding onto references of values from the iterator is not valid.</p>
 <p class="rubric">Parameters:</p>
@@ -248,7 +251,7 @@
         <a href="class_detangled_predicated_tree.html" class="btn btn-neutral float-right" title="template class detangled::predicated_tree" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="group_predicated.html" class="btn btn-neutral float-left" title="Predicated Trees" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="group_predicated.html" class="btn btn-neutral float-left" title="Predicated Trees (Cartesian Trees)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

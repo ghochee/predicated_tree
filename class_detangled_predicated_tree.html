@@ -85,7 +85,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="group_predicated.html">Predicated Trees</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_heap_iterator.html">template class detangled::heap_iterator</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">template class detangled::predicated_tree</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
@@ -96,12 +96,15 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="group_predicated.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group_predicated.html#detailed-documentation">Detailed Documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -151,7 +154,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="group_predicated.html">Predicated Trees</a> &raquo;</li>
+          <li><a href="group_predicated.html">Predicated Trees (Cartesian Trees)</a> &raquo;</li>
         
       <li>template class detangled::predicated_tree</li>
     
@@ -252,15 +255,9 @@
 <div class="section" id="detailed-documentation">
 <span id="details-classdetangled-1-1predicated-tree"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
 <p>Predicated trees are containers which make <em>ordering</em> guarantees under specified predicates.</p>
-<p>They are containers built on top of standard trees (e.g. <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">detangled::raw_tree</span></span></a></code>). They support all operations that a <a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">raw_tree</span></a> would.</p>
-<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md0">Essence of Predicated Tree:</p>
-<p>The <em>relation</em> between a <a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">raw_tree</span></a> and a <a class="reference internal" href="#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref">predicated_tree</span></a> is analogous to the <em>relation</em> between a <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> and an <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code>. This the easiest way to <em>grok</em> the essence of <a class="reference internal" href="#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref">predicated_tree</span></a>. This can be repeated to emphasize.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The relation between a raw_tree and a predicated_tree is analogous to the
-relation between a std::vector and a std::multiset.
-</pre></div>
-</div>
-<p>A <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> would take a predicate (SWO) and maintain inserted elements under the ordering of the predicate.</p>
-<p>A <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> would take (upto) two (possibly orthogonal) predicates. One predicate (<code class="docutils literal notranslate"><span class="pre">H</span></code>) is maintained as a <em>heap</em> -like partial ordering. The second property (<code class="docutils literal notranslate"><span class="pre">L</span></code>) is maintained as a left-right (in-order traversal) property. More specifically:</p>
+<p>They are containers built on top of standard trees (e.g. <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">detangled::raw_tree</span></span></a></code>). They support all non-mutating operations that a <a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">raw_tree</span></a> would.</p>
+<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md0">Essence of Predicated Tree Container:</p>
+<p>The <em>relation</em> between a <a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">raw_tree</span></a> and a <a class="reference internal" href="#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref">predicated_tree</span></a> is analogous to the <em>relation</em> between a <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> and an <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code>. A <code class="docutils literal notranslate"><span class="pre">std::multiset</span></code> would take a predicate (SWO) and maintain inserted elements under the ordering of the predicate. A <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref"><span class="pre">predicated_tree</span></span></a></code> would take (upto) two (possibly orthogonal) predicates. One predicate (<code class="docutils literal notranslate"><span class="pre">H</span></code>) is maintained as a <em>heap</em> -like partial ordering. The second predicate (<code class="docutils literal notranslate"><span class="pre">L</span></code>) is maintained as a left-right (in-order traversal) property. More specifically:</p>
 <ul class="simple">
 <li><p>inorder traversal of the tree gives values increasing in <code class="docutils literal notranslate"><span class="pre">L</span></code> predicate.</p></li>
 <li><p>max-heap-like property is maintained over the <code class="docutils literal notranslate"><span class="pre">H</span></code> predicate.</p></li>
@@ -275,73 +272,9 @@ relation between a std::vector and a std::multiset.
 <pre class="highlight literal-block"><span></span><span class="kt">bool</span> <span class="nf">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">first</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">second</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span></pre>
 <p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md1">Simple Examples:</p>
 <p>TODO(ghochee): Simple working code example.</p>
-<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md2">Special cases:</p>
-<p>The following special cases exist for the behaviour of the trees depending on the specified predicates. These special cases are <em>special</em> only in the sense of understanding. Available operations and behaviour of the tree container objects remains the same.</p>
-<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md3">Indifferent Predicates:</p>
-<p><a class="reference internal" href="struct_detangled_indifferent.html#doxid-structdetangled-1-1indifferent"><span class="std std-ref">indifferent</span></a> predicates would return false for all comparisons (i.e. not affect ordering in any way). Depending on where client code specifies indifferent predicate we have different behaviours of the <a class="reference internal" href="#doxid-classdetangled-1-1predicated-tree"><span class="std std-ref">predicated_tree</span></a>.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 35%" />
-<col style="width: 31%" />
-<col style="width: 35%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Height Indifferent</p></th>
-<th class="head"><p>Left Indifferent</p></th>
-<th class="head"><p>Result</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>No</p></td>
-<td><p>No</p></td>
-<td><p>Predicated Tree</p></td>
-</tr>
-<tr class="row-odd"><td><p>No</p></td>
-<td><p>Yes</p></td>
-<td><p>Max heap</p></td>
-</tr>
-<tr class="row-even"><td><p>Yes</p></td>
-<td><p>No</p></td>
-<td><p>Binary search tree</p></td>
-</tr>
-<tr class="row-odd"><td><p>Yes</p></td>
-<td><p>Yes</p></td>
-<td><p>Simple tree</p></td>
-</tr>
-</tbody>
-</table>
-<p>If viewed in the above sense, the dual predicate tree seems like a subsumation of the properties of heaps and binary search trees. It is however a little more powerful in that heap modifications are effected keeping in mind the binary search tree property and vice a versa. Put another way, all insertions and deletions of elements in a predicated tree would be done keeping <em>both</em> predicates intact.</p>
-<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md4">Identical predicates:</p>
-<p>If the same predicates are specified for <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">left</span></code> then we get the equivalent of the linked list.</p>
-<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md5">Handling Equality:</p>
+<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md2">Handling Equality:</p>
 <p>Values are ‘equal’ on a predicate if <code class="docutils literal notranslate"><span class="pre">P(a,</span> <span class="pre">b)</span></code> and <code class="docutils literal notranslate"><span class="pre">P(b,</span> <span class="pre">a)</span></code> are both false. Values can be <code class="docutils literal notranslate"><span class="pre">H</span></code> -equal, <code class="docutils literal notranslate"><span class="pre">L</span></code> -equal or just equal if they are equal on both <code class="docutils literal notranslate"><span class="pre">H</span></code> and <code class="docutils literal notranslate"><span class="pre">L</span></code>.</p>
 <p>A pair of equal nodes are placed in parent-left-child arrangement. All subsequent equal nodes are inserted in the right subtree of the lower node. This ensures unambiguous navigation through a constructed tree when searching for values or ranges of values etc.</p>
-<p class="rubric" id="doxid-classdetangled-1-1predicated-tree-1autotoc-md6">Shape Uniqueness (aside):</p>
-<p>If both H and L are total orderings (viz. exactly one of P(a, b) or P(b, a) is true) then given a set of unique values the tree shape generated by this data structure is unique. Intuitively the proof of this is as follows:</p>
-<p>Given v0, v1, v2 unique values in order of height (v0 taller than v1 taller than v2). This does not lose us generality because we haven’t said anything about their left-ordering and given any three values there will always be a tallest and a second tallest value. There are <code class="docutils literal notranslate"><span class="pre">3!</span> <span class="pre">=</span> <span class="pre">6</span></code> sequences possible on left-right ordering of v0, v1, v2. The generated shapes for each are as follows (a&gt;b means a is left of b):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>v0&gt;v1&gt;v2         v0                  v0&gt;v2&gt;v1         v0
-                  |                                    |
-                  -----v1                              -----v1
-                        |                                    |
-                        -----v2                        v2-----
-
-
-v1&gt;v0&gt;v2         v0                  v1&gt;v2&gt;v0         v0
-                 |                                    |
-           v1---------v2                        v1-----
-                                                 |
-                                                 -----v2
-
-
-v2&gt;v0&gt;v1         v0                  v2&gt;v1&gt;v0         v0
-                  |                                    |
-            v2---------v1                        v2-----
-                                                  |
-                                                  -----v1
-</pre></div>
-</div>
-<p>Other than the listed arrangements no other arrangement is possible which maintains the properties. Note also that when the tallest value is in the middle in the left-ordering (<code class="docutils literal notranslate"><span class="pre">v1&gt;v0&gt;v2</span></code> and <code class="docutils literal notranslate"><span class="pre">v2&gt;v0&gt;v1</span></code>) the height ordering information between <code class="docutils literal notranslate"><span class="pre">v1</span></code> and <code class="docutils literal notranslate"><span class="pre">v2</span></code> is lost. This is fine because height property correctness is only tested from a node through it’s ancestors till the root.</p>
-<p>Given the above and a list of values v0, v1, …, vN for all three consecutive values, exactly one of the above arrangements can be done. Note that when a node has to be on the right (or left) child of another node as described above, this really means that the node must be in the right (or left) <em>sub-tree</em>. Each node is part of three consecutive-triples and since the child can be anywhere in a subtree, each nodes position can be ‘fixed’ to meet all requirements simultaneously.</p>
 <p class="rubric">Parameters:</p>
 <table class="colwidths-given docutils align-default">
 <colgroup>
@@ -402,7 +335,7 @@ v2&gt;v0&gt;v1         v0                  v2&gt;v1&gt;v0         v0
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>pos</p></td>
-<td><p>is the position at which rotateion is done.</p></td>
+<td><p>is the position at which rotation is done.</p></td>
 </tr>
 </tbody>
 </table>

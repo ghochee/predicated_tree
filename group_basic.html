@@ -90,11 +90,12 @@
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -168,11 +169,11 @@
 <div class="toctree-wrapper compound">
 </div>
 <p>A family of class templaes which can be used for making tree objects and manipulating them. There are lot of related assets but the primary entities in this group are as follows.</p>
-<p class="rubric" id="doxid-group-basic-1autotoc-md14">Raw Tree:</p>
+<p class="rubric" id="doxid-group-basic-1autotoc-md10">Raw Tree:</p>
 <p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_raw_tree.html#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">detangled::raw_tree</span></span></a></code> s allow users to create and manipulate tree objects.</p>
-<p class="rubric" id="doxid-group-basic-1autotoc-md15">Accessor:</p>
+<p class="rubric" id="doxid-group-basic-1autotoc-md11">Accessor:</p>
 <p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> s are <em>pointers</em> to nodes in a tree. These can be used to navigate through tree elements. These should be thought of as equivalent to <code class="docutils literal notranslate"><span class="pre">iterator</span></code> s from STL <em>especially</em> when used for specifying <code class="docutils literal notranslate"><span class="pre">pos</span></code> style arguments. A related class family is <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_virtual_accessor.html#doxid-classdetangled-1-1virtual-accessor"><span class="std std-ref"><span class="pre">virtual_accessor</span></span></a></code> s which are pointers to nodes limited to a subtree.</p>
-<p class="rubric" id="doxid-group-basic-1autotoc-md16">Iterator:</p>
+<p class="rubric" id="doxid-group-basic-1autotoc-md12">Iterator:</p>
 <p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_iterator.html#doxid-classdetangled-1-1iterator"><span class="std std-ref"><span class="pre">detangled::iterator</span></span></a></code> classes are configured to perform *iteration*s on a virtual tree of nodes in a specific order. This allows client code to efficiently navigate through the container of nodes that they create. Iterators are additionally configurable on the type of iterator (e.g. <code class="docutils literal notranslate"><span class="pre">left</span></code> sided <code class="docutils literal notranslate"><span class="pre">preorder</span></code>) and also on the subtree on which to run the iteration.</p>
 <p>This group contains resources which can be used for creating and manipulating basic tree objects.</p>
 <pre class="highlight doxyrest-overview-code-block literal-block"><span></span><span class="c1">// classes</span>

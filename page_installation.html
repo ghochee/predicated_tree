@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="_static/doxyrest-sphinx_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tutorial" href="page_tutorial.html" />
+    <link rel="next" title="Special Cases" href="page_special.html" />
     <link rel="prev" title="template struct detangled::stable_random" href="struct_detangled_stable_random.html" /> 
 </head>
 
@@ -85,11 +85,12 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
-<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -161,10 +162,10 @@
   <div class="section" id="installation">
 <span id="doxid-installation"></span><span id="index-0"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>This is a header only library. It is used by doing direct <code class="docutils literal notranslate"><span class="pre">include</span></code> in the source / header files.</p>
-<p class="rubric" id="doxid-installation-1autotoc-md37">Git Clone:</p>
-<pre class="highlight literal-block"><span></span><span class="n">git</span> <span class="n">clone</span> <span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">ghochee</span><span class="o">/</span><span class="n">predicated_tree</span></pre>
+<p class="rubric" id="doxid-installation-1autotoc-md33">Git Clone:</p>
+<pre class="highlight literal-block"><span></span>$ git clone https://github.com/ghochee/predicated_tree</pre>
 <p>Then add <code class="docutils literal notranslate"><span class="pre">&lt;project-clone-path&gt;/include</span></code> to the include paths during compilation.</p>
-<p class="rubric" id="doxid-installation-1autotoc-md38">CMake example:</p>
+<p class="rubric" id="doxid-installation-1autotoc-md34">CMake example:</p>
 <p><a class="reference external" href="https://cmake.org/cmake/help/latest/command/target_include_directories.html">Reference</a></p>
 <pre class="highlight literal-block"><span></span><span class="n">target_include_directories</span><span class="p">(</span><span class="o">&lt;</span><span class="n">target</span><span class="o">&gt;</span>
     <span class="n">PRIVATE</span> <span class="o">&lt;</span><span class="n">project</span><span class="o">-</span><span class="n">clone</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;/</span><span class="n">include</span><span class="p">)</span></pre>
@@ -179,7 +180,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="page_tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="page_special.html" class="btn btn-neutral float-right" title="Special Cases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="struct_detangled_stable_random.html" class="btn btn-neutral float-left" title="template struct detangled::stable_random" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -98,11 +98,12 @@
 <li class="toctree-l2"><a class="reference internal" href="class_detangled_virtual_accessor.html">template class detangled::virtual_accessor</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul>
@@ -338,16 +339,16 @@
 <div class="section" id="detailed-documentation">
 <span id="details-classdetangled-1-1raw-tree"></span><h2>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree"><span class="std std-ref">raw_tree</span></a> is a <em>container</em> which behaves like a <em>tree</em>.</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md17">Overview:</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md18">Typical usage:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md13">Overview:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md14">Typical usage:</p>
 <pre class="highlight literal-block"><span></span><span class="n">raw_tree</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">messages</span><span class="p">(</span><span class="s">&quot;world &quot;</span><span class="p">);</span>
 <span class="n">messages</span><span class="p">.</span><span class="n">replace</span><span class="o">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref">side::left</span></a><span></span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Hello &quot;</span><span class="p">);</span>
 <span class="n">messages</span><span class="p">.</span><span class="n">replace</span><span class="o">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref">side::right</span></a><span></span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;!&quot;</span><span class="p">);</span></pre>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md19">Recursive Container:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md15">Recursive Container:</p>
 <p>It is a <em>container</em> because it allows storing elements of a fixed type and allows client-code meaningful ways to access the elements. It is foundationally unlike other containers in that it’s internal storage is recursive. This allows usage patterns which allow treating a <em>subtree</em> like a tree.</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md20">Accessing values:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md16">Accessing values:</p>
 <p>Clients may create <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_iterator.html#doxid-classdetangled-1-1iterator"><span class="std std-ref"><span class="pre">detangled::iterator</span></span></a></code> s to <em>iterate</em> over the contained values. See <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a1775af0e6d6563ac4b58ef2fe6e20ea7"><span class="std std-ref"><span class="pre">raw_tree::begin()</span></span></a></code> for more. Other than this <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a74d6084b4e2e36521f43adfc7d723d5f"><span class="std std-ref"><span class="pre">raw_tree::parent()</span></span></a></code>, <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a902d7bc88d2ca6c9d5f8e21b7c53bfe6"><span class="std std-ref"><span class="pre">raw_tree::child</span></span></a></code> etc. are methods which can be used for accessing other nodes from a tree node.</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md21">Similarity with std containers:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md17">Similarity with std containers:</p>
 <p>It is most closely related to <code class="docutils literal notranslate"><span class="pre">std::list</span></code> for the following reasons:</p>
 <ul class="simple">
 <li><p><em>Nodes</em> are stored on the heap.</p></li>
@@ -355,20 +356,20 @@
 <li><p>It has <em>splice</em> like operations which allow stitching pieces from one container object to another container object.</p></li>
 <li><p><code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> s pointing to nodes in a tree are valid across <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1abf7c40eef41eabc516aeaf8dd099d7e8"><span class="std std-ref"><span class="pre">raw_tree::detach</span></span></a></code> and <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a223ce6bfb9cd303d8016da90a6382564"><span class="std std-ref"><span class="pre">raw_tree::replace</span></span></a></code> operations (but read <code class="docutils literal notranslate"><a class="reference internal" href="class_detangled_accessor.html#doxid-classdetangled-1-1accessor"><span class="std std-ref"><span class="pre">detangled::accessor</span></span></a></code> documentation for exceptions).</p></li>
 </ul>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md22">Relations:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md18">Relations:</p>
 <p>Other than the data stored at a <em>node</em> the other elements that a <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree"><span class="std std-ref"><span class="pre">raw_tree</span></span></a></code> object contains are references to a <em>parent</em> and upto two children (<em>left</em> and <em>right</em>).</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md23">Children:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md19">Children:</p>
 <p>Each node has two children which it owns (a.k.a. deletes when going out of scope). The first child is referred to as <em>left</em> and the second is <em>right</em>.</p>
 <p>Methods which are used for performing operations on any one of the two children are non-type-templated with the side enum (<code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a345501f02e11f0e45eccb8c173f14b42"><span class="std std-ref"><span class="pre">raw_tree::has_child</span></span></a><span class="pre">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code> for example). Each child is guaranteed to refer to <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md24">Parent:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md20">Parent:</p>
 <p>Parent relations are non-owning (i.e. we may die without affecting the parent). We are guaranteed to be found at either the <code class="docutils literal notranslate"><span class="pre">right</span></code> or <code class="docutils literal notranslate"><span class="pre">left</span></code> child position of the parent node.</p>
 <p>Root nodes are exceptions. See the <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1a74d6084b4e2e36521f43adfc7d723d5f"><span class="std std-ref"><span class="pre">parent()</span></span></a></code> methods for details on the result for these.</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md25">Operations:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md21">Operations:</p>
 <p>Operations (methods) of the tree objects are categorizable and the following notes help in remembering the classification and specific gotchas.</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md26">Safety of methods:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md22">Safety of methods:</p>
 <p>Almost all <em>referential</em> operations are unsafe and client code should be satisfied before attempting to access or modify a relation. For example <code class="docutils literal notranslate"><a class="reference internal" href="#doxid-classdetangled-1-1raw-tree-1abf7c40eef41eabc516aeaf8dd099d7e8"><span class="std std-ref"><span class="pre">raw_tree::detach</span></span></a><span class="pre">&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref"><span class="pre">side::right</span></span></a><span class="pre">&gt;()</span></code> when there no <code class="docutils literal notranslate"><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a7c4f29407893c334a6cb7a87bf045c0d"><span class="std std-ref"><span class="pre">side::right</span></span></a></code> child present is undefined access.</p>
 <p>The above is done for efficiency. Many algorithmic situations would result in preconditions being true without any effective way to determine it beforehand (meaning we wouldn’t know them at compile time). Clients can be efficient by bypassing safety checks in those situations.</p>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md27">Non-mutating and Mutating methods:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md23">Non-mutating and Mutating methods:</p>
 <p><em>Non-mutating</em> operations allow client code to access data on the tree including through a chain of relation nodes without modifying the tree in any way. Values stored at nodes are also accessible and classified as <em>non-mutating</em> operations.</p>
 <p>Additionally non-mutating operations have two forms. non-const and <code class="docutils literal notranslate"><span class="pre">...</span> <span class="pre">const;</span></code> ones. For example:</p>
 <pre class="highlight literal-block"><span></span><span class="k">const</span> <span class="n">raw_tree</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -380,7 +381,7 @@ which documentation is listed typically). The actual class has non-const
 and non-templated versions of many of the methods.
 </pre></div>
 </div>
-<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md28">Side as template argument vs function argument:</p>
+<p class="rubric" id="doxid-classdetangled-1-1raw-tree-1autotoc-md24">Side as template argument vs function argument:</p>
 <p>Methods which deal with child (and grandchild) nodes require specifying the specific child. Two methods are provided for this category of methods, ones in which this specification is given through:</p>
 <ul class="simple">
 <li><p>A <em>template</em> argument (<code class="docutils literal notranslate"><span class="pre">has_child&lt;</span><a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507a811882fecd5c7618d7099ebbd39ea254"><span class="std std-ref"><span class="pre">side::left</span></span></a><span class="pre">&gt;()</span></code>)</p></li>

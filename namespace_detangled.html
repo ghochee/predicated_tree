@@ -85,11 +85,12 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="group_basic.html">Basic Trees</a></li>
-<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_predicated.html">Predicated Trees (Cartesian Trees)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="group_predicates.html">Predicates</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="page_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page_special.html">Special Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="page_tutorial.html">Tutorial</a></li>
 </ul>
 <ul class="current">
@@ -278,6 +279,10 @@
 <span class="kt">bool</span>
 <a class="reference internal" href="#doxid-namespacedetangled-1a18f70fa6081764ad5b59a2f1cd9e3206"><span class="std std-ref">is_heap</span></a><span></span><span class="p">(</span><span class="n">AccessorType</span> <span class="n">pos</span><span class="p">,</span> <span class="k">const</span> <span class="n">HeightPredicate</span><span class="o">&amp;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">HeightPredicate</span><span class="p">());</span>
 
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">PTree</span><span class="o">&gt;</span>
+<a class="reference internal" href="class_detangled_heap_iterator.html#doxid-classdetangled-1-1heap-iterator"><span class="std std-ref">heap_iterator</span></a><span></span><span class="o">&lt;</span><span class="n">PTree</span><span class="o">&gt;</span>
+<a class="reference internal" href="group_predicated.html#doxid-group-predicated-1ga147247e793d0fbee6f064d8c066e18f7"><span class="std std-ref">heap_iterator_end</span></a><span></span><span class="p">(</span><span class="n">PTree</span><span class="o">&amp;</span><span class="p">);</span>
+
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">H</span><span class="o">&gt;</span>
 <span class="doxyrest-code-target target" id="doxid-namespacedetangled-1aa8806285b5e7d0745b19f40e482bc1aa">predicated_tree</span><span></span><span class="p">(</span><span class="n">H</span> <span class="n">h</span><span class="p">);</span>
 
@@ -288,11 +293,11 @@
 <span class="kt">bool</span>
 <a class="reference internal" href="group_predicates.html#doxid-group-predicates-1gaf4d21ff7643809b39f2799ae2ead7f9a"><span class="std std-ref">more_even</span></a><span></span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">);</span>
 
-<span class="k">constexpr</span> <a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507"><span class="std std-ref">side</span></a><span></span>
-<span class="doxyrest-code-target target" id="doxid-namespacedetangled-1a7bb02e8576f23c4356876e3d40577f43">operator!</span><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
-
 <span class="k">constexpr</span> <a class="reference internal" href="enum_detangled_traversal_order.html#doxid-namespacedetangled-1ad707dcf610a906a4b646aac110da16dc"><span class="std std-ref">traversal_order</span></a><span></span>
 <a class="reference internal" href="#doxid-namespacedetangled-1a52df995b32b9f79f9ce5d6bec33fbac4"><span class="std std-ref">operator~</span></a><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="enum_detangled_traversal_order.html#doxid-namespacedetangled-1ad707dcf610a906a4b646aac110da16dc"><span class="std std-ref">traversal_order</span></a><span></span> <span class="n">order</span><span class="p">);</span>
+
+<span class="k">constexpr</span> <a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507"><span class="std std-ref">side</span></a><span></span>
+<span class="doxyrest-code-target target" id="doxid-namespacedetangled-1a7bb02e8576f23c4356876e3d40577f43">operator!</span><span></span><span class="p">(</span><span class="k">const</span> <a class="reference internal" href="enum_detangled_side.html#doxid-namespacedetangled-1a983b09eb3e2eaafdff4093f0af2d3507"><span class="std std-ref">side</span></a><span></span> <span class="n">wing</span><span class="p">);</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">E</span><span class="o">&gt;</span>
 <span class="k">constexpr</span> <span class="k">auto</span>
