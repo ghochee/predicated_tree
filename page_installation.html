@@ -160,10 +160,30 @@
   <div class="section" id="installation">
 <span id="doxid-installation"></span><span id="index-0"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>This is a header only library. It is used by doing direct <code class="docutils literal notranslate"><span class="pre">include</span></code> in the source / header files.</p>
-<p class="rubric" id="doxid-installation-1autotoc-md6">Git Clone:</p>
+<p>See Tutorial for usage after correct installation.</p>
+<p class="rubric" id="doxid-installation-1autotoc-md6">Conan:</p>
+<p><strong>NOTE:</strong> Conan package installation is done inside a subdirectory for proper namespacing. All header includes have to be prefixed with <code class="docutils literal notranslate"><span class="pre">detangled/</span></code>.</p>
+<p>Using <a class="reference external" href="https://conan.io">conan</a> for setup. After setting up conan, the following steps are required.</p>
+<p>Setup the conan remote repository from which this header only library will be pulled.</p>
+<pre class="highlight literal-block"><span></span>$ conan remote add ghochee https://api.bintray.com/conan/ghochee/conan
+$</pre>
+<p>To add dependency to the package</p>
+<pre class="highlight literal-block"><span></span>project_dir$ cat conanfile.txt
+[requires]
+predicated_tree/0.2.2@ghochee/alpha
+project_dir$</pre>
+<p>To install the package</p>
+<pre class="highlight literal-block"><span></span>project_dir$ mkdir .conan/
+project_dir$ cd .conan
+project_dir$ conan install .. -r ghochee
+project_dir$</pre>
+<p class="rubric" id="doxid-installation-1autotoc-md7">CMake example:</p>
+<pre class="highlight literal-block"><span></span>include(${CMAKE_SOURCE_DIR}/.conan/conanbuildinfo.cmake)
+conan_basic_setup()</pre>
+<p class="rubric" id="doxid-installation-1autotoc-md8">Git:</p>
 <pre class="highlight literal-block"><span></span>$ git clone https://github.com/ghochee/predicated_tree</pre>
 <p>Then add <code class="docutils literal notranslate"><span class="pre">&lt;project-clone-path&gt;/include</span></code> to the include paths during compilation.</p>
-<p class="rubric" id="doxid-installation-1autotoc-md7">CMake example:</p>
+<p class="rubric" id="doxid-installation-1autotoc-md9">CMake example:</p>
 <p><a class="reference external" href="https://cmake.org/cmake/help/latest/command/target_include_directories.html">Reference</a></p>
 <pre class="highlight literal-block"><span></span><span class="n">target_include_directories</span><span class="p">(</span><span class="o">&lt;</span><span class="n">target</span><span class="o">&gt;</span>
     <span class="n">PRIVATE</span> <span class="o">&lt;</span><span class="n">project</span><span class="o">-</span><span class="n">clone</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;/</span><span class="n">include</span><span class="p">)</span></pre>
